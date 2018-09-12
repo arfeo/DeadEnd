@@ -1,0 +1,59 @@
+@import './variables';
+
+.gameBoard {
+  display: flex;
+  flex-direction: column;
+  width: 128vmin;
+  height: 90vmin;
+  border-style: outset;
+  border-color: $white $grey $grey $white;
+
+  .-grid {
+    width: 100%;
+    height: 80vmin;
+    background-color: $black;
+  }
+
+  .-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 10vmin;
+    width: calc(100% - 8vmin);
+    padding: 0 4vmin;
+    background-color: $black;
+    color: $white;
+    font-size: $baseFontSize;
+
+    .-info {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .-label {
+        margin-right: 2vmin;
+      }
+
+      .-value {
+        margin-right: 10vmin;
+      }
+    }
+
+    .-help {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $white;
+      width: 4vmin;
+      height: 4vmin;
+      color: $black;
+      cursor: pointer;
+
+      &:before {
+        content: 'i';
+        text-align: center;
+      }
+    }
+  }
+}
