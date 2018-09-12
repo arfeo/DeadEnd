@@ -21,7 +21,8 @@
       height: 4vmin;
     }
 
-    .-stones-container {
+    .-stones-canvas,
+    .-ball-canvas {
       position: absolute;
       top: 0;
       left: 0;

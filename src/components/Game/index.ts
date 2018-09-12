@@ -1,7 +1,11 @@
 import { globals } from '../../constants/globals';
 
 import { setCellSize } from '../../utils/common';
-import { renderGameBoard, resetPanelInfoValues } from './render';
+import {
+  renderBall,
+  renderGameBoard,
+  resetPanelInfoValues,
+} from './render';
 
 class Game {
   appRoot: HTMLElement;
@@ -14,6 +18,8 @@ class Game {
   ballCanvas: HTMLCanvasElement;
   stonesCanvas: HTMLCanvasElement;
   cellSize: number;
+  ballPosition: number[];
+  stonesPosition: number[][];
 
   constructor(levelId = 1, stepsCount = 0, undosCount = 0) {
     this.appRoot = document.getElementById('root');
@@ -39,6 +45,7 @@ class Game {
 
   render() {
     renderGameBoard.call(this);
+    renderBall.call(this);
     resetPanelInfoValues.call(this);
   }
 }

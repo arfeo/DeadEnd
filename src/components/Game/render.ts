@@ -1,11 +1,5 @@
 import { levels } from '../../constants/levels';
 
-export function resetPanelInfoValues() {
-  this.panelLevelsValue.innerText = this.levelId.toString();
-  this.panelStepsValue.innerText = this.stepsCount.toString();
-  this.panelUndosValue.innerText = this.undosCount.toString();
-}
-
 export function renderGameBoard() {
   const gameBoard: HTMLElement = document.createElement('div');
   const gameBoardGrid: HTMLElement = document.createElement('div');
@@ -63,6 +57,11 @@ export function renderGameBoard() {
       const currentBoardCell: number = levels[this.levelId - 1].board[y][x];
 
       switch (currentBoardCell) {
+        case 1: { // Ball
+          this.ballPosition = [y, x];
+
+          break;
+        }
         case 2: { // Exit
           ctx.fillStyle = 'gold';
           ctx.beginPath();
@@ -89,10 +88,40 @@ export function renderGameBoard() {
     }
   }
 
+  this.ballCanvas = document.createElement('canvas');
+  this.ballCanvas.className = '-ball-canvas';
+  this.ballCanvas.width = this.cellSize * 32;
+  this.ballCanvas.height = this.cellSize * 20;
+
   this.stonesCanvas = document.createElement('canvas');
-  this.stonesCanvas.className = '-stones-container';
+  this.stonesCanvas.className = '-stones-canvas';
   this.stonesCanvas.width = this.cellSize * 32;
   this.stonesCanvas.height = this.cellSize * 20;
 
+  gameBoardGrid.appendChild(this.ballCanvas);
   gameBoardGrid.appendChild(this.stonesCanvas);
+}
+
+export function renderBall() {
+  const ctx: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
+  const ballX = this.ballPosition[1] * this.cellSize;
+  const ballY = this.ballPosition[0] * this.cellSize;
+
+  ctx.fillStyle = 'blue';
+  ctx.beginPath();
+  ctx.arc(
+    ballX + this.cellSize / 2,
+    ballY + this.cellSize / 2,
+    this.cellSize / 3,
+    0,
+    Math.PI * 2,
+    false,
+  );
+  ctx.fill();
+}
+
+export function resetPanelInfoValues() {
+  this.panelLevelsValue.innerText = this.levelId.toString();
+  this.panelStepsValue.innerText = this.stepsCount.toString();
+  this.panelUndosValue.innerText = this.undosCount.toString();
 }
