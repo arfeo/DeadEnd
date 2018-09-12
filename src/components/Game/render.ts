@@ -83,6 +83,11 @@ export function renderGameBoard() {
 
           break;
         }
+        case 4: { // Stone (regular)
+          this.stonePositions.push([y, x]);
+
+          break;
+        }
         default: break;
       }
     }
@@ -107,7 +112,7 @@ export function renderBall() {
   const ballX = this.ballPosition[1] * this.cellSize;
   const ballY = this.ballPosition[0] * this.cellSize;
 
-  ctx.fillStyle = 'blue';
+  ctx.fillStyle = 'cyan';
   ctx.beginPath();
   ctx.arc(
     ballX + this.cellSize / 2,
@@ -118,6 +123,23 @@ export function renderBall() {
     false,
   );
   ctx.fill();
+}
+
+export function renderStones() {
+  const ctx: CanvasRenderingContext2D = this.stonesCanvas.getContext('2d');
+
+  this.stonePositions.map((position: number[]) => {
+    const stoneX = position[1] * this.cellSize;
+    const stoneY = position[0] * this.cellSize;
+
+    ctx.fillStyle = 'grey';
+    ctx.fillRect(
+      stoneX + 1,
+      stoneY + 1,
+      this.cellSize - 2,
+      this.cellSize - 2,
+    );
+  });
 }
 
 export function resetPanelInfoValues() {
