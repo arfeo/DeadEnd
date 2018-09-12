@@ -1,6 +1,6 @@
 # DeadEnd
 
-Remake of DeadEnd II, a puzzle game initially developed by Wolfgang Thaller (released for the Macintosh in 1998)
+Remake of `DeadEnd II`, a puzzle game initially developed by Wolfgang Thaller (released for the Macintosh in 1998).
 
 ## Installation
 

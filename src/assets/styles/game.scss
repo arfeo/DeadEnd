@@ -9,9 +9,25 @@
   border-color: $white $grey $grey $white;
 
   .-grid {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
     height: 80vmin;
     background-color: $black;
+
+    .-cell {
+      width: 4vmin;
+      height: 4vmin;
+    }
+
+    .-stones-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 128vmin;
+      height: 80vmin;
+    }
   }
 
   .-panel {
