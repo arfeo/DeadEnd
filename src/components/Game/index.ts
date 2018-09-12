@@ -1,3 +1,5 @@
+import { globals } from '../../constants/globals';
+
 class Game {
   appRoot: HTMLElement;
   panelLevelsValue: HTMLElement;
@@ -18,6 +20,10 @@ class Game {
     this.undosCount = undosCount;
 
     this.render();
+  }
+
+  destroy() {
+    globals.pageInstance = null;
   }
 
   resetPanelInfoValues() {
