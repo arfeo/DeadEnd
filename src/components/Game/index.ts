@@ -1,9 +1,4 @@
-import {
-  renderBall,
-  renderGameBoard,
-  renderStones,
-  resetPanelInfoValues,
-} from './render';
+import { renderGameBoard, resetPanelInfoValues } from './render';
 import { setUpEventHandlers } from './handlers';
 import { setCellSize } from '../../utils/common';
 
@@ -39,6 +34,7 @@ class Game {
 
     this.cellSize = setCellSize();
 
+    this.ballPosition = [];
     this.stonePositions = [];
 
     this.keyPressTimer = null;
@@ -50,8 +46,6 @@ class Game {
 
   private render() {
     renderGameBoard.call(this);
-    renderBall.call(this);
-    renderStones.call(this);
     resetPanelInfoValues.call(this);
 
     setUpEventHandlers.call(this);

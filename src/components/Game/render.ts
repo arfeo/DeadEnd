@@ -1,6 +1,9 @@
 import { levels } from '../../constants/levels';
 
 export function renderGameBoard() {
+  /**
+   * Set up game board infrastructure
+   */
   const gameBoard: HTMLElement = document.createElement('div');
   const gameBoardGrid: HTMLElement = document.createElement('div');
   const gameBoardPanel: HTMLElement = document.createElement('div');
@@ -42,57 +45,6 @@ export function renderGameBoard() {
   gameBoardPanelInfo.appendChild(this.panelUndosValue);
   gameBoardPanel.appendChild(panelHepButton);
 
-  for (let y = 0; y < 20; y += 1) {
-    for (let x = 0; x < 32; x += 1) {
-      const cell: HTMLCanvasElement = document.createElement('canvas');
-
-      cell.id = `cell-${y}-${x}`;
-      cell.className = '-cell';
-      cell.width = this.cellSize;
-      cell.height = this.cellSize;
-
-      gameBoardGrid.appendChild(cell);
-
-      const ctx: CanvasRenderingContext2D = cell.getContext('2d');
-      const currentBoardCell: number = levels[this.levelId - 1].board[y][x];
-
-      switch (currentBoardCell) {
-        case 1: { // Ball
-          this.ballPosition = [y, x];
-
-          break;
-        }
-        case 2: { // Exit
-          ctx.fillStyle = 'gold';
-          ctx.beginPath();
-          ctx.arc(
-            this.cellSize / 2,
-            this.cellSize / 2,
-            this.cellSize / 3,
-            0,
-            Math.PI * 2,
-            false,
-          );
-          ctx.fill();
-
-          break;
-        }
-        case 3: { // Wall
-          ctx.fillStyle = 'red';
-          ctx.fillRect(0, 0, this.cellSize, this.cellSize);
-
-          break;
-        }
-        case 4: { // Stone (regular)
-          this.stonePositions.push([y, x]);
-
-          break;
-        }
-        default: break;
-      }
-    }
-  }
-
   this.ballCanvas = document.createElement('canvas');
   this.ballCanvas.className = '-ball-canvas';
   this.ballCanvas.width = this.cellSize * 32;
@@ -105,41 +57,86 @@ export function renderGameBoard() {
 
   gameBoardGrid.appendChild(this.ballCanvas);
   gameBoardGrid.appendChild(this.stonesCanvas);
-}
 
-export function renderBall() {
-  const ctx: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
-  const ballX = this.ballPosition[1] * this.cellSize;
-  const ballY = this.ballPosition[0] * this.cellSize;
+  /**
+   * Place game board objects
+   */
+  const ctxBall: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
+  const ctxStones: CanvasRenderingContext2D = this.stonesCanvas.getContext('2d');
 
-  ctx.fillStyle = 'cyan';
-  ctx.beginPath();
-  ctx.arc(
-    ballX + this.cellSize / 2,
-    ballY + this.cellSize / 2,
-    this.cellSize / 3,
-    0,
-    Math.PI * 2,
-    false,
-  );
-  ctx.fill();
-}
+  for (let y = 0; y < 20; y += 1) {
+    for (let x = 0; x < 32; x += 1) {
+      const cell: HTMLCanvasElement = document.createElement('canvas');
 
-export function renderStones() {
-  const ctx: CanvasRenderingContext2D = this.stonesCanvas.getContext('2d');
+      cell.id = `cell-${y}-${x}`;
+      cell.className = '-cell';
+      cell.width = this.cellSize;
+      cell.height = this.cellSize;
 
-  this.stonePositions.map((position: number[]) => {
-    const stoneX = position[1] * this.cellSize;
-    const stoneY = position[0] * this.cellSize;
+      gameBoardGrid.appendChild(cell);
 
-    ctx.fillStyle = 'grey';
-    ctx.fillRect(
-      stoneX + 1,
-      stoneY + 1,
-      this.cellSize - 2,
-      this.cellSize - 2,
-    );
-  });
+      const ctxCell: CanvasRenderingContext2D = cell.getContext('2d');
+      const currentBoardCell: number = levels[this.levelId - 1].board[y][x];
+
+      switch (currentBoardCell) {
+        case 1: { // Ball
+          this.ballPosition = [y, x];
+
+          ctxBall.fillStyle = 'cyan';
+          ctxBall.beginPath();
+          ctxBall.arc(
+            x * this.cellSize + this.cellSize / 2,
+            y * this.cellSize + this.cellSize / 2,
+            this.cellSize / 3,
+            0,
+            Math.PI * 2,
+            false,
+          );
+          ctxBall.fill();
+
+          break;
+        }
+        case 2: { // Exit
+          ctxCell.fillStyle = 'gold';
+          ctxCell.beginPath();
+          ctxCell.arc(
+            this.cellSize / 2,
+            this.cellSize / 2,
+            this.cellSize / 3,
+            0,
+            Math.PI * 2,
+            false,
+          );
+          ctxCell.fill();
+
+          break;
+        }
+        case 3: { // Wall
+          ctxCell.fillStyle = 'red';
+          ctxCell.fillRect(
+            0,
+            0,
+            this.cellSize,
+            this.cellSize,
+          );
+
+          break;
+        }
+        case 4: { // Stone (regular)
+          ctxStones.fillStyle = 'grey';
+          ctxStones.fillRect(
+            x * this.cellSize + 1,
+            y * this.cellSize + 1,
+            this.cellSize - 2,
+            this.cellSize - 2,
+          );
+
+          break;
+        }
+        default: break;
+      }
+    }
+  }
 }
 
 export function resetPanelInfoValues() {
