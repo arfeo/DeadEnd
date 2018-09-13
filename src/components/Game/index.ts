@@ -47,7 +47,6 @@ class Game {
   private render() {
     renderGameBoard.call(this);
     resetPanelInfoValues.call(this);
-
     setUpEventHandlers.call(this);
   }
 }

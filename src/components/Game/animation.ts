@@ -1,8 +1,43 @@
 export function ballMove(direction: string): Promise<void> {
+  const ballPosX = this.ballPosition[1];
+  const ballPosY = this.ballPosition[0];
+  let ballX = ballPosX * this.cellSize;
+  let ballY = ballPosY * this.cellSize;
+
+  switch (direction) {
+    case 'up': {
+      if (this.stonePositions[ballPosY - 1][ballPosX] !== 0) {
+        return Promise.reject();
+      }
+
+      break;
+    }
+    case 'right': {
+      if (this.stonePositions[ballPosY][ballPosX + 1] !== 0) {
+        return Promise.reject();
+      }
+
+      break;
+    }
+    case 'down': {
+      if (this.stonePositions[ballPosY + 1][ballPosX] !== 0) {
+        return Promise.reject();
+      }
+
+      break;
+    }
+    case 'left': {
+      if (this.stonePositions[ballPosY][ballPosX - 1] !== 0) {
+        return Promise.reject();
+      }
+
+      break;
+    }
+    default: break;
+  }
+
   const ctx: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
   const speedCorrection = 4;
-  let ballX = this.ballPosition[1] * this.cellSize;
-  let ballY = this.ballPosition[0] * this.cellSize;
   let step = 0;
 
   ctx.fillStyle = 'cyan';

@@ -5,7 +5,7 @@ export function setUpEventHandlers() {
   document.body.addEventListener('keyup', () => clearTimeout(this.keyPressTimer));
 }
 
-async function keyDownHandler(event: KeyboardEvent) {
+function keyDownHandler(event: KeyboardEvent) {
   if (!this.isBallMoving) {
     this.keyPressTimer = setTimeout(() => {
       // ..
@@ -16,22 +16,30 @@ async function keyDownHandler(event: KeyboardEvent) {
     switch (event.key) {
       case 'ArrowUp':
       case 'Up': {
-        await ballMove.call(this, 'up');
+        ballMove.call(this, 'up').catch(() => {
+          console.log('Cannot move here');
+        });
         break;
       }
       case 'ArrowRight':
       case 'Right': {
-        await ballMove.call(this, 'right');
+        ballMove.call(this, 'right').catch(() => {
+          console.log('Cannot move here');
+        });
         break;
       }
       case 'ArrowDown':
       case 'Down': {
-        await ballMove.call(this, 'down');
+        ballMove.call(this, 'down').catch(() => {
+          console.log('Cannot move here');
+        });
         break;
       }
       case 'ArrowLeft':
       case 'Left': {
-        await ballMove.call(this, 'left');
+        ballMove.call(this, 'left').catch(() => {
+          console.log('Cannot move here');
+        });
         break;
       }
       default: break;

@@ -65,6 +65,8 @@ export function renderGameBoard() {
   const ctxStones: CanvasRenderingContext2D = this.stonesCanvas.getContext('2d');
 
   for (let y = 0; y < 20; y += 1) {
+    this.stonePositions[y] = [];
+
     for (let x = 0; x < 32; x += 1) {
       const cell: HTMLCanvasElement = document.createElement('canvas');
 
@@ -81,6 +83,7 @@ export function renderGameBoard() {
       switch (currentBoardCell) {
         case 1: { // Ball
           this.ballPosition = [y, x];
+          this.stonePositions[y].push(0);
 
           ctxBall.fillStyle = 'cyan';
           ctxBall.beginPath();
@@ -97,6 +100,8 @@ export function renderGameBoard() {
           break;
         }
         case 2: { // Exit
+          this.stonePositions[y].push(0);
+
           ctxCell.fillStyle = 'gold';
           ctxCell.beginPath();
           ctxCell.arc(
@@ -112,6 +117,8 @@ export function renderGameBoard() {
           break;
         }
         case 3: { // Wall
+          this.stonePositions[y].push(currentBoardCell);
+
           ctxCell.fillStyle = 'red';
           ctxCell.fillRect(
             0,
@@ -123,6 +130,8 @@ export function renderGameBoard() {
           break;
         }
         case 4: { // Stone (regular)
+          this.stonePositions[y].push(currentBoardCell);
+
           ctxStones.fillStyle = 'grey';
           ctxStones.fillRect(
             x * this.cellSize + 1,
@@ -133,7 +142,11 @@ export function renderGameBoard() {
 
           break;
         }
-        default: break;
+        default: {
+          this.stonePositions[y].push(0);
+
+          break;
+        }
       }
     }
   }
