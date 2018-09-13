@@ -90,7 +90,7 @@ export function renderGameBoard() {
           ctxBall.arc(
             x * this.cellSize + this.cellSize / 2,
             y * this.cellSize + this.cellSize / 2,
-            this.cellSize / 2,
+            this.cellSize / 2.5,
             0,
             Math.PI * 2,
             false,

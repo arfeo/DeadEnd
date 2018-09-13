@@ -2,17 +2,10 @@ import { ballMove } from './animation';
 
 export function setUpEventHandlers() {
   document.body.addEventListener('keydown', keyDownHandler.bind(this));
-  document.body.addEventListener('keyup', () => clearTimeout(this.keyPressTimer));
 }
 
 function keyDownHandler(event: KeyboardEvent) {
   if (!this.isBallMoving) {
-    this.keyPressTimer = setTimeout(() => {
-      // ..
-
-      clearTimeout(this.keyPressTimer);
-    }, 1000);
-
     switch (event.key) {
       case 'ArrowUp':
       case 'Up': {
