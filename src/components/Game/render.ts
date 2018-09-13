@@ -2,7 +2,7 @@ import { levels } from '../../constants/levels';
 
 export function renderGameBoard() {
   /**
-   * Set up game board infrastructure
+   * Set up game boardMap infrastructure
    */
   const gameBoard: HTMLElement = document.createElement('div');
   const gameBoardGrid: HTMLElement = document.createElement('div');
@@ -59,7 +59,7 @@ export function renderGameBoard() {
   gameBoardGrid.appendChild(this.stonesCanvas);
 
   /**
-   * Place game board objects
+   * Place game boardMap objects
    */
   const ctxBall: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
   const ctxStones: CanvasRenderingContext2D = this.stonesCanvas.getContext('2d');
@@ -78,7 +78,7 @@ export function renderGameBoard() {
       gameBoardGrid.appendChild(cell);
 
       const ctxCell: CanvasRenderingContext2D = cell.getContext('2d');
-      const currentBoardCell: number = levels[this.levelId - 1].board[y][x];
+      const currentBoardCell: number = levels[this.levelId - 1].boardMap[y][x];
 
       switch (currentBoardCell) {
         case 1: { // Ball

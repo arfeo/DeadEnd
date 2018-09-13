@@ -5,5 +5,5 @@ export interface IGlobals {
 
 export interface ILevels {
   id: number;
-  board: number[][];
+  boardMap: number[][];
 }
