@@ -78,7 +78,7 @@ export function ballMove(direction: string): Promise<void> {
     ctx.arc(
       ballX + this.cellSize / 2,
       ballY + this.cellSize / 2,
-      this.cellSize / 3,
+      this.cellSize / 2,
       0,
       Math.PI * 2,
       false,

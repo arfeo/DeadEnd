@@ -90,7 +90,7 @@ export function renderGameBoard() {
           ctxBall.arc(
             x * this.cellSize + this.cellSize / 2,
             y * this.cellSize + this.cellSize / 2,
-            this.cellSize / 3,
+            this.cellSize / 2,
             0,
             Math.PI * 2,
             false,
@@ -102,12 +102,28 @@ export function renderGameBoard() {
         case 2: { // Exit
           this.stonePositions[y].push(0);
 
-          ctxCell.fillStyle = 'gold';
+          const grdX = this.cellSize / 2;
+          const grdY = this.cellSize / 2;
+          const innerRadius = this.cellSize / 8;
+          const outerRadius = this.cellSize / 3;
+
+          const gradient=ctxCell.createRadialGradient(
+            grdX,
+            grdY,
+            innerRadius,
+            grdX,
+            grdY,
+            outerRadius,
+          );
+          gradient.addColorStop(0, 'red');
+          gradient.addColorStop(1, 'gold');
+
+          ctxCell.fillStyle = gradient;
           ctxCell.beginPath();
           ctxCell.arc(
             this.cellSize / 2,
             this.cellSize / 2,
-            this.cellSize / 3,
+            this.cellSize / 2.5,
             0,
             Math.PI * 2,
             false,
