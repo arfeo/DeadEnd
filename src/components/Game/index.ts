@@ -20,14 +20,9 @@ class Game {
   cellSize: number;
   ballPosition: number[];
   stonePositions: number[][];
-  mainLoopTimer: number;
   keyPressTimer: number;
-  keysDown: {
-    arrowUp: boolean;
-    arrowRight: boolean;
-    arrowDown: boolean;
-    arrowLeft: boolean;
-  };
+  animationId: number;
+  isBallMoving: boolean;
 
   constructor(levelId = 1, stepsCount = 0, undosCount = 0) {
     this.appRoot = document.getElementById('root');
@@ -46,15 +41,9 @@ class Game {
 
     this.stonePositions = [];
 
-    this.mainLoopTimer = null;
     this.keyPressTimer = null;
 
-    this.keysDown = {
-      arrowUp: false,
-      arrowRight: false,
-      arrowDown: false,
-      arrowLeft: false,
-    };
+    this.isBallMoving = false;
 
     this.render();
   }

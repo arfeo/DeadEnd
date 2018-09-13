@@ -1,78 +1,40 @@
+import { ballMove } from './animation';
+
 export function setUpEventHandlers() {
   document.body.addEventListener('keydown', keyDownHandler.bind(this));
-  document.body.addEventListener('keyup', keyUpHandler.bind(this));
-
-  this.mainLoopTimer = setInterval(mainLoopHandler.bind(this), 0);
+  document.body.addEventListener('keyup', () => clearTimeout(this.keyPressTimer));
 }
 
-function keyDownHandler(event: KeyboardEvent) {
-  this.keyPressTimer = setTimeout(() => {
-    // ..
+async function keyDownHandler(event: KeyboardEvent) {
+  if (!this.isBallMoving) {
+    this.keyPressTimer = setTimeout(() => {
+      // ..
 
-    clearTimeout(this.keyPressTimer);
-  }, 1000);
+      clearTimeout(this.keyPressTimer);
+    }, 1000);
 
-  switch (event.key) {
-    case 'ArrowUp':
-    case 'Up':
-    {
-      this.keysDown.arrowUp = true;
-      break;
+    switch (event.key) {
+      case 'ArrowUp':
+      case 'Up': {
+        await ballMove.call(this, 'up');
+        break;
+      }
+      case 'ArrowRight':
+      case 'Right': {
+        await ballMove.call(this, 'right');
+        break;
+      }
+      case 'ArrowDown':
+      case 'Down': {
+        await ballMove.call(this, 'down');
+        break;
+      }
+      case 'ArrowLeft':
+      case 'Left': {
+        await ballMove.call(this, 'left');
+        break;
+      }
+      default: break;
     }
-    case 'ArrowRight':
-    case 'Right':
-    {
-      this.keysDown.arrowRight = true;
-      break;
-    }
-    case 'ArrowDown':
-    case 'Down':
-    {
-      this.keysDown.arrowDown = true;
-      break;
-    }
-    case 'ArrowLeft':
-    case 'Left':
-    {
-      this.keysDown.arrowLeft = true;
-      break;
-    }
-    default: break;
   }
-}
-
-function keyUpHandler(event: KeyboardEvent) {
-  clearTimeout(this.keyPressTimer);
-
-  switch (event.key) {
-    case 'ArrowUp':
-    case 'Up':
-    {
-      this.keysDown.arrowUp = false;
-      break;
-    }
-    case 'ArrowRight':
-    case 'Right':
-    {
-      this.keysDown.arrowRight = false;
-      break;
-    }
-    case 'ArrowDown':
-    case 'Down':
-    {
-      this.keysDown.arrowDown = false;
-      break;
-    }
-    case 'ArrowLeft':
-    case 'Left':
-    {
-      this.keysDown.arrowLeft = false;
-      break;
-    }
-    default: break;
-  }
-}
-
-function mainLoopHandler() {
-  // ..
 }
