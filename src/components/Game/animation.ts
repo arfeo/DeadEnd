@@ -8,7 +8,7 @@ import { invertDirection } from '../../utils/common';
  *
  * @param direction
  */
-export function ballMove(direction: string): Promise<void> {
+function ballMove(direction: string): Promise<void> {
   const ballPosX = this.ballPosition[1];
   const ballPosY = this.ballPosition[0];
   let ballX = ballPosX * this.cellSize;
@@ -88,10 +88,10 @@ export function ballMove(direction: string): Promise<void> {
     }
 
     ctx.clearRect(
-      ballX,
-      ballY,
-      this.cellSize,
-      this.cellSize,
+      ballX - this.cellSize,
+      ballY - this.cellSize,
+      this.cellSize * 3,
+      this.cellSize * 3,
     );
 
     if (direction === 'right' || direction === 'left') {
@@ -139,7 +139,7 @@ function ballHit(startDirection: string): Promise<void> {
   this.isBallMoving = true;
 
   const animateBallHit = (): Promise<void> => {
-    const speedCorrection = startDirection !== direction ? 2 : 6;
+    const speedCorrection = startDirection !== direction ? 3 : 6;
 
     step += speedCorrection;
 
@@ -158,10 +158,10 @@ function ballHit(startDirection: string): Promise<void> {
     }
 
     ctx.clearRect(
-      ballX,
-      ballY,
-      this.cellSize,
-      this.cellSize,
+      ballX - this.cellSize,
+      ballY - this.cellSize,
+      this.cellSize * 3,
+      this.cellSize * 3,
     );
 
     if (direction === 'right' || direction === 'left') {
@@ -306,3 +306,5 @@ function stoneMove(position: { x: number; y: number }, direction: string): Promi
 
   return Promise.resolve();
 }
+
+export { ballMove };

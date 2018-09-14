@@ -3,7 +3,7 @@ import { ballMove } from './animation';
 /**
  * Set up game event handlers
  */
-export function setUpEventHandlers() {
+function setUpEventHandlers() {
   document.body.addEventListener('keydown', keyDownHandler.bind(this));
 }
 
@@ -47,3 +47,5 @@ function keyDownHandler(event: KeyboardEvent) {
     }
   }
 }
+
+export { setUpEventHandlers };

@@ -3,7 +3,7 @@ import { levels } from '../../constants/levels';
 /**
  * Render the game board infrastructure and game objects
  */
-export function renderGameBoard() {
+function renderGameBoard() {
   // ----- INFRASTRUCTURE ----- //
   const gameBoard: HTMLElement = document.createElement('div');
   const gameBoardGrid: HTMLElement = document.createElement('div');
@@ -170,8 +170,10 @@ export function renderGameBoard() {
 /**
  * Set panel info values (level, steps, undos)
  */
-export function resetPanelInfoValues() {
+function resetPanelInfoValues() {
   this.panelLevelsValue.innerText = this.levelId.toString();
   this.panelStepsValue.innerText = this.stepsCount.toString();
   this.panelUndosValue.innerText = this.undosCount.toString();
 }
+
+export { renderGameBoard, resetPanelInfoValues };
