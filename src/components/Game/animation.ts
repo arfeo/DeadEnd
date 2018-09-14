@@ -84,6 +84,10 @@ function ballMove(direction: string): Promise<void> {
         this.ballPosition[0] += direction === 'down' ? 1 : -1;
       }
 
+      if (levels[this.levelId - 1].boardMap[this.ballPosition[0]][this.ballPosition[1]] === 2) {
+        return ballTransport.call(this);
+      }
+
       return Promise.resolve();
     }
 
@@ -174,7 +178,7 @@ function ballHit(startDirection: string): Promise<void> {
     ctx.arc(
       ballX + this.cellSize / 2,
       ballY + this.cellSize / 2,
-      this.cellSize / 2.5 ,
+      this.cellSize / 2.5,
       0,
       Math.PI * 2,
       false,
@@ -303,6 +307,58 @@ function stoneMove(position: { x: number; y: number }, direction: string): Promi
   };
 
   this.stoneAnimationId = requestAnimationFrame(animateStoneMove);
+
+  return Promise.resolve();
+}
+
+/**
+ * Animate ball transportation
+ */
+export function ballTransport(): Promise<void> {
+  const ctx: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
+  const ballX = this.ballPosition[1] * this.cellSize;
+  const ballY = this.ballPosition[0] * this.cellSize;
+  let step = 0;
+
+  ctx.fillStyle = 'cyan';
+
+  this.isBallMoving = true;
+
+  const animateBallTransport = (): Promise<void> => {
+    const initialRadius = this.cellSize / 2.5;
+
+    step += 1;
+
+    if (step > initialRadius) {
+      cancelAnimationFrame(this.ballAnimationId);
+
+      this.isBallMoving = false;
+
+      return Promise.resolve();
+    }
+
+    ctx.clearRect(
+      ballX - this.cellSize,
+      ballY - this.cellSize,
+      this.cellSize * 3,
+      this.cellSize * 3,
+    );
+
+    ctx.beginPath();
+    ctx.arc(
+      ballX + this.cellSize / 2,
+      ballY + this.cellSize / 2,
+      initialRadius - step,
+      0,
+      Math.PI * 2,
+      false,
+    );
+    ctx.fill();
+
+    this.ballAnimationId = requestAnimationFrame(animateBallTransport);
+  };
+
+  this.ballAnimationId = requestAnimationFrame(animateBallTransport);
 
   return Promise.resolve();
 }
