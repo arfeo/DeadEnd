@@ -16,8 +16,9 @@ class Game {
   ballPosition: number[];
   stonePositions: number[][];
   keyPressTimer: number;
-  animationId: number;
+  ballAnimationId: number;
   isBallMoving: boolean;
+  stoneAnimationId: number;
 
   constructor(levelId = 1, stepsCount = 0, undosCount = 0) {
     this.appRoot = document.getElementById('root');

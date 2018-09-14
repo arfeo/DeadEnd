@@ -1,9 +1,17 @@
 import { ballMove } from './animation';
 
+/**
+ * Set up game event handlers
+ */
 export function setUpEventHandlers() {
   document.body.addEventListener('keydown', keyDownHandler.bind(this));
 }
 
+/**
+ * Keyboard event handler
+ *
+ * @param event
+ */
 function keyDownHandler(event: KeyboardEvent) {
   if (!this.isBallMoving) {
     switch (event.key) {

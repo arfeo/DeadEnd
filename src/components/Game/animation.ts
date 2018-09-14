@@ -1,5 +1,13 @@
+// tslint:disable:max-file-line-count
+import { levels } from '../../constants/levels';
+
 import { invertDirection } from '../../utils/common';
 
+/**
+ * Animate the ball move
+ *
+ * @param direction
+ */
 export function ballMove(direction: string): Promise<void> {
   const ballPosX = this.ballPosition[1];
   const ballPosY = this.ballPosition[0];
@@ -55,7 +63,7 @@ export function ballMove(direction: string): Promise<void> {
   }
 
   const ctx: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
-  const speedCorrection = 4;
+  const speedCorrection = 5;
   let step = 0;
 
   ctx.fillStyle = 'cyan';
@@ -66,7 +74,7 @@ export function ballMove(direction: string): Promise<void> {
     step += speedCorrection;
 
     if (step > this.cellSize) {
-      cancelAnimationFrame(this.animationId);
+      cancelAnimationFrame(this.ballAnimationId);
 
       this.isBallMoving = false;
 
@@ -103,15 +111,20 @@ export function ballMove(direction: string): Promise<void> {
     );
     ctx.fill();
 
-    this.animationId = requestAnimationFrame(animateBallMove);
+    this.ballAnimationId = requestAnimationFrame(animateBallMove);
   };
 
-  this.animationId = requestAnimationFrame(animateBallMove);
+  this.ballAnimationId = requestAnimationFrame(animateBallMove);
 
   return Promise.resolve();
 }
 
-export function ballHit(startDirection: string): Promise<void> {
+/**
+ * Animate the Ball's hit
+ *
+ * @param startDirection
+ */
+function ballHit(startDirection: string): Promise<void> {
   const ballPosX = this.ballPosition[1];
   const ballPosY = this.ballPosition[0];
   let ballX = ballPosX * this.cellSize;
@@ -136,11 +149,11 @@ export function ballHit(startDirection: string): Promise<void> {
 
         direction = invertDirection(direction);
       } else {
-        cancelAnimationFrame(this.animationId);
+        cancelAnimationFrame(this.ballAnimationId);
 
         this.isBallMoving = false;
 
-        return Promise.resolve();
+        return testStoneMove.call(this, ballPosX, ballPosY, direction);
       }
     }
 
@@ -168,10 +181,128 @@ export function ballHit(startDirection: string): Promise<void> {
     );
     ctx.fill();
 
-    this.animationId = requestAnimationFrame(animateBallHit);
+    this.ballAnimationId = requestAnimationFrame(animateBallHit);
   };
 
-  this.animationId = requestAnimationFrame(animateBallHit);
+  this.ballAnimationId = requestAnimationFrame(animateBallHit);
+
+  return Promise.resolve();
+}
+
+/**
+ * Move a stone if possible
+ *
+ * @param posX
+ * @param posY
+ * @param direction
+ */
+function testStoneMove(posX: number, posY: number, direction: string): Promise<any[]> {
+  switch (direction) {
+    case 'up': {
+      if (this.stonePositions[posY - 2][posX] === 0 && levels[this.levelId - 1].boardMap[posY - 1][posX] !== 3) {
+        return Promise.all([
+          stoneMove.call(this, { x: posX, y: posY - 1 }, direction),
+          ballMove.call(this, direction),
+        ]);
+      }
+
+      break;
+    }
+    case 'right': {
+      if (this.stonePositions[posY][posX + 2] === 0 && levels[this.levelId - 1].boardMap[posY][posX + 1] !== 3) {
+        return Promise.all([
+          stoneMove.call(this, { x: posX + 1, y: posY }, direction),
+          ballMove.call(this, direction),
+        ]);
+      }
+
+      break;
+    }
+    case 'down': {
+      if (this.stonePositions[posY + 2][posX] === 0 && levels[this.levelId - 1].boardMap[posY + 1][posX] !== 3) {
+        return Promise.all([
+          stoneMove.call(this, { x: posX, y: posY + 1 }, direction),
+          ballMove.call(this, direction),
+        ]);
+      }
+
+      break;
+    }
+    case 'left': {
+      if (this.stonePositions[posY][posX - 2] === 0 && levels[this.levelId - 1].boardMap[posY][posX - 1] !== 3) {
+        return Promise.all([
+          stoneMove.call(this, { x: posX - 1, y: posY }, direction),
+          ballMove.call(this, direction),
+        ]);
+      }
+
+      break;
+    }
+    default: return;
+  }
+}
+
+/**
+ * Animate a stone move
+ *
+ * @param position
+ * @param direction
+ */
+function stoneMove(position: { x: number; y: number }, direction: string): Promise<void> {
+  const ctx: CanvasRenderingContext2D = this.stonesCanvas.getContext('2d');
+  const stoneType: number = this.stonePositions[position.y][position.x];
+  const speedCorrection = 5;
+  let stoneX: number = position.x * this.cellSize;
+  let stoneY: number = position.y * this.cellSize;
+  let step = 0;
+
+  ctx.fillStyle = 'grey';
+
+  let moveX: number = position.x;
+  let moveY: number = position.y;
+
+  if (direction === 'right' || direction === 'left') {
+    moveX += direction === 'right' ? 1 : -1;
+  } else {
+    moveY += direction === 'down' ? 1 : -1;
+  }
+
+  this.stonePositions[position.y][position.x] = 0;
+  this.stonePositions[moveY][moveX] = stoneType;
+
+  const animateStoneMove = (): Promise<void> => {
+    step += speedCorrection;
+
+    if (step > this.cellSize) {
+      cancelAnimationFrame(this.stoneAnimationId);
+
+      return Promise.resolve();
+    }
+
+    ctx.clearRect(
+      stoneX,
+      stoneY,
+      this.cellSize,
+      this.cellSize,
+    );
+
+    if (direction === 'right' || direction === 'left') {
+      stoneX += speedCorrection * (direction === 'right' ? 1 : -1);
+    } else {
+      stoneY += speedCorrection * (direction === 'down' ? 1 : -1);
+    }
+
+    ctx.fillRect(
+      stoneX + 1,
+      stoneY + 1,
+      this.cellSize - 2,
+      this.cellSize - 2,
+    );
+
+    this.stoneAnimationId = requestAnimationFrame(animateStoneMove);
+  };
+
+  this.stoneAnimationId = requestAnimationFrame(animateStoneMove);
 
   return Promise.resolve();
 }

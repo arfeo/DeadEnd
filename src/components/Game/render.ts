@@ -1,9 +1,10 @@
 import { levels } from '../../constants/levels';
 
+/**
+ * Render the game board infrastructure and game objects
+ */
 export function renderGameBoard() {
-  /**
-   * Set up game boardMap infrastructure
-   */
+  // ----- INFRASTRUCTURE ----- //
   const gameBoard: HTMLElement = document.createElement('div');
   const gameBoardGrid: HTMLElement = document.createElement('div');
   const gameBoardPanel: HTMLElement = document.createElement('div');
@@ -58,9 +59,7 @@ export function renderGameBoard() {
   gameBoardGrid.appendChild(this.ballCanvas);
   gameBoardGrid.appendChild(this.stonesCanvas);
 
-  /**
-   * Place game boardMap objects
-   */
+  // ----- OBJECTS ----- //
   const ctxBall: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
   const ctxStones: CanvasRenderingContext2D = this.stonesCanvas.getContext('2d');
 
@@ -168,6 +167,9 @@ export function renderGameBoard() {
   }
 }
 
+/**
+ * Set panel info values (level, steps, undos)
+ */
 export function resetPanelInfoValues() {
   this.panelLevelsValue.innerText = this.levelId.toString();
   this.panelStepsValue.innerText = this.stepsCount.toString();
