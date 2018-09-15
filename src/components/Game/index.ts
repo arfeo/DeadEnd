@@ -1,5 +1,5 @@
 import { renderGameBoard, resetPanelInfoValues } from './render';
-import { setUpEventHandlers } from './handlers';
+import { setUpEventHandlers } from './events';
 import { setCellSize } from '../../utils/common';
 
 class Game {
