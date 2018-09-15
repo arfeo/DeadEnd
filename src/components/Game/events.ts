@@ -14,7 +14,7 @@ function setUpEventHandlers() {
  * @param event
  */
 function keyDownHandler(event: KeyboardEvent) {
-  if (!this.isBallMoving) {
+  if (!this.isBallMoving && !this.isGameOver) {
     switch (event.key) {
       case 'ArrowUp':
       case 'Up': {

@@ -10,13 +10,3 @@ export const calculateVMin = (): number => {
 export const setCellSize = (): number => {
   return globals.cellSize > 0 ? globals.cellSize : Math.round(calculateVMin() * 4  / 10) * 10;
 };
-
-export const invertDirection = (direction: string): string => {
-  switch (direction) {
-    case 'up': return 'down';
-    case 'right': return 'left';
-    case 'down': return 'up';
-    case 'left': return 'right';
-    default: return null as string;
-  }
-};

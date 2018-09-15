@@ -19,6 +19,7 @@ class Game {
   ballAnimationId: number;
   isBallMoving: boolean;
   stoneAnimationId: number;
+  isGameOver: boolean;
 
   constructor(levelId = 1, stepsCount = 0, undosCount = 0) {
     this.appRoot = document.getElementById('root');
@@ -42,13 +43,20 @@ class Game {
 
     this.isBallMoving = false;
 
+    this.isGameOver = false;
+
     this.render();
   }
 
-  private render() {
+  render() {
     renderGameBoard.call(this);
     resetPanelInfoValues.call(this);
     setUpEventHandlers.call(this);
+  }
+
+  destroy() {
+    clearTimeout(this.ballAnimationId);
+    clearTimeout(this.stoneAnimationId);
   }
 }
 

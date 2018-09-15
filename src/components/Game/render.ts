@@ -1,4 +1,5 @@
 import { levels } from '../../constants/levels';
+import { levelIndexById } from './utils';
 
 /**
  * Render the game board infrastructure and game objects
@@ -77,7 +78,7 @@ function renderGameBoard() {
       gameBoardGrid.appendChild(cell);
 
       const ctxCell: CanvasRenderingContext2D = cell.getContext('2d');
-      const currentBoardCell: number = levels[this.levelId - 1].boardMap[y][x];
+      const currentBoardCell: number = levels[levelIndexById(this.levelId)].boardMap[y][x];
 
       switch (currentBoardCell) {
         case 1: { // Ball

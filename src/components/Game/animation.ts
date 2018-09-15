@@ -1,7 +1,10 @@
 // tslint:disable:max-file-line-count
+import { Game } from './index';
+
+import { globals } from '../../constants/globals';
 import { levels } from '../../constants/levels';
 
-import { invertDirection } from '../../utils/common';
+import { invertDirection, levelIndexById } from './utils';
 
 /**
  * Animate the ball move
@@ -84,7 +87,7 @@ function ballMove(direction: string): Promise<void> {
         this.ballPosition[0] += direction === 'down' ? 1 : -1;
       }
 
-      if (levels[this.levelId - 1].boardMap[this.ballPosition[0]][this.ballPosition[1]] === 2) {
+      if (levels[levelIndexById(this.levelId)].boardMap[this.ballPosition[0]][this.ballPosition[1]] === 2) {
         return ballTransport.call(this);
       }
 
@@ -124,7 +127,7 @@ function ballMove(direction: string): Promise<void> {
 }
 
 /**
- * Animate the Ball's hit
+ * Animate the ball's hit
  *
  * @param startDirection
  */
@@ -201,9 +204,11 @@ function ballHit(startDirection: string): Promise<void> {
  * @param direction
  */
 function testStoneMove(posX: number, posY: number, direction: string): Promise<any[]> {
+  const levelIndex = levelIndexById(this.levelId);
+
   switch (direction) {
     case 'up': {
-      if (this.stonePositions[posY - 2][posX] === 0 && levels[this.levelId - 1].boardMap[posY - 1][posX] !== 3) {
+      if (this.stonePositions[posY - 2][posX] === 0 && levels[levelIndex].boardMap[posY - 1][posX] !== 3) {
         return Promise.all([
           stoneMove.call(this, { x: posX, y: posY - 1 }, direction),
           ballMove.call(this, direction),
@@ -213,7 +218,7 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
       break;
     }
     case 'right': {
-      if (this.stonePositions[posY][posX + 2] === 0 && levels[this.levelId - 1].boardMap[posY][posX + 1] !== 3) {
+      if (this.stonePositions[posY][posX + 2] === 0 && levels[levelIndex].boardMap[posY][posX + 1] !== 3) {
         return Promise.all([
           stoneMove.call(this, { x: posX + 1, y: posY }, direction),
           ballMove.call(this, direction),
@@ -223,7 +228,7 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
       break;
     }
     case 'down': {
-      if (this.stonePositions[posY + 2][posX] === 0 && levels[this.levelId - 1].boardMap[posY + 1][posX] !== 3) {
+      if (this.stonePositions[posY + 2][posX] === 0 && levels[levelIndex].boardMap[posY + 1][posX] !== 3) {
         return Promise.all([
           stoneMove.call(this, { x: posX, y: posY + 1 }, direction),
           ballMove.call(this, direction),
@@ -233,7 +238,7 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
       break;
     }
     case 'left': {
-      if (this.stonePositions[posY][posX - 2] === 0 && levels[this.levelId - 1].boardMap[posY][posX - 1] !== 3) {
+      if (this.stonePositions[posY][posX - 2] === 0 && levels[levelIndex].boardMap[posY][posX - 1] !== 3) {
         return Promise.all([
           stoneMove.call(this, { x: posX - 1, y: posY }, direction),
           ballMove.call(this, direction),
@@ -247,7 +252,7 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
 }
 
 /**
- * Animate a stone move
+ * Animate stone move
  *
  * @param position
  * @param direction
@@ -312,7 +317,7 @@ function stoneMove(position: { x: number; y: number }, direction: string): Promi
 }
 
 /**
- * Animate ball transportation
+ * Animate the ball transportation
  */
 export function ballTransport(): Promise<void> {
   const ctx: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
@@ -333,6 +338,16 @@ export function ballTransport(): Promise<void> {
       cancelAnimationFrame(this.ballAnimationId);
 
       this.isBallMoving = false;
+
+      if (levelIndexById(this.levelId + 1) > -1) {
+        this.destroy();
+
+        globals.pageInstance = new Game(this.levelId + 1);
+      } else {
+        alert('Game over');
+
+        this.isGameOver = true;
+      }
 
       return Promise.resolve();
     }
