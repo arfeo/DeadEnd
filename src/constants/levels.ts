@@ -7,7 +7,7 @@
  * 4 - stone (regular)
  */
 
-import { ILevels } from '../types';
+import { ILevels } from '../types/constants';
 
 export const levels: ILevels[] = [
   {

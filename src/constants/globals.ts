@@ -1,4 +1,4 @@
-import { IGlobals } from '../types';
+import { IGlobals } from '../types/constants';
 
 export const globals: IGlobals = {
   pageInstance: null,
