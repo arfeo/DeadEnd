@@ -14,50 +14,38 @@ function setUpEventHandlers() {
  * @param event
  */
 function keyDownHandler(event: KeyboardEvent) {
+  const onBallMove = (direction: string) => {
+    ballMove.call(this, direction).then(onBallMoveCompleted).catch(() => {
+      console.log('Cannot move here');
+    });
+  };
+
+  const onBallMoveCompleted = () => {
+    this.stepsCount += 1;
+
+    resetPanelInfoValues.call(this);
+  };
+
   if (!this.isBallMoving && !this.isGameOver) {
     switch (event.key) {
       case 'ArrowUp':
       case 'Up': {
-        ballMove.call(this, 'up').then(() => {
-          this.stepsCount += 1;
-
-          resetPanelInfoValues.call(this);
-        }).catch(() => {
-          console.log('Cannot move here');
-        });
+        onBallMove('up');
         break;
       }
       case 'ArrowRight':
       case 'Right': {
-        ballMove.call(this, 'right').then(() => {
-          this.stepsCount += 1;
-
-          resetPanelInfoValues.call(this);
-        }).catch(() => {
-          console.log('Cannot move here');
-        });
+        onBallMove('right');
         break;
       }
       case 'ArrowDown':
       case 'Down': {
-        ballMove.call(this, 'down').then(() => {
-          this.stepsCount += 1;
-
-          resetPanelInfoValues.call(this);
-        }).catch(() => {
-          console.log('Cannot move here');
-        });
+        onBallMove('down');
         break;
       }
       case 'ArrowLeft':
       case 'Left': {
-        ballMove.call(this, 'left').then(() => {
-          this.stepsCount += 1;
-
-          resetPanelInfoValues.call(this);
-        }).catch(() => {
-          console.log('Cannot move here');
-        });
+        onBallMove('left');
         break;
       }
       default: break;

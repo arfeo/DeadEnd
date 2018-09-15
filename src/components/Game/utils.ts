@@ -14,4 +14,4 @@ export const invertDirection = (direction: string): string => {
 
 export const levelIndexById = (levelId: number): number => {
   return findIndex(levels, { id: levelId });
-}
+};
