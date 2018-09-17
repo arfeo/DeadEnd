@@ -1,5 +1,7 @@
+import { Game } from '../components/Game';
+
 export interface IGlobals {
-  pageInstance: any;
+  pageInstance: Game;
   cellSize: number;
 }
 

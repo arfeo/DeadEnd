@@ -17,7 +17,6 @@ class Game {
   cellSize: number;
   ballPosition: number[];
   stonePositions: number[][];
-  keyPressTimer: number;
   ballAnimationId: number;
   isBallMoving: boolean;
   stoneAnimationId: number;
@@ -41,10 +40,7 @@ class Game {
     this.ballPosition = [];
     this.stonePositions = [];
 
-    this.keyPressTimer = null;
-
     this.isBallMoving = false;
-
     this.isGameOver = false;
 
     this.render();
