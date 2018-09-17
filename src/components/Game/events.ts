@@ -1,6 +1,7 @@
+import { globals } from '../../constants/globals';
+
 import { ballMove } from './animation';
 import { resetPanelInfoValues } from './render';
-import { globals } from '../../constants/globals';
 
 /**
  * Set up game event handlers

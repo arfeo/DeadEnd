@@ -208,7 +208,11 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
 
   switch (direction) {
     case 'up': {
-      if (this.stonePositions[posY - 2][posX] === 0 && levels[levelIndex].boardMap[posY - 1][posX] !== 3) {
+      const isNextToNextCellEmpty = this.stonePositions[posY - 2][posX] === 0;
+      const isNextCellWall = levels[levelIndex].boardMap[posY - 1][posX] === 3;
+      const isNextToNextCellExit = levels[levelIndex].boardMap[posY - 2][posX] === 2;
+
+      if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit) {
         return Promise.all([
           stoneMove.call(this, { x: posX, y: posY - 1 }, direction),
           ballMove.call(this, direction),
@@ -218,7 +222,11 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
       break;
     }
     case 'right': {
-      if (this.stonePositions[posY][posX + 2] === 0 && levels[levelIndex].boardMap[posY][posX + 1] !== 3) {
+      const isNextToNextCellEmpty = this.stonePositions[posY][posX + 2] === 0;
+      const isNextCellWall = levels[levelIndex].boardMap[posY][posX + 1] === 3;
+      const isNextToNextCellExit = levels[levelIndex].boardMap[posY][posX + 2] === 2;
+
+      if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit) {
         return Promise.all([
           stoneMove.call(this, { x: posX + 1, y: posY }, direction),
           ballMove.call(this, direction),
@@ -228,7 +236,11 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
       break;
     }
     case 'down': {
-      if (this.stonePositions[posY + 2][posX] === 0 && levels[levelIndex].boardMap[posY + 1][posX] !== 3) {
+      const isNextToNextCellEmpty = this.stonePositions[posY + 2][posX] === 0;
+      const isNextCellWall = levels[levelIndex].boardMap[posY + 1][posX] === 3;
+      const isNextToNextCellExit = levels[levelIndex].boardMap[posY + 2][posX] === 2;
+
+      if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit) {
         return Promise.all([
           stoneMove.call(this, { x: posX, y: posY + 1 }, direction),
           ballMove.call(this, direction),
@@ -238,7 +250,11 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
       break;
     }
     case 'left': {
-      if (this.stonePositions[posY][posX - 2] === 0 && levels[levelIndex].boardMap[posY][posX - 1] !== 3) {
+      const isNextToNextCellEmpty = this.stonePositions[posY][posX - 2] === 0;
+      const isNextCellWall = levels[levelIndex].boardMap[posY][posX - 1] === 3;
+      const isNextToNextCellExit = levels[levelIndex].boardMap[posY][posX - 2] === 2;
+
+      if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit) {
         return Promise.all([
           stoneMove.call(this, { x: posX - 1, y: posY }, direction),
           ballMove.call(this, direction),
@@ -247,7 +263,7 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
 
       break;
     }
-    default: return;
+    default: return null as Promise<any[]>;
   }
 }
 
