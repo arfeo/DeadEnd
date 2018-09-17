@@ -1,7 +1,7 @@
 import { globals } from '../../constants/globals';
 
 import { renderGameBoard, resetPanelInfoValues } from './render';
-import { setUpEventHandlers } from './events';
+import { keyDownHandler, removeEventHandlers, setUpEventHandlers } from './events';
 import { setCellSize } from '../../utils/common';
 
 class Game {
@@ -43,6 +43,10 @@ class Game {
     this.isBallMoving = false;
     this.isGameOver = false;
 
+    globals.eventListeners = {
+      keyDown: keyDownHandler.bind(this),
+    };
+
     this.render();
   }
 
@@ -55,6 +59,8 @@ class Game {
   destroy() {
     clearTimeout(this.ballAnimationId);
     clearTimeout(this.stoneAnimationId);
+
+    removeEventHandlers.call(this);
 
     globals.pageInstance = null;
   }

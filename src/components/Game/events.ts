@@ -1,11 +1,19 @@
 import { ballMove } from './animation';
 import { resetPanelInfoValues } from './render';
+import { globals } from '../../constants/globals';
 
 /**
  * Set up game event handlers
  */
 function setUpEventHandlers() {
-  document.body.addEventListener('keydown', keyDownHandler.bind(this));
+  document.body.addEventListener('keydown', globals.eventListeners.keyDown);
+}
+
+/**
+ * Remove game event handlers
+ */
+function removeEventHandlers() {
+  document.body.removeEventListener('keydown', globals.eventListeners.keyDown);
 }
 
 /**
@@ -53,4 +61,4 @@ function keyDownHandler(event: KeyboardEvent) {
   }
 }
 
-export { setUpEventHandlers };
+export { keyDownHandler, removeEventHandlers, setUpEventHandlers };

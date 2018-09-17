@@ -2,6 +2,9 @@ import { Game } from '../components/Game';
 
 export interface IGlobals {
   pageInstance: Game;
+  eventListeners: {
+    keyDown: EventListener;
+  };
   cellSize: number;
 }
 
