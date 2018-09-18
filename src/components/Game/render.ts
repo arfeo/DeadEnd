@@ -159,6 +159,90 @@ function renderGameBoard() {
 
           break;
         }
+        case 5: { // Stone (up arrow)
+          this.stonePositions[y].push(currentBoardCell);
+
+          ctxStones.fillStyle = 'grey';
+          ctxStones.fillRect(
+            x * this.cellSize + 1,
+            y * this.cellSize + 1,
+            this.cellSize - 2,
+            this.cellSize - 2,
+          );
+
+          ctxStones.fillStyle = '#000';
+          ctxStones.font = '2vmin Arial';
+          ctxStones.fillText(
+            '↑',
+            x * this.cellSize + this.cellSize / 2.5,
+            y * this.cellSize + this.cellSize / 1.5
+          );
+
+          break;
+        }
+        case 6: { // Stone (right arrow)
+          this.stonePositions[y].push(currentBoardCell);
+
+          ctxStones.fillStyle = 'grey';
+          ctxStones.fillRect(
+            x * this.cellSize + 1,
+            y * this.cellSize + 1,
+            this.cellSize - 2,
+            this.cellSize - 2,
+          );
+
+          ctxStones.fillStyle = '#000';
+          ctxStones.font = '2vmin Arial';
+          ctxStones.fillText(
+            '→',
+            x * this.cellSize + this.cellSize / 3.5,
+            y * this.cellSize + this.cellSize / 1.5
+          );
+
+          break;
+        }
+        case 7: { // Stone (down arrow)
+          this.stonePositions[y].push(currentBoardCell);
+
+          ctxStones.fillStyle = 'grey';
+          ctxStones.fillRect(
+            x * this.cellSize + 1,
+            y * this.cellSize + 1,
+            this.cellSize - 2,
+            this.cellSize - 2,
+          );
+
+          ctxStones.fillStyle = '#000';
+          ctxStones.font = '2vmin Arial';
+          ctxStones.fillText(
+            '↓',
+            x * this.cellSize + this.cellSize / 2.5,
+            y * this.cellSize + this.cellSize / 1.5
+          );
+
+          break;
+        }
+        case 8: { // Stone (left arrow)
+          this.stonePositions[y].push(currentBoardCell);
+
+          ctxStones.fillStyle = 'grey';
+          ctxStones.fillRect(
+            x * this.cellSize + 1,
+            y * this.cellSize + 1,
+            this.cellSize - 2,
+            this.cellSize - 2,
+          );
+
+          ctxStones.fillStyle = '#000';
+          ctxStones.font = '2vmin Arial';
+          ctxStones.fillText(
+            '←',
+            x * this.cellSize + this.cellSize / 3.5,
+            y * this.cellSize + this.cellSize / 1.5
+          );
+
+          break;
+        }
         default: {
           this.stonePositions[y].push(0);
 

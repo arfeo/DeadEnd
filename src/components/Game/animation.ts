@@ -208,11 +208,13 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
 
   switch (direction) {
     case 'up': {
+      const stoneType = this.stonePositions[posY - 1][posX];
       const isNextToNextCellEmpty = this.stonePositions[posY - 2][posX] === 0;
       const isNextCellWall = levels[levelIndex].boardMap[posY - 1][posX] === 3;
       const isNextToNextCellExit = levels[levelIndex].boardMap[posY - 2][posX] === 2;
+      const isMovableStone = stoneType === 4 || stoneType === 5;
 
-      if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit) {
+      if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit && isMovableStone) {
         return Promise.all([
           stoneMove.call(this, { x: posX, y: posY - 1 }, direction),
           ballMove.call(this, direction),
@@ -222,11 +224,13 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
       break;
     }
     case 'right': {
+      const stoneType = this.stonePositions[posY][posX + 1];
       const isNextToNextCellEmpty = this.stonePositions[posY][posX + 2] === 0;
       const isNextCellWall = levels[levelIndex].boardMap[posY][posX + 1] === 3;
       const isNextToNextCellExit = levels[levelIndex].boardMap[posY][posX + 2] === 2;
+      const isMovableStone = stoneType === 4 || stoneType === 6;
 
-      if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit) {
+      if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit && isMovableStone) {
         return Promise.all([
           stoneMove.call(this, { x: posX + 1, y: posY }, direction),
           ballMove.call(this, direction),
@@ -236,11 +240,13 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
       break;
     }
     case 'down': {
+      const stoneType = this.stonePositions[posY + 1][posX];
       const isNextToNextCellEmpty = this.stonePositions[posY + 2][posX] === 0;
       const isNextCellWall = levels[levelIndex].boardMap[posY + 1][posX] === 3;
       const isNextToNextCellExit = levels[levelIndex].boardMap[posY + 2][posX] === 2;
+      const isMovableStone = stoneType === 4 || stoneType === 7;
 
-      if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit) {
+      if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit && isMovableStone) {
         return Promise.all([
           stoneMove.call(this, { x: posX, y: posY + 1 }, direction),
           ballMove.call(this, direction),
@@ -250,11 +256,13 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
       break;
     }
     case 'left': {
+      const stoneType = this.stonePositions[posY][posX - 1];
       const isNextToNextCellEmpty = this.stonePositions[posY][posX - 2] === 0;
       const isNextCellWall = levels[levelIndex].boardMap[posY][posX - 1] === 3;
       const isNextToNextCellExit = levels[levelIndex].boardMap[posY][posX - 2] === 2;
+      const isMovableStone = stoneType === 4 || stoneType === 8;
 
-      if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit) {
+      if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit && isMovableStone) {
         return Promise.all([
           stoneMove.call(this, { x: posX - 1, y: posY }, direction),
           ballMove.call(this, direction),
@@ -280,8 +288,6 @@ function stoneMove(position: { x: number; y: number }, direction: string): Promi
   let stoneX: number = position.x * this.cellSize;
   let stoneY: number = position.y * this.cellSize;
   let step = 0;
-
-  ctx.fillStyle = 'grey';
 
   let moveX: number = position.x;
   let moveY: number = position.y;
@@ -317,12 +323,60 @@ function stoneMove(position: { x: number; y: number }, direction: string): Promi
       stoneY += speedCorrection * (direction === 'down' ? 1 : -1);
     }
 
+    ctx.fillStyle = 'grey';
+
     ctx.fillRect(
       stoneX + 1,
       stoneY + 1,
       this.cellSize - 2,
       this.cellSize - 2,
     );
+
+    if (stoneType !== 4) {
+      ctx.fillStyle = 'black';
+      ctx.font = '2vmin Arial';
+
+      switch (direction) {
+        case 'up': {
+          ctx.fillText(
+            '↑',
+            stoneX + this.cellSize / 2.5,
+            stoneY + this.cellSize / 1.5
+          );
+
+          break;
+        }
+        case 'right': {
+          ctx.fillText(
+            '→',
+            stoneX + this.cellSize / 3.5,
+            stoneY + this.cellSize / 1.5
+          );
+
+          break;
+        }
+        case 'down': {
+          ctx.fillText(
+            '↓',
+            stoneX + this.cellSize / 2.5,
+            stoneY + this.cellSize / 1.5
+          );
+
+          break;
+        }
+        case 'left': {
+          ctx.fillText(
+            '←',
+            stoneX + this.cellSize / 3.5,
+            stoneY + this.cellSize / 1.5
+          );
+
+          break;
+        }
+        default:
+          break;
+      }
+    }
 
     this.stoneAnimationId = requestAnimationFrame(animateStoneMove);
   };
