@@ -108,7 +108,7 @@ function renderGameBoard() {
           const innerRadius = this.cellSize / 8;
           const outerRadius = this.cellSize / 3;
 
-          const gradient=ctxCell.createRadialGradient(
+          const gradient = ctxCell.createRadialGradient(
             grdX,
             grdY,
             innerRadius,
@@ -143,6 +143,20 @@ function renderGameBoard() {
             this.cellSize,
             this.cellSize,
           );
+
+          for (let i = 1; i <= 4; i += 1) {
+            ctxCell.beginPath();
+            ctxCell.moveTo(0, i * (this.cellSize / 4));
+            ctxCell.lineTo(this.cellSize, i * (this.cellSize / 4));
+            ctxCell.stroke();
+          }
+
+          for (let i = 1; i <= 2; i += 1) {
+            ctxCell.beginPath();
+            ctxCell.moveTo(i * (this.cellSize / 2), 0);
+            ctxCell.lineTo(i * (this.cellSize / 2), this.cellSize);
+            ctxCell.stroke();
+          }
 
           break;
         }
