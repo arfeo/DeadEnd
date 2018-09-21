@@ -17,8 +17,8 @@
     background-color: $black;
 
     .-cell {
-      width: 4vmin;
-      height: 4vmin;
+      width: $cellSize;
+      height: $cellSize;
     }
 
     .-stones-canvas,
@@ -38,7 +38,7 @@
     justify-content: space-between;
     height: 10vmin;
     width: calc(100% - 8vmin);
-    padding: 0 4vmin;
+    padding: 0 $cellSize;
     background-color: $black;
     color: $white;
     font-size: $baseFontSize;
@@ -47,6 +47,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
+      flex-grow: 2;
 
       .-label {
         margin-right: 1vmin;
@@ -57,20 +58,30 @@
       }
     }
 
+    .-undo,
     .-help {
       display: flex;
       align-items: center;
       justify-content: center;
       background-color: $white;
-      width: 4vmin;
-      height: 4vmin;
+      width: $cellSize;
+      height: $cellSize;
+      margin-left: 2vmin;
       color: $black;
       cursor: pointer;
+      border-radius: 0.5vmin;
 
       &:before {
-        content: '?';
         text-align: center;
       }
+    }
+
+    .-undo:before {
+      content: '↺';
+    }
+
+    .-help:before {
+      content: '?';
     }
   }
 }

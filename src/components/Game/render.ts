@@ -19,7 +19,6 @@ function renderGameBoard() {
   const panelLevelLabel: HTMLElement = document.createElement('div');
   const panelStepsLabel: HTMLElement = document.createElement('div');
   const panelUndosLabel: HTMLElement = document.createElement('div');
-  const panelHepButton: HTMLElement = document.createElement('div');
 
   this.appRoot.innerHTML = '';
 
@@ -30,11 +29,12 @@ function renderGameBoard() {
   panelLevelLabel.className = '-label';
   panelStepsLabel.className = '-label';
   panelUndosLabel.className = '-label';
-  panelHepButton.className = '-help';
 
   this.panelLevelsValue.className = '-value';
   this.panelStepsValue.className = '-value';
   this.panelUndosValue.className = '-value';
+  this.panelUndoButton.className = '-undo';
+  this.panelHelpButton.className = '-help';
 
   panelLevelLabel.innerText = 'Level:';
   panelStepsLabel.innerText = 'Steps:';
@@ -51,7 +51,8 @@ function renderGameBoard() {
   gameBoardPanelInfo.appendChild(this.panelStepsValue);
   gameBoardPanelInfo.appendChild(panelUndosLabel);
   gameBoardPanelInfo.appendChild(this.panelUndosValue);
-  gameBoardPanel.appendChild(panelHepButton);
+  gameBoardPanel.appendChild(this.panelUndoButton);
+  gameBoardPanel.appendChild(this.panelHelpButton);
 
   this.ballCanvas = document.createElement('canvas');
   this.ballCanvas.className = '-ball-canvas';

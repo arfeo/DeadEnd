@@ -9,6 +9,8 @@ class Game {
   panelLevelsValue: HTMLElement;
   panelStepsValue: HTMLElement;
   panelUndosValue: HTMLElement;
+  panelUndoButton: HTMLElement;
+  panelHelpButton: HTMLElement;
   levelId: number;
   stepsCount: number;
   undosCount: number;
@@ -27,6 +29,8 @@ class Game {
     this.panelLevelsValue = document.createElement('div');
     this.panelStepsValue = document.createElement('div');
     this.panelUndosValue = document.createElement('div');
+    this.panelUndoButton = document.createElement('div');
+    this.panelHelpButton = document.createElement('div');
 
     this.ballCanvas = document.createElement('canvas');
     this.stonesCanvas = document.createElement('canvas');
