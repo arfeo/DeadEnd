@@ -1,5 +1,9 @@
 import { levels } from '../../constants/levels';
-import { gameColors } from '../../constants/game';
+import {
+  gameColors,
+  stoneLabels,
+  STONE_LABEL_FONT,
+} from '../../constants/game';
 
 import { levelIndexById } from './utils';
 
@@ -186,11 +190,11 @@ function renderGameBoard() {
           );
 
           ctxStones.fillStyle = gameColors.StoneLabel;
-          ctxStones.font = '2vmin Arial';
+          ctxStones.font = STONE_LABEL_FONT;
           ctxStones.fillText(
-            '↑',
-            x * this.cellSize + this.cellSize / 2.5,
-            y * this.cellSize + this.cellSize / 1.5
+            stoneLabels.Up,
+            x * this.cellSize + this.cellSize / 2.5 - 1,
+            y * this.cellSize + this.cellSize / 1.5 - 1,
           );
 
           break;
@@ -207,11 +211,11 @@ function renderGameBoard() {
           );
 
           ctxStones.fillStyle = gameColors.StoneLabel;
-          ctxStones.font = '2vmin Arial';
+          ctxStones.font = STONE_LABEL_FONT;
           ctxStones.fillText(
-            '→',
+            stoneLabels.Right,
             x * this.cellSize + this.cellSize / 3.5,
-            y * this.cellSize + this.cellSize / 1.5
+            y * this.cellSize + this.cellSize / 1.5,
           );
 
           break;
@@ -228,11 +232,11 @@ function renderGameBoard() {
           );
 
           ctxStones.fillStyle = gameColors.StoneLabel;
-          ctxStones.font = '2vmin Arial';
+          ctxStones.font = STONE_LABEL_FONT;
           ctxStones.fillText(
-            '↓',
-            x * this.cellSize + this.cellSize / 2.5,
-            y * this.cellSize + this.cellSize / 1.5
+            stoneLabels.Down,
+            x * this.cellSize + this.cellSize / 2.5 - 1,
+            y * this.cellSize + this.cellSize / 1.5 - 1,
           );
 
           break;
@@ -249,11 +253,11 @@ function renderGameBoard() {
           );
 
           ctxStones.fillStyle = gameColors.StoneLabel;
-          ctxStones.font = '2vmin Arial';
+          ctxStones.font = STONE_LABEL_FONT;
           ctxStones.fillText(
-            '←',
+            stoneLabels.Left,
             x * this.cellSize + this.cellSize / 3.5,
-            y * this.cellSize + this.cellSize / 1.5
+            y * this.cellSize + this.cellSize / 1.5,
           );
 
           break;

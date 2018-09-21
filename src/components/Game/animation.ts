@@ -3,7 +3,11 @@ import { Game } from './index';
 
 import { globals } from '../../constants/globals';
 import { levels } from '../../constants/levels';
-import { gameColors } from '../../constants/game';
+import {
+  gameColors,
+  stoneLabels,
+  STONE_LABEL_FONT,
+} from '../../constants/game';
 
 import { invertDirection, levelIndexById } from './utils';
 
@@ -335,41 +339,41 @@ function stoneMove(position: { x: number; y: number }, direction: string): Promi
 
     if (stoneType !== 4) {
       ctx.fillStyle = gameColors.StoneLabel;
-      ctx.font = '2vmin Arial';
+      ctx.font = STONE_LABEL_FONT;
 
       switch (direction) {
         case 'up': {
           ctx.fillText(
-            '↑',
-            stoneX + this.cellSize / 2.5,
-            stoneY + this.cellSize / 1.5
+            stoneLabels.Up,
+            stoneX + this.cellSize / 2.5 - 1,
+            stoneY + this.cellSize / 1.5 - 1,
           );
 
           break;
         }
         case 'right': {
           ctx.fillText(
-            '→',
+            stoneLabels.Right,
             stoneX + this.cellSize / 3.5,
-            stoneY + this.cellSize / 1.5
+            stoneY + this.cellSize / 1.5,
           );
 
           break;
         }
         case 'down': {
           ctx.fillText(
-            '↓',
-            stoneX + this.cellSize / 2.5,
-            stoneY + this.cellSize / 1.5
+            stoneLabels.Down,
+            stoneX + this.cellSize / 2.5 - 1,
+            stoneY + this.cellSize / 1.5 - 1,
           );
 
           break;
         }
         case 'left': {
           ctx.fillText(
-            '←',
+            stoneLabels.Left,
             stoneX + this.cellSize / 3.5,
-            stoneY + this.cellSize / 1.5
+            stoneY + this.cellSize / 1.5,
           );
 
           break;

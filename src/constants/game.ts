@@ -6,3 +6,12 @@ export enum gameColors {
   Stone = 'grey',
   StoneLabel = 'black',
 }
+
+export enum stoneLabels {
+  Up = '↑',
+  Right = '→',
+  Down = '↓',
+  Left = '←',
+}
+
+export const STONE_LABEL_FONT = '2vmin Helvetica, Arial';
