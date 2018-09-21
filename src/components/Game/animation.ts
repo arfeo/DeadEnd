@@ -3,11 +3,7 @@ import { Game } from './index';
 
 import { globals } from '../../constants/globals';
 import { levels } from '../../constants/levels';
-import {
-  gameColors,
-  stoneLabels,
-  STONE_LABEL_FONT,
-} from '../../constants/game';
+import { gameColors, stoneLabels, STONE_LABEL_FONT } from '../../constants/game';
 
 import { invertDirection, levelIndexById } from './utils';
 

@@ -1,11 +1,14 @@
 import { globals } from '../../constants/globals';
 
-import { renderGameBoard, resetPanelInfoValues } from './render';
+import { renderGameBoard, renderObjects, resetPanelInfoValues } from './render';
 import { keyDownHandler, removeEventHandlers, setUpEventHandlers } from './events';
 import { setCellSize } from '../../utils/common';
 
+import { IUndoMap } from '../../types/constants';
+
 class Game {
   appRoot: HTMLElement;
+  gameBoardGrid: HTMLElement;
   panelLevelsValue: HTMLElement;
   panelStepsValue: HTMLElement;
   panelUndosValue: HTMLElement;
@@ -19,6 +22,7 @@ class Game {
   cellSize: number;
   ballPosition: number[];
   stonePositions: number[][];
+  undoMap: IUndoMap[];
   ballAnimationId: number;
   isBallMoving: boolean;
   stoneAnimationId: number;
@@ -26,6 +30,7 @@ class Game {
 
   constructor(levelId = 1, stepsCount = 0, undosCount = 0) {
     this.appRoot = document.getElementById('root');
+    this.gameBoardGrid = document.createElement('div');
     this.panelLevelsValue = document.createElement('div');
     this.panelStepsValue = document.createElement('div');
     this.panelUndosValue = document.createElement('div');
@@ -43,6 +48,7 @@ class Game {
 
     this.ballPosition = [];
     this.stonePositions = [];
+    this.undoMap = [];
 
     this.isBallMoving = false;
     this.isGameOver = false;
@@ -56,6 +62,7 @@ class Game {
 
   render() {
     renderGameBoard.call(this);
+    renderObjects.call(this);
     resetPanelInfoValues.call(this);
     setUpEventHandlers.call(this);
   }

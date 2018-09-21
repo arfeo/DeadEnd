@@ -1,19 +1,13 @@
 import { levels } from '../../constants/levels';
-import {
-  gameColors,
-  stoneLabels,
-  STONE_LABEL_FONT,
-} from '../../constants/game';
+import { gameColors, stoneLabels, STONE_LABEL_FONT } from '../../constants/game';
 
 import { levelIndexById } from './utils';
 
 /**
- * Render the game board infrastructure and game objects
+ * Render the game board infrastructure
  */
 function renderGameBoard() {
-  // ----- INFRASTRUCTURE ----- //
   const gameBoard: HTMLElement = document.createElement('div');
-  const gameBoardGrid: HTMLElement = document.createElement('div');
   const gameBoardPanel: HTMLElement = document.createElement('div');
   const gameBoardPanelInfo: HTMLElement = document.createElement('div');
   const panelLevelLabel: HTMLElement = document.createElement('div');
@@ -23,7 +17,7 @@ function renderGameBoard() {
   this.appRoot.innerHTML = '';
 
   gameBoard.className = 'gameBoard';
-  gameBoardGrid.className = '-grid';
+  this.gameBoardGrid.className = '-grid';
   gameBoardPanel.className = '-panel';
   gameBoardPanelInfo.className = '-info';
   panelLevelLabel.className = '-label';
@@ -42,7 +36,7 @@ function renderGameBoard() {
 
   this.appRoot.appendChild(gameBoard);
 
-  gameBoard.appendChild(gameBoardGrid);
+  gameBoard.appendChild(this.gameBoardGrid);
   gameBoard.appendChild(gameBoardPanel);
   gameBoardPanel.appendChild(gameBoardPanelInfo);
   gameBoardPanelInfo.appendChild(panelLevelLabel);
@@ -64,10 +58,14 @@ function renderGameBoard() {
   this.stonesCanvas.width = this.cellSize * 32;
   this.stonesCanvas.height = this.cellSize * 20;
 
-  gameBoardGrid.appendChild(this.ballCanvas);
-  gameBoardGrid.appendChild(this.stonesCanvas);
+  this.gameBoardGrid.appendChild(this.ballCanvas);
+  this.gameBoardGrid.appendChild(this.stonesCanvas);
+}
 
-  // ----- OBJECTS ----- //
+/**
+ * Render game objects
+ */
+function renderObjects() {
   const ctxBall: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
   const ctxStones: CanvasRenderingContext2D = this.stonesCanvas.getContext('2d');
 
@@ -82,7 +80,7 @@ function renderGameBoard() {
       cell.width = this.cellSize;
       cell.height = this.cellSize;
 
-      gameBoardGrid.appendChild(cell);
+      this.gameBoardGrid.appendChild(cell);
 
       const ctxCell: CanvasRenderingContext2D = cell.getContext('2d');
       const currentBoardCell: number = levels[levelIndexById(this.levelId)].boardMap[y][x];
@@ -282,4 +280,4 @@ function resetPanelInfoValues() {
   this.panelUndosValue.innerText = this.undosCount.toString();
 }
 
-export { renderGameBoard, resetPanelInfoValues };
+export { renderGameBoard, renderObjects, resetPanelInfoValues };
