@@ -3,6 +3,7 @@ import { Game } from './index';
 
 import { globals } from '../../constants/globals';
 import { levels } from '../../constants/levels';
+import { gameColors } from '../../constants/game';
 
 import { invertDirection, levelIndexById } from './utils';
 
@@ -69,7 +70,7 @@ function ballMove(direction: string): Promise<void> {
   const speedCorrection = 5;
   let step = 0;
 
-  ctx.fillStyle = 'cyan';
+  ctx.fillStyle = gameColors.Ball;
 
   this.isBallMoving = true;
 
@@ -141,7 +142,7 @@ function ballHit(startDirection: string): Promise<void> {
   let direction = invertDirection(startDirection);
   let step = 0;
 
-  ctx.fillStyle = 'cyan';
+  ctx.fillStyle = gameColors.Ball;
 
   this.isBallMoving = true;
 
@@ -323,7 +324,7 @@ function stoneMove(position: { x: number; y: number }, direction: string): Promi
       stoneY += speedCorrection * (direction === 'down' ? 1 : -1);
     }
 
-    ctx.fillStyle = 'grey';
+    ctx.fillStyle = gameColors.Stone;
 
     ctx.fillRect(
       stoneX + 1,
@@ -333,7 +334,7 @@ function stoneMove(position: { x: number; y: number }, direction: string): Promi
     );
 
     if (stoneType !== 4) {
-      ctx.fillStyle = 'black';
+      ctx.fillStyle = gameColors.StoneLabel;
       ctx.font = '2vmin Arial';
 
       switch (direction) {
@@ -395,7 +396,7 @@ export function ballTransport(): Promise<void> {
   const ballY = this.ballPosition[0] * this.cellSize;
   let step = 0;
 
-  ctx.fillStyle = 'cyan';
+  ctx.fillStyle = gameColors.Ball;
 
   this.isBallMoving = true;
 

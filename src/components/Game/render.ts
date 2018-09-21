@@ -1,4 +1,5 @@
 import { levels } from '../../constants/levels';
+import { gameColors } from '../../constants/game';
 
 import { levelIndexById } from './utils';
 
@@ -86,7 +87,7 @@ function renderGameBoard() {
           this.ballPosition = [y, x];
           this.stonePositions[y].push(0);
 
-          ctxBall.fillStyle = 'cyan';
+          ctxBall.fillStyle = gameColors.Ball;
           ctxBall.beginPath();
           ctxBall.arc(
             x * this.cellSize + this.cellSize / 2,
@@ -116,8 +117,8 @@ function renderGameBoard() {
             grdY,
             outerRadius,
           );
-          gradient.addColorStop(0, 'red');
-          gradient.addColorStop(1, 'gold');
+          gradient.addColorStop(0, gameColors.ExitGradientInner);
+          gradient.addColorStop(1, gameColors.ExitGradientOuter);
 
           ctxCell.fillStyle = gradient;
           ctxCell.beginPath();
@@ -136,7 +137,7 @@ function renderGameBoard() {
         case 3: { // Wall
           this.stonePositions[y].push(currentBoardCell);
 
-          ctxCell.fillStyle = 'red';
+          ctxCell.fillStyle = gameColors.Wall;
           ctxCell.fillRect(
             0,
             0,
@@ -163,7 +164,7 @@ function renderGameBoard() {
         case 4: { // Stone (regular)
           this.stonePositions[y].push(currentBoardCell);
 
-          ctxStones.fillStyle = 'grey';
+          ctxStones.fillStyle = gameColors.Stone;
           ctxStones.fillRect(
             x * this.cellSize + 1,
             y * this.cellSize + 1,
@@ -176,7 +177,7 @@ function renderGameBoard() {
         case 5: { // Stone (up arrow)
           this.stonePositions[y].push(currentBoardCell);
 
-          ctxStones.fillStyle = 'grey';
+          ctxStones.fillStyle = gameColors.Stone;
           ctxStones.fillRect(
             x * this.cellSize + 1,
             y * this.cellSize + 1,
@@ -184,7 +185,7 @@ function renderGameBoard() {
             this.cellSize - 2,
           );
 
-          ctxStones.fillStyle = '#000';
+          ctxStones.fillStyle = gameColors.StoneLabel;
           ctxStones.font = '2vmin Arial';
           ctxStones.fillText(
             '↑',
@@ -197,7 +198,7 @@ function renderGameBoard() {
         case 6: { // Stone (right arrow)
           this.stonePositions[y].push(currentBoardCell);
 
-          ctxStones.fillStyle = 'grey';
+          ctxStones.fillStyle = gameColors.Stone;
           ctxStones.fillRect(
             x * this.cellSize + 1,
             y * this.cellSize + 1,
@@ -205,7 +206,7 @@ function renderGameBoard() {
             this.cellSize - 2,
           );
 
-          ctxStones.fillStyle = '#000';
+          ctxStones.fillStyle = gameColors.StoneLabel;
           ctxStones.font = '2vmin Arial';
           ctxStones.fillText(
             '→',
@@ -218,7 +219,7 @@ function renderGameBoard() {
         case 7: { // Stone (down arrow)
           this.stonePositions[y].push(currentBoardCell);
 
-          ctxStones.fillStyle = 'grey';
+          ctxStones.fillStyle = gameColors.Stone;
           ctxStones.fillRect(
             x * this.cellSize + 1,
             y * this.cellSize + 1,
@@ -226,7 +227,7 @@ function renderGameBoard() {
             this.cellSize - 2,
           );
 
-          ctxStones.fillStyle = '#000';
+          ctxStones.fillStyle = gameColors.StoneLabel;
           ctxStones.font = '2vmin Arial';
           ctxStones.fillText(
             '↓',
@@ -239,7 +240,7 @@ function renderGameBoard() {
         case 8: { // Stone (left arrow)
           this.stonePositions[y].push(currentBoardCell);
 
-          ctxStones.fillStyle = 'grey';
+          ctxStones.fillStyle = gameColors.Stone;
           ctxStones.fillRect(
             x * this.cellSize + 1,
             y * this.cellSize + 1,
@@ -247,7 +248,7 @@ function renderGameBoard() {
             this.cellSize - 2,
           );
 
-          ctxStones.fillStyle = '#000';
+          ctxStones.fillStyle = gameColors.StoneLabel;
           ctxStones.font = '2vmin Arial';
           ctxStones.fillText(
             '←',
