@@ -150,7 +150,7 @@ function ballHit(startDirection: string): Promise<void> {
 
     step += speedCorrection;
 
-    if (step > this.cellSize) {
+    if (step >= this.cellSize) {
       if (startDirection !== direction) {
         step = 0;
 
