@@ -28,7 +28,7 @@ class Goto extends Modal {
 
     gotoInput.className = '-input';
 
-    gotoSubmitContainer.className = '-submit-container';
+    gotoSubmitContainer.className = 'modal-submit';
 
     gotoSubmitButton.className = '-button';
     gotoSubmitButton.innerText = 'Go to';
@@ -42,7 +42,7 @@ class Goto extends Modal {
     gotoInput.focus();
 
     gotoSubmitButton.addEventListener('click', () => {
-      const inputValue = gotoInput.value;
+      const inputValue: string = gotoInput.value;
 
       if (isEmpty(inputValue)) {
         alert('Enter level #');

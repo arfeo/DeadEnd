@@ -52,6 +52,17 @@
 
       .modal {
         padding-right: 2vmin;
+
+        .modal-submit {
+          display: flex;
+          justify-content: center;
+          margin-top: 2vmin;
+
+          .-button {
+            font-size: $modalFontSize;
+            margin: 0 1vmin;
+          }
+        }
       }
     }
   }

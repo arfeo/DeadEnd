@@ -2,6 +2,7 @@
 import { cloneDeep } from 'lodash';
 
 import { Game } from './index';
+import { GameOver } from '../GameOver';
 
 import { globals } from '../../constants/globals';
 import { levels } from '../../constants/levels';
@@ -434,7 +435,7 @@ export function ballTransport(): Promise<void> {
 
         globals.pageInstance = new Game(this.levelId + 1);
       } else {
-        alert('Game over');
+        new GameOver(this);
 
         this.isGameOver = true;
       }
