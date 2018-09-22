@@ -1,0 +1,28 @@
+@import 'variables';
+
+.goto-form {
+  .-input-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .-label {
+      margin-right: 2vmin;
+    }
+
+    .-input {
+      width: 100%;
+      font-size: $modalFontSize;
+    }
+  }
+
+  .-submit-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2vmin;
+
+    .-button {
+      font-size: $modalFontSize;
+    }
+  }
+}
