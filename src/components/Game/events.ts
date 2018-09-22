@@ -1,5 +1,7 @@
 import { cloneDeep, isArray } from 'lodash';
 
+import { Goto } from '../Goto';
+
 import { globals } from '../../constants/globals';
 
 import { ballMove } from './animation';
@@ -10,6 +12,7 @@ import { renderGameObjects, resetPanelInfoValues } from './render';
  */
 function setUpEventHandlers() {
   document.body.addEventListener('keydown', globals.eventListeners.onKeyDown);
+  this.panelGotoButton.addEventListener('click', globals.eventListeners.onGotoButtonClick);
   this.panelUndoButton.addEventListener('click', globals.eventListeners.onUndoButtonClick);
 }
 
@@ -18,6 +21,7 @@ function setUpEventHandlers() {
  */
 function removeEventHandlers() {
   document.body.removeEventListener('keydown', globals.eventListeners.onKeyDown);
+  this.panelGotoButton.removeEventListener('click', globals.eventListeners.onGotoButtonClick);
   this.panelUndoButton.removeEventListener('click', globals.eventListeners.onUndoButtonClick);
 }
 
@@ -67,6 +71,15 @@ function keyDownHandler(event: KeyboardEvent) {
 }
 
 /**
+ * Go to level button click handler
+ */
+function gotoButtonClickHandler() {
+  removeEventHandlers.call(this);
+
+  new Goto(this);
+}
+
+/**
  * Undo button click handler
  */
 function undoButtonClickHandler() {
@@ -84,8 +97,9 @@ function undoButtonClickHandler() {
 }
 
 export {
-  setUpEventHandlers,
-  removeEventHandlers,
+  gotoButtonClickHandler,
   keyDownHandler,
+  removeEventHandlers,
+  setUpEventHandlers,
   undoButtonClickHandler,
-};
+}

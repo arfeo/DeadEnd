@@ -4,6 +4,7 @@ export interface IGlobals {
   pageInstance: Game;
   eventListeners: {
     onKeyDown: EventListener;
+    onGotoButtonClick: EventListener;
     onUndoButtonClick: EventListener;
   };
   cellSize: number;

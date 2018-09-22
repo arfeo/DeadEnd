@@ -1,7 +1,13 @@
 import { globals } from '../../constants/globals';
 
 import { renderGameBoard, renderGameObjects, resetPanelInfoValues } from './render';
-import { keyDownHandler, removeEventHandlers, setUpEventHandlers, undoButtonClickHandler } from './events';
+import {
+  gotoButtonClickHandler,
+  keyDownHandler,
+  removeEventHandlers,
+  setUpEventHandlers,
+  undoButtonClickHandler,
+} from './events';
 import { setCellSize } from '../../utils/common';
 
 class Game {
@@ -57,6 +63,7 @@ class Game {
 
     globals.eventListeners = {
       onKeyDown: keyDownHandler.bind(this),
+      onGotoButtonClick: gotoButtonClickHandler.bind(this),
       onUndoButtonClick: undoButtonClickHandler.bind(this),
     };
 
