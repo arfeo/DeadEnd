@@ -16,11 +16,6 @@
     height: 80vmin;
     background-color: $black;
 
-    .-cell {
-      width: $cellSize;
-      height: $cellSize;
-    }
-
     .-static-canvas,
     .-stones-canvas,
     .-ball-canvas {
@@ -59,6 +54,7 @@
       }
     }
 
+    .-goto,
     .-undo,
     .-help {
       display: flex;
@@ -77,8 +73,22 @@
       }
     }
 
-    .-undo:before {
-      content: '↺';
+    .-goto {
+      width: auto;
+      padding: 0 2vmin;
+
+      &:before {
+        content: 'Go to...';
+      }
+    }
+
+    .-undo {
+      width: auto;
+      padding: 0 2vmin;
+
+      &:before {
+        content: 'Undo';
+      }
     }
 
     .-help:before {

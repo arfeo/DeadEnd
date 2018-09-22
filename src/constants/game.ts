@@ -14,4 +14,9 @@ export enum stoneLabels {
   Left = '←',
 }
 
+export enum gridDimensions {
+  Width = 32,
+  Height = 20,
+}
+
 export const STONE_LABEL_FONT = '2vmin Helvetica, Arial';

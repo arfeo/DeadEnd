@@ -2,7 +2,7 @@
 import { isEmpty } from 'lodash';
 
 import { levels } from '../../constants/levels';
-import { gameColors, stoneLabels, STONE_LABEL_FONT } from '../../constants/game';
+import { gameColors, stoneLabels, gridDimensions, STONE_LABEL_FONT } from '../../constants/game';
 
 import { levelIndexById } from './utils';
 
@@ -30,6 +30,7 @@ function renderGameBoard() {
   this.panelLevelsValue.className = '-value';
   this.panelStepsValue.className = '-value';
   this.panelUndosValue.className = '-value';
+  this.panelGotoButton.className = '-goto';
   this.panelUndoButton.className = '-undo';
   this.panelHelpButton.className = '-help';
 
@@ -48,23 +49,24 @@ function renderGameBoard() {
   gameBoardPanelInfo.appendChild(this.panelStepsValue);
   gameBoardPanelInfo.appendChild(panelUndosLabel);
   gameBoardPanelInfo.appendChild(this.panelUndosValue);
+  gameBoardPanel.appendChild(this.panelGotoButton);
   gameBoardPanel.appendChild(this.panelUndoButton);
   gameBoardPanel.appendChild(this.panelHelpButton);
 
   this.staticCanvas = document.createElement('canvas');
   this.staticCanvas.className = '-static-canvas';
-  this.staticCanvas.width = this.cellSize * 32;
-  this.staticCanvas.height = this.cellSize * 20;
+  this.staticCanvas.width = this.cellSize * gridDimensions.Width;
+  this.staticCanvas.height = this.cellSize * gridDimensions.Height;
 
   this.ballCanvas = document.createElement('canvas');
   this.ballCanvas.className = '-ball-canvas';
-  this.ballCanvas.width = this.cellSize * 32;
-  this.ballCanvas.height = this.cellSize * 20;
+  this.ballCanvas.width = this.cellSize * gridDimensions.Width;
+  this.ballCanvas.height = this.cellSize * gridDimensions.Height;
 
   this.stonesCanvas = document.createElement('canvas');
   this.stonesCanvas.className = '-stones-canvas';
-  this.stonesCanvas.width = this.cellSize * 32;
-  this.stonesCanvas.height = this.cellSize * 20;
+  this.stonesCanvas.width = this.cellSize * gridDimensions.Width;
+  this.stonesCanvas.height = this.cellSize * gridDimensions.Height;
 
   this.gameBoardGrid.appendChild(this.staticCanvas);
   this.gameBoardGrid.appendChild(this.ballCanvas);
@@ -83,13 +85,29 @@ function renderGameObjects(gameObjects: number[][] = []) {
   const ctxBall: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
   const ctxStones: CanvasRenderingContext2D = this.stonesCanvas.getContext('2d');
 
-  ctxBall.clearRect(0, 0, this.cellSize * 32, this.cellSize * 20);
-  ctxStones.clearRect(0, 0, this.cellSize * 32, this.cellSize * 20);
+  ctxStatic.clearRect(
+    0,
+    0,
+    this.cellSize * gridDimensions.Width,
+    this.cellSize * gridDimensions.Height,
+  );
+  ctxBall.clearRect(
+    0,
+    0,
+    this.cellSize * gridDimensions.Width,
+    this.cellSize * gridDimensions.Height,
+  );
+  ctxStones.clearRect(
+    0,
+    0,
+    this.cellSize * gridDimensions.Width,
+    this.cellSize * gridDimensions.Height,
+  );
 
-  for (let y = 0; y < 20; y += 1) {
+  for (let y = 0; y < gridDimensions.Height; y += 1) {
     this.stonePositions[y] = [];
 
-    for (let x = 0; x < 32; x += 1) {
+    for (let x = 0; x < gridDimensions.Width; x += 1) {
       const currentBoardCell: number = boardMap[y][x];
 
       switch (currentBoardCell) {
