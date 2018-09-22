@@ -7,7 +7,7 @@ import { findIndex } from 'lodash';
  *
  * @param direction
  */
-export const invertDirection = (direction: string): string => {
+function invertDirection(direction: string): string {
   switch (direction) {
     case 'up': return 'down';
     case 'right': return 'left';
@@ -15,13 +15,15 @@ export const invertDirection = (direction: string): string => {
     case 'left': return 'right';
     default: return null as string;
   }
-};
+}
 
 /**
  * Get level object index by id key
  *
  * @param levelId
  */
-export const levelIndexById = (levelId: number): number => {
+function levelIndexById(levelId: number): number {
   return findIndex(levels, { id: levelId });
-};
+}
+
+export { invertDirection, levelIndexById };

@@ -1,4 +1,6 @@
 // tslint:disable:max-file-line-count
+import { cloneDeep } from 'lodash';
+
 import { Game } from './index';
 
 import { globals } from '../../constants/globals';
@@ -20,7 +22,9 @@ function ballMove(direction: string): Promise<void> {
 
   switch (direction) {
     case 'up': {
-      if (this.stonePositions[ballPosY - 1][ballPosX] !== 0) {
+      const nextCell = this.stonePositions[ballPosY - 1][ballPosX];
+
+      if (nextCell !== 0 && nextCell !== 2) {
         if (this.stonePositions[ballPosY + 1][ballPosX] !== 0) {
           return Promise.reject();
         }
@@ -31,7 +35,9 @@ function ballMove(direction: string): Promise<void> {
       break;
     }
     case 'right': {
-      if (this.stonePositions[ballPosY][ballPosX + 1] !== 0) {
+      const nextCell = this.stonePositions[ballPosY][ballPosX + 1];
+
+      if (nextCell !== 0 && nextCell !== 2) {
         if (this.stonePositions[ballPosY][ballPosX - 1] !== 0) {
           return Promise.reject();
         }
@@ -42,7 +48,9 @@ function ballMove(direction: string): Promise<void> {
       break;
     }
     case 'down': {
-      if (this.stonePositions[ballPosY + 1][ballPosX] !== 0) {
+      const nextCell = this.stonePositions[ballPosY + 1][ballPosX];
+
+      if (nextCell !== 0 && nextCell !== 2) {
         if (this.stonePositions[ballPosY - 1][ballPosX] !== 0) {
           return Promise.reject();
         }
@@ -53,7 +61,9 @@ function ballMove(direction: string): Promise<void> {
       break;
     }
     case 'left': {
-      if (this.stonePositions[ballPosY][ballPosX - 1] !== 0) {
+      const nextCell = this.stonePositions[ballPosY][ballPosX - 1];
+
+      if (nextCell !== 0 && nextCell !== 2) {
         if (this.stonePositions[ballPosY][ballPosX + 1] !== 0) {
           return Promise.reject();
         }
@@ -204,7 +214,7 @@ function ballHit(startDirection: string): Promise<void> {
  * @param posY
  * @param direction
  */
-function testStoneMove(posX: number, posY: number, direction: string): Promise<any[]> {
+function testStoneMove(posX: number, posY: number, direction: string): Promise<Array<Promise<void>>> {
   const levelIndex = levelIndexById(this.levelId);
 
   switch (direction) {
@@ -272,7 +282,7 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
 
       break;
     }
-    default: return null as Promise<any[]>;
+    default: return null as Promise<Array<Promise<void>>>;
   }
 }
 
@@ -282,16 +292,25 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<a
  * @param position
  * @param direction
  */
-function stoneMove(position: { x: number; y: number }, direction: string): Promise<void> {
+async function stoneMove(position: { x: number; y: number }, direction: string): Promise<void> {
   const ctx: CanvasRenderingContext2D = this.stonesCanvas.getContext('2d');
   const stoneType: number = this.stonePositions[position.y][position.x];
   const speedCorrection = 5;
+  let step = 0;
+
   let stoneX: number = position.x * this.cellSize;
   let stoneY: number = position.y * this.cellSize;
-  let step = 0;
 
   let moveX: number = position.x;
   let moveY: number = position.y;
+
+  const undoHistoryItem = cloneDeep(this.stonePositions);
+  const ballX = this.ballPosition[1];
+  const ballY = this.ballPosition[0];
+
+  undoHistoryItem[ballY][ballX] = 1;
+
+  this.undoHistoryMap.push(undoHistoryItem);
 
   if (direction === 'right' || direction === 'left') {
     moveX += direction === 'right' ? 1 : -1;

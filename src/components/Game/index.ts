@@ -1,10 +1,8 @@
 import { globals } from '../../constants/globals';
 
-import { renderGameBoard, renderObjects, resetPanelInfoValues } from './render';
-import { keyDownHandler, removeEventHandlers, setUpEventHandlers } from './events';
+import { renderGameBoard, renderGameObjects, resetPanelInfoValues } from './render';
+import { keyDownHandler, removeEventHandlers, setUpEventHandlers, undoButtonClickHandler } from './events';
 import { setCellSize } from '../../utils/common';
-
-import { IUndoMap } from '../../types/constants';
 
 class Game {
   appRoot: HTMLElement;
@@ -17,12 +15,13 @@ class Game {
   levelId: number;
   stepsCount: number;
   undosCount: number;
+  staticCanvas: HTMLCanvasElement;
   ballCanvas: HTMLCanvasElement;
   stonesCanvas: HTMLCanvasElement;
   cellSize: number;
   ballPosition: number[];
   stonePositions: number[][];
-  undoMap: IUndoMap[];
+  undoHistoryMap: Array<number[][]>;
   ballAnimationId: number;
   isBallMoving: boolean;
   stoneAnimationId: number;
@@ -37,6 +36,7 @@ class Game {
     this.panelUndoButton = document.createElement('div');
     this.panelHelpButton = document.createElement('div');
 
+    this.staticCanvas = document.createElement('canvas');
     this.ballCanvas = document.createElement('canvas');
     this.stonesCanvas = document.createElement('canvas');
 
@@ -48,13 +48,14 @@ class Game {
 
     this.ballPosition = [];
     this.stonePositions = [];
-    this.undoMap = [];
+    this.undoHistoryMap = [];
 
     this.isBallMoving = false;
     this.isGameOver = false;
 
     globals.eventListeners = {
-      keyDown: keyDownHandler.bind(this),
+      onKeyDown: keyDownHandler.bind(this),
+      onUndoButtonClick: undoButtonClickHandler.bind(this),
     };
 
     this.render();
@@ -62,7 +63,7 @@ class Game {
 
   render() {
     renderGameBoard.call(this);
-    renderObjects.call(this);
+    renderGameObjects.call(this);
     resetPanelInfoValues.call(this);
     setUpEventHandlers.call(this);
   }

@@ -1,3 +1,6 @@
+// tslint:disable:max-file-line-count
+import { isEmpty } from 'lodash';
+
 import { levels } from '../../constants/levels';
 import { gameColors, stoneLabels, STONE_LABEL_FONT } from '../../constants/game';
 
@@ -48,6 +51,11 @@ function renderGameBoard() {
   gameBoardPanel.appendChild(this.panelUndoButton);
   gameBoardPanel.appendChild(this.panelHelpButton);
 
+  this.staticCanvas = document.createElement('canvas');
+  this.staticCanvas.className = '-static-canvas';
+  this.staticCanvas.width = this.cellSize * 32;
+  this.staticCanvas.height = this.cellSize * 20;
+
   this.ballCanvas = document.createElement('canvas');
   this.ballCanvas.className = '-ball-canvas';
   this.ballCanvas.width = this.cellSize * 32;
@@ -58,32 +66,31 @@ function renderGameBoard() {
   this.stonesCanvas.width = this.cellSize * 32;
   this.stonesCanvas.height = this.cellSize * 20;
 
+  this.gameBoardGrid.appendChild(this.staticCanvas);
   this.gameBoardGrid.appendChild(this.ballCanvas);
   this.gameBoardGrid.appendChild(this.stonesCanvas);
 }
 
 /**
  * Render game objects
+ *
+ * @param gameObjects
  */
-function renderObjects() {
+function renderGameObjects(gameObjects: number[][] = []) {
+  const boardMap = !isEmpty(gameObjects) ? gameObjects : levels[levelIndexById(this.levelId)].boardMap;
+
+  const ctxStatic: CanvasRenderingContext2D = this.staticCanvas.getContext('2d');
   const ctxBall: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
   const ctxStones: CanvasRenderingContext2D = this.stonesCanvas.getContext('2d');
+
+  ctxBall.clearRect(0, 0, this.cellSize * 32, this.cellSize * 20);
+  ctxStones.clearRect(0, 0, this.cellSize * 32, this.cellSize * 20);
 
   for (let y = 0; y < 20; y += 1) {
     this.stonePositions[y] = [];
 
     for (let x = 0; x < 32; x += 1) {
-      const cell: HTMLCanvasElement = document.createElement('canvas');
-
-      cell.id = `cell-${y}-${x}`;
-      cell.className = '-cell';
-      cell.width = this.cellSize;
-      cell.height = this.cellSize;
-
-      this.gameBoardGrid.appendChild(cell);
-
-      const ctxCell: CanvasRenderingContext2D = cell.getContext('2d');
-      const currentBoardCell: number = levels[levelIndexById(this.levelId)].boardMap[y][x];
+      const currentBoardCell: number = boardMap[y][x];
 
       switch (currentBoardCell) {
         case 1: { // Ball
@@ -105,14 +112,14 @@ function renderObjects() {
           break;
         }
         case 2: { // Exit
-          this.stonePositions[y].push(0);
+          this.stonePositions[y].push(currentBoardCell);
 
-          const grdX = this.cellSize / 2;
-          const grdY = this.cellSize / 2;
+          const grdX = x * this.cellSize + this.cellSize / 2;
+          const grdY = y * this.cellSize + this.cellSize / 2;
           const innerRadius = this.cellSize / 8;
           const outerRadius = this.cellSize / 3;
 
-          const gradient = ctxCell.createRadialGradient(
+          const gradient = ctxStatic.createRadialGradient(
             grdX,
             grdY,
             innerRadius,
@@ -123,43 +130,55 @@ function renderObjects() {
           gradient.addColorStop(0, gameColors.ExitGradientInner);
           gradient.addColorStop(1, gameColors.ExitGradientOuter);
 
-          ctxCell.fillStyle = gradient;
-          ctxCell.beginPath();
-          ctxCell.arc(
-            this.cellSize / 2,
-            this.cellSize / 2,
+          ctxStatic.fillStyle = gradient;
+          ctxStatic.beginPath();
+          ctxStatic.arc(
+            x * this.cellSize + this.cellSize / 2,
+            y * this.cellSize + this.cellSize / 2,
             this.cellSize / 2.5,
             0,
             Math.PI * 2,
             false,
           );
-          ctxCell.fill();
+          ctxStatic.fill();
 
           break;
         }
         case 3: { // Wall
           this.stonePositions[y].push(currentBoardCell);
 
-          ctxCell.fillStyle = gameColors.Wall;
-          ctxCell.fillRect(
-            0,
-            0,
+          ctxStatic.fillStyle = gameColors.Wall;
+          ctxStatic.fillRect(
+            x * this.cellSize,
+            y * this.cellSize,
             this.cellSize,
             this.cellSize,
           );
 
           for (let i = 1; i <= 4; i += 1) {
-            ctxCell.beginPath();
-            ctxCell.moveTo(0, i * (this.cellSize / 4));
-            ctxCell.lineTo(this.cellSize, i * (this.cellSize / 4));
-            ctxCell.stroke();
+            ctxStatic.beginPath();
+            ctxStatic.moveTo(
+              x * this.cellSize,
+              y * this.cellSize + i * (this.cellSize / 4),
+            );
+            ctxStatic.lineTo(
+              x * this.cellSize + this.cellSize,
+              y * this.cellSize + i * (this.cellSize / 4),
+            );
+            ctxStatic.stroke();
           }
 
           for (let i = 1; i <= 2; i += 1) {
-            ctxCell.beginPath();
-            ctxCell.moveTo(i * (this.cellSize / 2), 0);
-            ctxCell.lineTo(i * (this.cellSize / 2), this.cellSize);
-            ctxCell.stroke();
+            ctxStatic.beginPath();
+            ctxStatic.moveTo(
+              x * this.cellSize + i * (this.cellSize / 2),
+              y * this.cellSize,
+            );
+            ctxStatic.lineTo(
+              x * this.cellSize + i * (this.cellSize / 2),
+              y * this.cellSize + this.cellSize,
+            );
+            ctxStatic.stroke();
           }
 
           break;
@@ -280,4 +299,4 @@ function resetPanelInfoValues() {
   this.panelUndosValue.innerText = this.undosCount.toString();
 }
 
-export { renderGameBoard, renderObjects, resetPanelInfoValues };
+export { renderGameBoard, renderGameObjects, resetPanelInfoValues };
