@@ -77,6 +77,7 @@ function undoButtonClickHandler() {
 
     this.undoHistoryMap.pop();
     this.undosCount += 1;
+    this.isGameOver = false;
 
     resetPanelInfoValues.call(this);
   }
