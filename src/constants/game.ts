@@ -1,5 +1,6 @@
 export enum gameColors {
-  Ball = 'cyan',
+  BallGradientInner = 'deepskyblue',
+  BallGradientOuter = 'royalblue',
   ExitGradientInner = 'red',
   ExitGradientOuter = 'gold',
   Wall = 'red',

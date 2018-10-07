@@ -9,6 +9,7 @@ import { levels } from '../../constants/levels';
 import { gameColors, stoneLabels, STONE_LABEL_FONT } from '../../constants/game';
 
 import { invertDirection, levelIndexById } from './utils';
+import { renderBall } from './render';
 
 /**
  * Animate the ball move
@@ -81,8 +82,6 @@ function ballMove(direction: string): Promise<void> {
   const speedCorrection = 5;
   let step = 0;
 
-  ctx.fillStyle = gameColors.Ball;
-
   this.isBallMoving = true;
 
   const animateBallMove = (): Promise<void> => {
@@ -119,16 +118,7 @@ function ballMove(direction: string): Promise<void> {
       ballY += speedCorrection * (direction === 'down' ? 1 : -1);
     }
 
-    ctx.beginPath();
-    ctx.arc(
-      ballX + this.cellSize / 2,
-      ballY + this.cellSize / 2,
-      this.cellSize / 2.5,
-      0,
-      Math.PI * 2,
-      false,
-    );
-    ctx.fill();
+    renderBall.call(this, ctx, ballX, ballY);
 
     this.ballAnimationId = requestAnimationFrame(animateBallMove);
   };
@@ -152,8 +142,6 @@ function ballHit(startDirection: string): Promise<void> {
   const ctx: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
   let direction = invertDirection(startDirection);
   let step = 0;
-
-  ctx.fillStyle = gameColors.Ball;
 
   this.isBallMoving = true;
 
@@ -189,16 +177,7 @@ function ballHit(startDirection: string): Promise<void> {
       ballY += speedCorrection * (direction === 'down' ? 1 : -1);
     }
 
-    ctx.beginPath();
-    ctx.arc(
-      ballX + this.cellSize / 2,
-      ballY + this.cellSize / 2,
-      this.cellSize / 2.5,
-      0,
-      Math.PI * 2,
-      false,
-    );
-    ctx.fill();
+    renderBall.call(this, ctx, ballX, ballY);
 
     this.ballAnimationId = requestAnimationFrame(animateBallHit);
   };
@@ -416,8 +395,6 @@ export function ballTransport(): Promise<void> {
   const ballY = this.ballPosition[0] * this.cellSize;
   let step = 0;
 
-  ctx.fillStyle = gameColors.Ball;
-
   this.isBallMoving = true;
 
   const animateBallTransport = (): Promise<void> => {
@@ -450,16 +427,7 @@ export function ballTransport(): Promise<void> {
       this.cellSize * 3,
     );
 
-    ctx.beginPath();
-    ctx.arc(
-      ballX + this.cellSize / 2,
-      ballY + this.cellSize / 2,
-      initialRadius - step,
-      0,
-      Math.PI * 2,
-      false,
-    );
-    ctx.fill();
+    renderBall.call(this, ctx, ballX, ballY, initialRadius - step);
 
     this.ballAnimationId = requestAnimationFrame(animateBallTransport);
   };

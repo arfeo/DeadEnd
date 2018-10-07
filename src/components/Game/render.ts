@@ -115,17 +115,7 @@ function renderGameObjects(gameObjects: number[][] = []) {
           this.ballPosition = [y, x];
           this.stonePositions[y].push(0);
 
-          ctxBall.fillStyle = gameColors.Ball;
-          ctxBall.beginPath();
-          ctxBall.arc(
-            x * this.cellSize + this.cellSize / 2,
-            y * this.cellSize + this.cellSize / 2,
-            this.cellSize / 2.5,
-            0,
-            Math.PI * 2,
-            false,
-          );
-          ctxBall.fill();
+          renderBall.call(this, ctxBall, x * this.cellSize, y * this.cellSize);
 
           break;
         }
@@ -309,6 +299,45 @@ function renderGameObjects(gameObjects: number[][] = []) {
 }
 
 /**
+ * Render the Ball
+ *
+ * @param ctx
+ * @param x
+ * @param y
+ * @param radius
+ */
+function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?: number) {
+  const grdX = x + this.cellSize / 2;
+  const grdY = y + this.cellSize / 2;
+  const innerRadius = this.cellSize / 6;
+  const outerRadius = this.cellSize / 3;
+
+  const gradient = ctx.createRadialGradient(
+    grdX,
+    grdY,
+    innerRadius,
+    grdX,
+    grdY,
+    outerRadius,
+  );
+  gradient.addColorStop(0, gameColors.BallGradientInner);
+  gradient.addColorStop(1, gameColors.BallGradientOuter);
+
+  ctx.fillStyle = gradient;
+
+  ctx.beginPath();
+  ctx.arc(
+    x + this.cellSize / 2,
+    y + this.cellSize / 2,
+    radius || this.cellSize / 2.5,
+    0,
+    Math.PI * 2,
+    false,
+  );
+  ctx.fill();
+}
+
+/**
  * Set panel info values (level, steps, undos)
  */
 function resetPanelInfoValues() {
@@ -317,4 +346,9 @@ function resetPanelInfoValues() {
   this.panelUndosValue.innerText = this.undosCount.toString();
 }
 
-export { renderGameBoard, renderGameObjects, resetPanelInfoValues };
+export {
+  renderGameBoard,
+  renderGameObjects,
+  resetPanelInfoValues,
+  renderBall,
+};
