@@ -1,4 +1,4 @@
-export enum gameColors {
+export enum GameColors {
   BallGradientInner = 'deepskyblue',
   BallGradientOuter = 'royalblue',
   ExitGradientInner = 'red',
@@ -8,14 +8,14 @@ export enum gameColors {
   StoneLabel = 'black',
 }
 
-export enum stoneLabels {
+export enum StoneLabels {
   Up = '↑',
   Right = '→',
   Down = '↓',
   Left = '←',
 }
 
-export enum gridDimensions {
+export enum GridDimensions {
   Width = 32,
   Height = 20,
 }

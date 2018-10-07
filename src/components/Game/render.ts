@@ -2,7 +2,7 @@
 import { isEmpty } from 'lodash';
 
 import { levels } from '../../constants/levels';
-import { gameColors, stoneLabels, gridDimensions, STONE_LABEL_FONT } from '../../constants/game';
+import { GameColors, StoneLabels, GridDimensions, STONE_LABEL_FONT } from '../../constants/game';
 
 import { levelIndexById } from './utils';
 
@@ -55,18 +55,18 @@ function renderGameBoard() {
 
   this.staticCanvas = document.createElement('canvas');
   this.staticCanvas.className = '-static-canvas';
-  this.staticCanvas.width = this.cellSize * gridDimensions.Width;
-  this.staticCanvas.height = this.cellSize * gridDimensions.Height;
+  this.staticCanvas.width = this.cellSize * GridDimensions.Width;
+  this.staticCanvas.height = this.cellSize * GridDimensions.Height;
 
   this.ballCanvas = document.createElement('canvas');
   this.ballCanvas.className = '-ball-canvas';
-  this.ballCanvas.width = this.cellSize * gridDimensions.Width;
-  this.ballCanvas.height = this.cellSize * gridDimensions.Height;
+  this.ballCanvas.width = this.cellSize * GridDimensions.Width;
+  this.ballCanvas.height = this.cellSize * GridDimensions.Height;
 
   this.stonesCanvas = document.createElement('canvas');
   this.stonesCanvas.className = '-stones-canvas';
-  this.stonesCanvas.width = this.cellSize * gridDimensions.Width;
-  this.stonesCanvas.height = this.cellSize * gridDimensions.Height;
+  this.stonesCanvas.width = this.cellSize * GridDimensions.Width;
+  this.stonesCanvas.height = this.cellSize * GridDimensions.Height;
 
   this.gameBoardGrid.appendChild(this.staticCanvas);
   this.gameBoardGrid.appendChild(this.ballCanvas);
@@ -88,26 +88,26 @@ function renderGameObjects(gameObjects: number[][] = []) {
   ctxStatic.clearRect(
     0,
     0,
-    this.cellSize * gridDimensions.Width,
-    this.cellSize * gridDimensions.Height,
+    this.cellSize * GridDimensions.Width,
+    this.cellSize * GridDimensions.Height,
   );
   ctxBall.clearRect(
     0,
     0,
-    this.cellSize * gridDimensions.Width,
-    this.cellSize * gridDimensions.Height,
+    this.cellSize * GridDimensions.Width,
+    this.cellSize * GridDimensions.Height,
   );
   ctxStones.clearRect(
     0,
     0,
-    this.cellSize * gridDimensions.Width,
-    this.cellSize * gridDimensions.Height,
+    this.cellSize * GridDimensions.Width,
+    this.cellSize * GridDimensions.Height,
   );
 
-  for (let y = 0; y < gridDimensions.Height; y += 1) {
+  for (let y = 0; y < GridDimensions.Height; y += 1) {
     this.stonePositions[y] = [];
 
-    for (let x = 0; x < gridDimensions.Width; x += 1) {
+    for (let x = 0; x < GridDimensions.Width; x += 1) {
       const currentBoardCell: number = boardMap[y][x];
 
       switch (currentBoardCell) {
@@ -135,8 +135,8 @@ function renderGameObjects(gameObjects: number[][] = []) {
             grdY,
             outerRadius,
           );
-          gradient.addColorStop(0, gameColors.ExitGradientInner);
-          gradient.addColorStop(1, gameColors.ExitGradientOuter);
+          gradient.addColorStop(0, GameColors.ExitGradientInner);
+          gradient.addColorStop(1, GameColors.ExitGradientOuter);
 
           ctxStatic.fillStyle = gradient;
           ctxStatic.beginPath();
@@ -155,7 +155,7 @@ function renderGameObjects(gameObjects: number[][] = []) {
         case 3: { // Wall
           this.stonePositions[y].push(currentBoardCell);
 
-          ctxStatic.fillStyle = gameColors.Wall;
+          ctxStatic.fillStyle = GameColors.Wall;
           ctxStatic.fillRect(
             x * this.cellSize,
             y * this.cellSize,
@@ -254,8 +254,8 @@ function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?
     grdY,
     outerRadius,
   );
-  gradient.addColorStop(0, gameColors.BallGradientInner);
-  gradient.addColorStop(1, gameColors.BallGradientOuter);
+  gradient.addColorStop(0, GameColors.BallGradientInner);
+  gradient.addColorStop(1, GameColors.BallGradientOuter);
 
   ctx.fillStyle = gradient;
 
@@ -280,7 +280,7 @@ function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?
  * @param direction
  */
 function renderStone(ctx: CanvasRenderingContext2D, x: number, y: number, direction?: string) {
-  ctx.fillStyle = gameColors.Stone;
+  ctx.fillStyle = GameColors.Stone;
 
   ctx.fillRect(
     x + 1,
@@ -290,11 +290,11 @@ function renderStone(ctx: CanvasRenderingContext2D, x: number, y: number, direct
   );
 
   if (direction) {
-    ctx.fillStyle = gameColors.StoneLabel;
+    ctx.fillStyle = GameColors.StoneLabel;
     ctx.font = STONE_LABEL_FONT;
 
     ctx.fillText(
-      stoneLabels[direction.charAt(0).toUpperCase() + direction.substr(1) as any],
+      StoneLabels[direction.charAt(0).toUpperCase() + direction.substr(1) as any],
       x + this.cellSize / (direction === 'up' || direction === 'down' ? 2.5 : 3.5),
       y + this.cellSize / 1.5,
     );
