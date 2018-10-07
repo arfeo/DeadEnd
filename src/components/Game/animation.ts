@@ -9,7 +9,7 @@ import { levels } from '../../constants/levels';
 import { gameColors, stoneLabels, STONE_LABEL_FONT } from '../../constants/game';
 
 import { invertDirection, levelIndexById } from './utils';
-import { renderBall } from './render';
+import { renderBall, renderStone } from './render';
 
 /**
  * Animate the ball move
@@ -309,14 +309,7 @@ async function stoneMove(position: { x: number; y: number }, direction: string):
       stoneY += speedCorrection * (direction === 'down' ? 1 : -1);
     }
 
-    ctx.fillStyle = gameColors.Stone;
-
-    ctx.fillRect(
-      stoneX + 1,
-      stoneY + 1,
-      this.cellSize - 2,
-      this.cellSize - 2,
-    );
+    renderStone.call(this, ctx, stoneX, stoneY);
 
     if (stoneType !== 4) {
       ctx.fillStyle = gameColors.StoneLabel;
@@ -326,8 +319,8 @@ async function stoneMove(position: { x: number; y: number }, direction: string):
         case 'up': {
           ctx.fillText(
             stoneLabels.Up,
-            stoneX + this.cellSize / 2.5 - 1,
-            stoneY + this.cellSize / 1.5 - 1,
+            stoneX + this.cellSize / 2.5,
+            stoneY + this.cellSize / 1.5,
           );
 
           break;
@@ -344,8 +337,8 @@ async function stoneMove(position: { x: number; y: number }, direction: string):
         case 'down': {
           ctx.fillText(
             stoneLabels.Down,
-            stoneX + this.cellSize / 2.5 - 1,
-            stoneY + this.cellSize / 1.5 - 1,
+            stoneX + this.cellSize / 2.5,
+            stoneY + this.cellSize / 1.5,
           );
 
           break;
@@ -359,8 +352,7 @@ async function stoneMove(position: { x: number; y: number }, direction: string):
 
           break;
         }
-        default:
-          break;
+        default: break;
       }
     }
 

@@ -193,104 +193,31 @@ function renderGameObjects(gameObjects: number[][] = []) {
         }
         case 4: { // Stone (regular)
           this.stonePositions[y].push(currentBoardCell);
-
-          ctxStones.fillStyle = gameColors.Stone;
-          ctxStones.fillRect(
-            x * this.cellSize + 1,
-            y * this.cellSize + 1,
-            this.cellSize - 2,
-            this.cellSize - 2,
-          );
-
+          renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize);
           break;
         }
         case 5: { // Stone (up arrow)
           this.stonePositions[y].push(currentBoardCell);
-
-          ctxStones.fillStyle = gameColors.Stone;
-          ctxStones.fillRect(
-            x * this.cellSize + 1,
-            y * this.cellSize + 1,
-            this.cellSize - 2,
-            this.cellSize - 2,
-          );
-
-          ctxStones.fillStyle = gameColors.StoneLabel;
-          ctxStones.font = STONE_LABEL_FONT;
-          ctxStones.fillText(
-            stoneLabels.Up,
-            x * this.cellSize + this.cellSize / 2.5 - 1,
-            y * this.cellSize + this.cellSize / 1.5 - 1,
-          );
-
+          renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'up');
           break;
         }
         case 6: { // Stone (right arrow)
           this.stonePositions[y].push(currentBoardCell);
-
-          ctxStones.fillStyle = gameColors.Stone;
-          ctxStones.fillRect(
-            x * this.cellSize + 1,
-            y * this.cellSize + 1,
-            this.cellSize - 2,
-            this.cellSize - 2,
-          );
-
-          ctxStones.fillStyle = gameColors.StoneLabel;
-          ctxStones.font = STONE_LABEL_FONT;
-          ctxStones.fillText(
-            stoneLabels.Right,
-            x * this.cellSize + this.cellSize / 3.5,
-            y * this.cellSize + this.cellSize / 1.5,
-          );
-
+          renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'right');
           break;
         }
         case 7: { // Stone (down arrow)
           this.stonePositions[y].push(currentBoardCell);
-
-          ctxStones.fillStyle = gameColors.Stone;
-          ctxStones.fillRect(
-            x * this.cellSize + 1,
-            y * this.cellSize + 1,
-            this.cellSize - 2,
-            this.cellSize - 2,
-          );
-
-          ctxStones.fillStyle = gameColors.StoneLabel;
-          ctxStones.font = STONE_LABEL_FONT;
-          ctxStones.fillText(
-            stoneLabels.Down,
-            x * this.cellSize + this.cellSize / 2.5 - 1,
-            y * this.cellSize + this.cellSize / 1.5 - 1,
-          );
-
+          renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'down');
           break;
         }
         case 8: { // Stone (left arrow)
           this.stonePositions[y].push(currentBoardCell);
-
-          ctxStones.fillStyle = gameColors.Stone;
-          ctxStones.fillRect(
-            x * this.cellSize + 1,
-            y * this.cellSize + 1,
-            this.cellSize - 2,
-            this.cellSize - 2,
-          );
-
-          ctxStones.fillStyle = gameColors.StoneLabel;
-          ctxStones.font = STONE_LABEL_FONT;
-          ctxStones.fillText(
-            stoneLabels.Left,
-            x * this.cellSize + this.cellSize / 3.5,
-            y * this.cellSize + this.cellSize / 1.5,
-          );
-
+          renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'left');
           break;
         }
         default: {
           this.stonePositions[y].push(0);
-
           break;
         }
       }
@@ -345,6 +272,36 @@ function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?
 }
 
 /**
+ * Render stone
+ *
+ * @param ctx
+ * @param x
+ * @param y
+ * @param direction
+ */
+function renderStone(ctx: CanvasRenderingContext2D, x: number, y: number, direction?: string) {
+  ctx.fillStyle = gameColors.Stone;
+
+  ctx.fillRect(
+    x + 1,
+    y + 1,
+    this.cellSize - 2,
+    this.cellSize - 2,
+  );
+
+  if (direction) {
+    ctx.fillStyle = gameColors.StoneLabel;
+    ctx.font = STONE_LABEL_FONT;
+
+    ctx.fillText(
+      stoneLabels[direction.charAt(0).toUpperCase() + direction.substr(1) as any],
+      x + this.cellSize / (direction === 'up' || direction === 'down' ? 2.5 : 3.5),
+      y + this.cellSize / 1.5,
+    );
+  }
+}
+
+/**
  * Set panel info values (level, steps, undos)
  */
 function resetPanelInfoValues() {
@@ -358,4 +315,5 @@ export {
   renderGameObjects,
   resetPanelInfoValues,
   renderBall,
+  renderStone,
 };
