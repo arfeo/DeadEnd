@@ -6,7 +6,6 @@ import { GameOver } from '../GameOver';
 
 import { globals } from '../../constants/globals';
 import { levels } from '../../constants/levels';
-import { gameColors, stoneLabels, STONE_LABEL_FONT } from '../../constants/game';
 
 import { invertDirection, levelIndexById } from './utils';
 import { renderBall, renderStone } from './render';
@@ -309,52 +308,7 @@ async function stoneMove(position: { x: number; y: number }, direction: string):
       stoneY += speedCorrection * (direction === 'down' ? 1 : -1);
     }
 
-    renderStone.call(this, ctx, stoneX, stoneY);
-
-    if (stoneType !== 4) {
-      ctx.fillStyle = gameColors.StoneLabel;
-      ctx.font = STONE_LABEL_FONT;
-
-      switch (direction) {
-        case 'up': {
-          ctx.fillText(
-            stoneLabels.Up,
-            stoneX + this.cellSize / 2.5,
-            stoneY + this.cellSize / 1.5,
-          );
-
-          break;
-        }
-        case 'right': {
-          ctx.fillText(
-            stoneLabels.Right,
-            stoneX + this.cellSize / 3.5,
-            stoneY + this.cellSize / 1.5,
-          );
-
-          break;
-        }
-        case 'down': {
-          ctx.fillText(
-            stoneLabels.Down,
-            stoneX + this.cellSize / 2.5,
-            stoneY + this.cellSize / 1.5,
-          );
-
-          break;
-        }
-        case 'left': {
-          ctx.fillText(
-            stoneLabels.Left,
-            stoneX + this.cellSize / 3.5,
-            stoneY + this.cellSize / 1.5,
-          );
-
-          break;
-        }
-        default: break;
-      }
-    }
+    renderStone.call(this, ctx, stoneX, stoneY, stoneType !== 4 ? direction : null);
 
     this.stoneAnimationId = requestAnimationFrame(animateStoneMove);
   };
