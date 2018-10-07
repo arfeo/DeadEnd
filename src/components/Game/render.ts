@@ -177,24 +177,24 @@ function renderGameObjects(gameObjects: number[][] = []) {
             ctxStatic.beginPath();
             ctxStatic.moveTo(
               x * this.cellSize,
-              y * this.cellSize + i * (this.cellSize / 4),
+              y * this.cellSize + i * this.cellSize / 4,
             );
             ctxStatic.lineTo(
               x * this.cellSize + this.cellSize,
-              y * this.cellSize + i * (this.cellSize / 4),
+              y * this.cellSize + i * this.cellSize / 4,
             );
             ctxStatic.stroke();
           }
 
-          for (let i = 1; i <= 2; i += 1) {
+          for (let i = 1; i <= 4; i += 1) {
             ctxStatic.beginPath();
             ctxStatic.moveTo(
-              x * this.cellSize + i * (this.cellSize / 2),
-              y * this.cellSize,
+              x * this.cellSize + (i % 2 === 0 ? 1 : 2) * this.cellSize / 2,
+              y * this.cellSize + (i - 1) * this.cellSize / 4,
             );
             ctxStatic.lineTo(
-              x * this.cellSize + i * (this.cellSize / 2),
-              y * this.cellSize + this.cellSize,
+              x * this.cellSize + (i % 2 === 0 ? 1 : 2) * this.cellSize / 2,
+              y * this.cellSize + (i - 1) * this.cellSize / 4 + this.cellSize / 4,
             );
             ctxStatic.stroke();
           }
