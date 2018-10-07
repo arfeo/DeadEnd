@@ -105,13 +105,6 @@ function ballMove(direction: string): Promise<void> {
       return Promise.resolve();
     }
 
-    ctx.clearRect(
-      ballX - this.cellSize,
-      ballY - this.cellSize,
-      this.cellSize * 3,
-      this.cellSize * 3,
-    );
-
     if (direction === 'right' || direction === 'left') {
       ballX += speedCorrection * (direction === 'right' ? 1 : -1);
     } else {
@@ -163,13 +156,6 @@ function ballHit(startDirection: string): Promise<void> {
         return testStoneMove.call(this, ballPosX, ballPosY, direction);
       }
     }
-
-    ctx.clearRect(
-      ballX - this.cellSize,
-      ballY - this.cellSize,
-      this.cellSize * 3,
-      this.cellSize * 3,
-    );
 
     if (direction === 'right' || direction === 'left') {
       ballX += speedCorrection * (direction === 'right' ? 1 : -1);
@@ -419,13 +405,6 @@ export function ballTransport(): Promise<void> {
 
       return Promise.resolve();
     }
-
-    ctx.clearRect(
-      ballX - this.cellSize,
-      ballY - this.cellSize,
-      this.cellSize * 3,
-      this.cellSize * 3,
-    );
 
     renderBall.call(this, ctx, ballX, ballY, initialRadius - step);
 

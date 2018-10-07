@@ -312,6 +312,13 @@ function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?
   const innerRadius = this.cellSize / 6;
   const outerRadius = this.cellSize / 3;
 
+  ctx.clearRect(
+    x - this.cellSize,
+    y - this.cellSize,
+    this.cellSize * 3,
+    this.cellSize * 3,
+  );
+
   const gradient = ctx.createRadialGradient(
     grdX,
     grdY,
