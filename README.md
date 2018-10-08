@@ -4,6 +4,8 @@ Remake of `DeadEnd II`, a puzzle game initially developed by Wolfgang Thaller (r
 
 ![Interface](http://arfeo.net/static/deadend/deadend.png "Interface")
 
+Live demo (3 levels): http://arfeo.net/tests/deadend/
+
 ## Installation
 
 Clone the project:
