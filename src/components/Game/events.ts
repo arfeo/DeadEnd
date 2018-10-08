@@ -77,8 +77,6 @@ function keyDownHandler(event: KeyboardEvent) {
  * Go to level button click handler
  */
 function gotoButtonClickHandler() {
-  removeEventHandlers.call(this);
-
   new Goto(this);
 }
 

@@ -1,6 +1,6 @@
 import { Game } from '../../Game';
 
-import { setUpEventHandlers } from '../../Game/events';
+import { removeEventHandlers, setUpEventHandlers } from '../../Game/events';
 
 type ModalSize = 'large' | 'medium' | 'small';
 
@@ -40,6 +40,8 @@ abstract class Modal {
     this.modalWindow.appendChild(this.modal);
 
     this.render();
+
+    removeEventHandlers.call(this.game);
 
     this.modalClose.addEventListener('click', this.close.bind(this));
   }
