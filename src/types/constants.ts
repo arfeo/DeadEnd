@@ -6,6 +6,7 @@ export interface IGlobals {
     onKeyDown: EventListener;
     onGotoButtonClick: EventListener;
     onUndoButtonClick: EventListener;
+    onHelpButtonClick: EventListener;
   };
   cellSize: number;
 }

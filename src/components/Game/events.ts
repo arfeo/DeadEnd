@@ -1,6 +1,7 @@
 import { cloneDeep, isArray } from 'lodash';
 
 import { Goto } from '../Goto';
+import { Help } from '../Help';
 
 import { globals } from '../../constants/globals';
 
@@ -14,6 +15,7 @@ function setUpEventHandlers() {
   document.body.addEventListener('keydown', globals.eventListeners.onKeyDown);
   this.panelGotoButton.addEventListener('click', globals.eventListeners.onGotoButtonClick);
   this.panelUndoButton.addEventListener('click', globals.eventListeners.onUndoButtonClick);
+  this.panelHelpButton.addEventListener('click', globals.eventListeners.onHelpButtonClick);
 }
 
 /**
@@ -23,6 +25,7 @@ function removeEventHandlers() {
   document.body.removeEventListener('keydown', globals.eventListeners.onKeyDown);
   this.panelGotoButton.removeEventListener('click', globals.eventListeners.onGotoButtonClick);
   this.panelUndoButton.removeEventListener('click', globals.eventListeners.onUndoButtonClick);
+  this.panelHelpButton.removeEventListener('click', globals.eventListeners.onHelpButtonClick);
 }
 
 /**
@@ -96,10 +99,18 @@ function undoButtonClickHandler() {
   }
 }
 
+/**
+ * Help button click handler
+ */
+function helpButtonClickHandler() {
+  new Help(this);
+}
+
 export {
   gotoButtonClickHandler,
   keyDownHandler,
   removeEventHandlers,
   setUpEventHandlers,
   undoButtonClickHandler,
+  helpButtonClickHandler,
 }
