@@ -3,8 +3,8 @@
 .gameBoard {
   display: flex;
   flex-direction: column;
-  width: 128vmin;
-  height: 90vmin;
+  width: calc(#{$cellSize} * 32);
+  height: calc(#{$cellSize} * 20 + #{$panelHeight});
   border-style: outset;
   border-color: $white $grey $grey $white;
 
@@ -13,7 +13,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    height: 80vmin;
+    height: calc(#{$cellSize} * 20);
     background-color: $black;
 
     .-static-canvas,
@@ -22,8 +22,8 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 128vmin;
-      height: 80vmin;
+      width: calc(#{$cellSize} * 32);
+      height: calc(#{$cellSize} * 20);
     }
   }
 
@@ -32,8 +32,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    height: 10vmin;
-    width: calc(100% - 8vmin);
+    height: $panelHeight;
+    width: calc(100% - #{$cellSize} * 2);
     padding: 0 $cellSize;
     background-color: $black;
     color: $white;
@@ -63,7 +63,7 @@
       background-color: $white;
       width: $cellSize;
       height: $cellSize;
-      margin-left: 2vmin;
+      margin-left: calc(#{$cellSize} / 2);
       color: $black;
       cursor: pointer;
       border-radius: 0.5vmin;
@@ -75,7 +75,7 @@
 
     .-goto {
       width: auto;
-      padding: 0 2vmin;
+      padding: 0 calc(#{$cellSize} / 2);
 
       &:before {
         content: 'Go to...';
@@ -84,7 +84,7 @@
 
     .-undo {
       width: auto;
-      padding: 0 2vmin;
+      padding: 0 calc(#{$cellSize} / 2);
 
       &:before {
         content: 'Undo';
