@@ -84,7 +84,7 @@ function gotoButtonClickHandler() {
  * Undo button click handler
  */
 function undoButtonClickHandler() {
-  const undoMapSize = isArray(this.undoHistoryMap) ? this.undoHistoryMap.length : 0;
+  const undoMapSize: number = isArray(this.undoHistoryMap) ? this.undoHistoryMap.length : 0;
 
   if (undoMapSize > 0) {
     renderGameObjects.call(this, cloneDeep(this.undoHistoryMap[undoMapSize - 1]));

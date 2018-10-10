@@ -79,7 +79,7 @@ function renderGameBoard() {
  * @param gameObjects
  */
 function renderGameObjects(gameObjects: number[][] = []) {
-  const boardMap = !isEmpty(gameObjects) ? gameObjects : levels[levelIndexById(this.levelId)].boardMap;
+  const boardMap: number[][] = !isEmpty(gameObjects) ? gameObjects : levels[levelIndexById(this.levelId)].boardMap;
 
   const ctxStatic: CanvasRenderingContext2D = this.staticCanvas.getContext('2d');
   const ctxBall: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
@@ -122,12 +122,12 @@ function renderGameObjects(gameObjects: number[][] = []) {
         case 2: { // Exit
           this.stonePositions[y].push(currentBoardCell);
 
-          const grdX = x * this.cellSize + this.cellSize / 2;
-          const grdY = y * this.cellSize + this.cellSize / 2;
-          const innerRadius = this.cellSize / 8;
-          const outerRadius = this.cellSize / 3;
+          const grdX: number = x * this.cellSize + this.cellSize / 2;
+          const grdY: number = y * this.cellSize + this.cellSize / 2;
+          const innerRadius: number = this.cellSize / 8;
+          const outerRadius: number = this.cellSize / 3;
 
-          const gradient = ctxStatic.createRadialGradient(
+          const gradient: CanvasGradient = ctxStatic.createRadialGradient(
             grdX,
             grdY,
             innerRadius,
@@ -234,10 +234,10 @@ function renderGameObjects(gameObjects: number[][] = []) {
  * @param radius
  */
 function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?: number) {
-  const grdX = x + this.cellSize / 2;
-  const grdY = y + this.cellSize / 2;
-  const innerRadius = this.cellSize / 6;
-  const outerRadius = this.cellSize / 3;
+  const grdX: number = x + this.cellSize / 2;
+  const grdY: number = y + this.cellSize / 2;
+  const innerRadius: number = this.cellSize / 6;
+  const outerRadius: number = this.cellSize / 3;
 
   ctx.clearRect(
     x - this.cellSize,
@@ -246,7 +246,7 @@ function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?
     this.cellSize * 3,
   );
 
-  const gradient = ctx.createRadialGradient(
+  const gradient: CanvasGradient = ctx.createRadialGradient(
     grdX,
     grdY,
     innerRadius,

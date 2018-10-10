@@ -20,16 +20,11 @@ class Goto extends Modal {
     const gotoSubmitButton: HTMLButtonElement = document.createElement('button');
 
     gotoForm.className = 'goto-form';
-
     gotoInputContainer.className = '-input-container';
-
     gotoLabel.className = '-label';
     gotoLabel.innerText = 'Level:';
-
     gotoInput.className = '-input';
-
     gotoSubmitContainer.className = 'modal-submit';
-
     gotoSubmitButton.className = '-button';
     gotoSubmitButton.innerText = 'Go to';
 

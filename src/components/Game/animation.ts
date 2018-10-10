@@ -16,14 +16,14 @@ import { renderBall, renderStone } from './render';
  * @param direction
  */
 function ballMove(direction: string): Promise<void> {
-  const ballPosX = this.ballPosition[1];
-  const ballPosY = this.ballPosition[0];
-  let ballX = ballPosX * this.cellSize;
-  let ballY = ballPosY * this.cellSize;
+  const ballPosX: number = this.ballPosition[1];
+  const ballPosY: number = this.ballPosition[0];
+  let ballX: number = ballPosX * this.cellSize;
+  let ballY: number = ballPosY * this.cellSize;
 
   switch (direction) {
     case 'up': {
-      const nextCell = this.stonePositions[ballPosY - 1][ballPosX];
+      const nextCell: number = this.stonePositions[ballPosY - 1][ballPosX];
 
       if (nextCell !== 0 && nextCell !== 2) {
         if (this.stonePositions[ballPosY + 1][ballPosX] !== 0) {
@@ -36,7 +36,7 @@ function ballMove(direction: string): Promise<void> {
       break;
     }
     case 'right': {
-      const nextCell = this.stonePositions[ballPosY][ballPosX + 1];
+      const nextCell: number = this.stonePositions[ballPosY][ballPosX + 1];
 
       if (nextCell !== 0 && nextCell !== 2) {
         if (this.stonePositions[ballPosY][ballPosX - 1] !== 0) {
@@ -49,7 +49,7 @@ function ballMove(direction: string): Promise<void> {
       break;
     }
     case 'down': {
-      const nextCell = this.stonePositions[ballPosY + 1][ballPosX];
+      const nextCell: number = this.stonePositions[ballPosY + 1][ballPosX];
 
       if (nextCell !== 0 && nextCell !== 2) {
         if (this.stonePositions[ballPosY - 1][ballPosX] !== 0) {
@@ -62,7 +62,7 @@ function ballMove(direction: string): Promise<void> {
       break;
     }
     case 'left': {
-      const nextCell = this.stonePositions[ballPosY][ballPosX - 1];
+      const nextCell: number = this.stonePositions[ballPosY][ballPosX - 1];
 
       if (nextCell !== 0 && nextCell !== 2) {
         if (this.stonePositions[ballPosY][ballPosX + 1] !== 0) {
@@ -126,10 +126,10 @@ function ballMove(direction: string): Promise<void> {
  * @param startDirection
  */
 function ballHit(startDirection: string): Promise<void> {
-  const ballPosX = this.ballPosition[1];
-  const ballPosY = this.ballPosition[0];
-  let ballX = ballPosX * this.cellSize;
-  let ballY = ballPosY * this.cellSize;
+  const ballPosX: number = this.ballPosition[1];
+  const ballPosY: number = this.ballPosition[0];
+  let ballX: number = ballPosX * this.cellSize;
+  let ballY: number = ballPosY * this.cellSize;
 
   const ctx: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
   let direction = invertDirection(startDirection);
@@ -138,7 +138,7 @@ function ballHit(startDirection: string): Promise<void> {
   this.isBallMoving = true;
 
   const animateBallHit = (): Promise<void> => {
-    const speedCorrection = startDirection !== direction ? 3 : 6;
+    const speedCorrection: number = startDirection !== direction ? 3 : 6;
 
     step += speedCorrection;
 
@@ -180,15 +180,15 @@ function ballHit(startDirection: string): Promise<void> {
  * @param direction
  */
 function testStoneMove(posX: number, posY: number, direction: string): Promise<Array<Promise<void>>> {
-  const levelIndex = levelIndexById(this.levelId);
+  const levelIndex: number = levelIndexById(this.levelId);
 
   switch (direction) {
     case 'up': {
-      const stoneType = this.stonePositions[posY - 1][posX];
-      const isNextToNextCellEmpty = this.stonePositions[posY - 2][posX] === 0;
-      const isNextCellWall = levels[levelIndex].boardMap[posY - 1][posX] === 3;
-      const isNextToNextCellExit = levels[levelIndex].boardMap[posY - 2][posX] === 2;
-      const isMovableStone = stoneType === 4 || stoneType === 5;
+      const stoneType: number = this.stonePositions[posY - 1][posX];
+      const isNextToNextCellEmpty: boolean = this.stonePositions[posY - 2][posX] === 0;
+      const isNextCellWall: boolean = levels[levelIndex].boardMap[posY - 1][posX] === 3;
+      const isNextToNextCellExit: boolean = levels[levelIndex].boardMap[posY - 2][posX] === 2;
+      const isMovableStone: boolean = stoneType === 4 || stoneType === 5;
 
       if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit && isMovableStone) {
         return Promise.all([
@@ -200,11 +200,11 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<A
       break;
     }
     case 'right': {
-      const stoneType = this.stonePositions[posY][posX + 1];
-      const isNextToNextCellEmpty = this.stonePositions[posY][posX + 2] === 0;
-      const isNextCellWall = levels[levelIndex].boardMap[posY][posX + 1] === 3;
-      const isNextToNextCellExit = levels[levelIndex].boardMap[posY][posX + 2] === 2;
-      const isMovableStone = stoneType === 4 || stoneType === 6;
+      const stoneType: number = this.stonePositions[posY][posX + 1];
+      const isNextToNextCellEmpty: boolean = this.stonePositions[posY][posX + 2] === 0;
+      const isNextCellWall: boolean = levels[levelIndex].boardMap[posY][posX + 1] === 3;
+      const isNextToNextCellExit: boolean = levels[levelIndex].boardMap[posY][posX + 2] === 2;
+      const isMovableStone: boolean = stoneType === 4 || stoneType === 6;
 
       if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit && isMovableStone) {
         return Promise.all([
@@ -216,11 +216,11 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<A
       break;
     }
     case 'down': {
-      const stoneType = this.stonePositions[posY + 1][posX];
-      const isNextToNextCellEmpty = this.stonePositions[posY + 2][posX] === 0;
-      const isNextCellWall = levels[levelIndex].boardMap[posY + 1][posX] === 3;
-      const isNextToNextCellExit = levels[levelIndex].boardMap[posY + 2][posX] === 2;
-      const isMovableStone = stoneType === 4 || stoneType === 7;
+      const stoneType: number = this.stonePositions[posY + 1][posX];
+      const isNextToNextCellEmpty: boolean = this.stonePositions[posY + 2][posX] === 0;
+      const isNextCellWall: boolean = levels[levelIndex].boardMap[posY + 1][posX] === 3;
+      const isNextToNextCellExit: boolean = levels[levelIndex].boardMap[posY + 2][posX] === 2;
+      const isMovableStone: boolean = stoneType === 4 || stoneType === 7;
 
       if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit && isMovableStone) {
         return Promise.all([
@@ -232,11 +232,11 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<A
       break;
     }
     case 'left': {
-      const stoneType = this.stonePositions[posY][posX - 1];
-      const isNextToNextCellEmpty = this.stonePositions[posY][posX - 2] === 0;
-      const isNextCellWall = levels[levelIndex].boardMap[posY][posX - 1] === 3;
-      const isNextToNextCellExit = levels[levelIndex].boardMap[posY][posX - 2] === 2;
-      const isMovableStone = stoneType === 4 || stoneType === 8;
+      const stoneType: number = this.stonePositions[posY][posX - 1];
+      const isNextToNextCellEmpty: boolean = this.stonePositions[posY][posX - 2] === 0;
+      const isNextCellWall: boolean = levels[levelIndex].boardMap[posY][posX - 1] === 3;
+      const isNextToNextCellExit: boolean = levels[levelIndex].boardMap[posY][posX - 2] === 2;
+      const isMovableStone: boolean = stoneType === 4 || stoneType === 8;
 
       if (isNextToNextCellEmpty && !isNextCellWall && !isNextToNextCellExit && isMovableStone) {
         return Promise.all([
@@ -269,9 +269,9 @@ async function stoneMove(position: { x: number; y: number }, direction: string):
   let moveX: number = position.x;
   let moveY: number = position.y;
 
-  const undoHistoryItem = cloneDeep(this.stonePositions);
-  const ballX = this.ballPosition[1];
-  const ballY = this.ballPosition[0];
+  const undoHistoryItem: number[][] = cloneDeep(this.stonePositions);
+  const ballX: number = this.ballPosition[1];
+  const ballY: number = this.ballPosition[0];
 
   undoHistoryItem[ballY][ballX] = 1;
 
@@ -323,14 +323,14 @@ async function stoneMove(position: { x: number; y: number }, direction: string):
  */
 export function ballTransport(): Promise<void> {
   const ctx: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
-  const ballX = this.ballPosition[1] * this.cellSize;
-  const ballY = this.ballPosition[0] * this.cellSize;
+  const ballX: number = this.ballPosition[1] * this.cellSize;
+  const ballY: number = this.ballPosition[0] * this.cellSize;
   let step = 0;
 
   this.isBallMoving = true;
 
   const animateBallTransport = (): Promise<void> => {
-    const initialRadius = this.cellSize / 2.5;
+    const initialRadius: number = this.cellSize / 2.5;
 
     step += 1;
 
