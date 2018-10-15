@@ -15,12 +15,9 @@ class GameOver extends Modal {
     const gameOverSubmitStop: HTMLButtonElement = document.createElement('button');
 
     gameOverLabel.innerText = 'Game over. Would you like to start the game over again?';
-
     gameOverSubmitContainer.className = 'modal-submit';
-
     gameOverSubmitRestart.className = '-button';
     gameOverSubmitRestart.innerText = 'Yes';
-
     gameOverSubmitStop.className = '-button';
     gameOverSubmitStop.innerText = 'No, thanks';
 

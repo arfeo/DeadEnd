@@ -7,7 +7,9 @@ class Help extends Modal {
   }
 
   render() {
-    const textContainer = document.createElement('div');
+    const textContainer: HTMLElement = document.createElement('div');
+    const submitContainer: HTMLElement = document.createElement('div');
+    const closeButton: HTMLButtonElement = document.createElement('button');
 
     textContainer.innerHTML = (`
       <strong>The game</strong>
@@ -31,8 +33,15 @@ class Help extends Modal {
       <strong>Known bug</strong>
       <p>The game will not launch on a Mac SE (a Macintosh model which was introduced in 1987, I think...).</p>
     `);
+    submitContainer.className = 'modal-submit';
+    closeButton.className = '-button';
+    closeButton.innerText = 'Close';
 
     this.modal.appendChild(textContainer);
+    this.modal.appendChild(submitContainer);
+    submitContainer.appendChild(closeButton);
+
+    closeButton.addEventListener('click', () => this.close());
   }
 }
 
