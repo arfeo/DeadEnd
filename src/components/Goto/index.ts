@@ -12,13 +12,16 @@ class Goto extends Modal {
   }
 
   render() {
+    const gotoModalLabel: HTMLElement = document.createElement('div');
     const gotoForm: HTMLElement = document.createElement('div');
     const gotoInputContainer: HTMLElement = document.createElement('div');
     const gotoLabel: HTMLElement = document.createElement('div');
     const gotoInput: HTMLInputElement = document.createElement('input');
     const gotoSubmitContainer: HTMLElement = document.createElement('div');
     const gotoSubmitButton: HTMLButtonElement = document.createElement('button');
+    const gotoCancelButton: HTMLButtonElement = document.createElement('button');
 
+    gotoModalLabel.innerHTML = `<strong>Go to level (1—${levels.length}):</strong>`;
     gotoForm.className = 'goto-form';
     gotoInputContainer.className = '-input-container';
     gotoLabel.className = '-label';
@@ -27,13 +30,17 @@ class Goto extends Modal {
     gotoSubmitContainer.className = 'modal-submit';
     gotoSubmitButton.className = '-button';
     gotoSubmitButton.innerText = 'Go to';
+    gotoCancelButton.className = '-button';
+    gotoCancelButton.innerText = 'Cancel';
 
+    this.modal.appendChild(gotoModalLabel);
     this.modal.appendChild(gotoForm);
     gotoForm.appendChild(gotoInputContainer);
     gotoInputContainer.appendChild(gotoLabel);
     gotoInputContainer.appendChild(gotoInput);
     gotoForm.appendChild(gotoSubmitContainer);
     gotoSubmitContainer.appendChild(gotoSubmitButton);
+    gotoSubmitContainer.appendChild(gotoCancelButton);
     gotoInput.focus();
 
     gotoSubmitButton.addEventListener('click', () => {
@@ -62,6 +69,8 @@ class Goto extends Modal {
 
       this.close();
     });
+
+    gotoCancelButton.addEventListener('click', () => this.close());
   }
 }
 
