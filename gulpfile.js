@@ -7,10 +7,11 @@ const tsify = require('tsify');
 const tslint = require('gulp-tslint');
 const sass = require('gulp-sass');
 const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
 const browserSync = require('browser-sync').create();
 
 function clean() {
-  return del([ 'dist' ]);
+  return del(['dist']);
 }
 
 function build(done) {
@@ -65,13 +66,14 @@ function linter() {
 }
 
 function ts() {
-  return browserify().add('./src/main.ts')
+  return browserify().add('./src/index.ts')
     .plugin(tsify)
     .bundle().on('error', function (error) {
       console.error(error.toString());
     })
     .pipe(source('app.js'))
     .pipe(buffer())
+    .pipe(uglify())
     .pipe(gulp.dest('./dist'));
 }
 

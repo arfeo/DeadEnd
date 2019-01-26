@@ -1,6 +1,4 @@
 // tslint:disable:max-file-line-count
-import { cloneDeep } from 'lodash';
-
 import { Game } from './index';
 import { GameOver } from '../GameOver';
 
@@ -269,7 +267,7 @@ async function stoneMove(position: { x: number; y: number }, direction: string):
   let moveX: number = position.x;
   let moveY: number = position.y;
 
-  const undoHistoryItem: number[][] = cloneDeep(this.stonePositions);
+  const undoHistoryItem: number[][] = JSON.parse(JSON.stringify(this.stonePositions));
   const ballX: number = this.ballPosition[1];
   const ballY: number = this.ballPosition[0];
 

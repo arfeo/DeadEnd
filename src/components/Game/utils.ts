@@ -1,6 +1,6 @@
 import { levels } from '../../constants/levels';
 
-import { findIndex } from 'lodash';
+import { ILevel } from '../../types/constants';
 
 /**
  * Invert the ball movement direction
@@ -23,7 +23,9 @@ function invertDirection(direction: string): string {
  * @param levelId
  */
 function levelIndexById(levelId: number): number {
-  return findIndex(levels, { id: levelId });
+  return levels.findIndex((item: ILevel) => {
+    return item.id === levelId;
+  });
 }
 
 export { invertDirection, levelIndexById };

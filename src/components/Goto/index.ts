@@ -1,10 +1,10 @@
-import { isEmpty, findIndex } from 'lodash';
-
 import { Modal } from '../common/Modal';
 import { Game } from '../Game';
 
 import { levels } from '../../constants/levels';
 import { globals } from '../../constants/globals';
+
+import { levelIndexById } from '../Game/utils';
 
 class Goto extends Modal {
   constructor(game: Game) {
@@ -46,7 +46,7 @@ class Goto extends Modal {
     gotoSubmitButton.addEventListener('click', () => {
       const inputValue: string = gotoInput.value;
 
-      if (isEmpty(inputValue)) {
+      if (!inputValue) {
         alert('Enter level #');
 
         gotoInput.focus();
@@ -54,7 +54,7 @@ class Goto extends Modal {
         return;
       }
 
-      if (findIndex(levels, { id: parseInt(inputValue) }) === -1) {
+      if (levelIndexById(parseInt(inputValue)) === -1) {
         alert(`Level # ${inputValue} does not exist`);
 
         gotoInput.value = '';

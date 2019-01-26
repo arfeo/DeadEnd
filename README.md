@@ -4,7 +4,7 @@ Remake of `DeadEnd II`, a puzzle game initially developed by Wolfgang Thaller (r
 
 [![DeadEnd Gameplay](http://arfeo.net/static/deadend/cover.png)](https://youtu.be/BItD1Ss58s8 "DeadEnd Gameplay")
 
-Live demo (3 levels): http://arfeo.net/tests/deadend/
+Live demo: http://arfeo.net/tests/deadend/
 
 ## The game
 

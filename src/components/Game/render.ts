@@ -1,6 +1,4 @@
 // tslint:disable:max-file-line-count
-import { isEmpty } from 'lodash';
-
 import { levels } from '../../constants/levels';
 import { GameColors, StoneLabels, GridDimensions, STONE_LABEL_FONT } from '../../constants/game';
 
@@ -79,7 +77,8 @@ function renderGameBoard() {
  * @param gameObjects
  */
 function renderGameObjects(gameObjects: number[][] = []) {
-  const boardMap: number[][] = !isEmpty(gameObjects) ? gameObjects : levels[levelIndexById(this.levelId)].boardMap;
+  const gameObjectsEmpty: boolean = Object.keys(gameObjects).length === 0;
+  const boardMap: number[][] = !gameObjectsEmpty ? gameObjects : levels[levelIndexById(this.levelId)].boardMap;
 
   const ctxStatic: CanvasRenderingContext2D = this.staticCanvas.getContext('2d');
   const ctxBall: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');

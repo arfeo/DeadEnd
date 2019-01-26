@@ -11,7 +11,7 @@ export interface IGlobals {
   cellSize: number;
 }
 
-export interface ILevels {
+export interface ILevel {
   id: number;
   boardMap: number[][];
 }

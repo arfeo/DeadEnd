@@ -1,5 +1,3 @@
-import { cloneDeep, isArray } from 'lodash';
-
 import { Goto } from '../Goto';
 import { Help } from '../Help';
 
@@ -36,6 +34,7 @@ function removeEventHandlers() {
 function keyDownHandler(event: KeyboardEvent) {
   const onBallMove = (direction: string) => {
     ballMove.call(this, direction).then(onBallMoveCompleted).catch(() => {
+      // TODO: add a corresponding sound effect
       console.log('Cannot move here');
     });
   };
@@ -84,10 +83,10 @@ function gotoButtonClickHandler() {
  * Undo button click handler
  */
 function undoButtonClickHandler() {
-  const undoMapSize: number = isArray(this.undoHistoryMap) ? this.undoHistoryMap.length : 0;
+  const undoMapSize: number = Array.isArray(this.undoHistoryMap) ? this.undoHistoryMap.length : 0;
 
   if (undoMapSize > 0) {
-    renderGameObjects.call(this, cloneDeep(this.undoHistoryMap[undoMapSize - 1]));
+    renderGameObjects.call(this, JSON.parse(JSON.stringify(this.undoHistoryMap[undoMapSize - 1])));
 
     this.undoHistoryMap.pop();
     this.undosCount += 1;

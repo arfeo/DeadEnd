@@ -13,9 +13,9 @@
  * 8 - stone (left arrow)
  */
 
-import { ILevels } from '../types/constants';
+import { ILevel } from '../types/constants';
 
-export const levels: ILevels[] = [
+export const levels: ILevel[] = [
   {
     id: 1,
     boardMap: [
