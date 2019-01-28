@@ -6,6 +6,8 @@ Remake of `DeadEnd II`, a puzzle game initially developed by Wolfgang Thaller (r
 
 Live demo: http://tests.arfeo.net/deadend/
 
+Level editor is available [here](https://github.com/arfeo/deadend-level-editor).
+
 ## The game
 
 DeadEnd is a strategy game. It is your goal to find a path out of a dungeon by pushing massive blocks of stone out of your way. This is a very tricky task because stones are so heavy that
