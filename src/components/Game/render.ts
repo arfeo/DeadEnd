@@ -8,6 +8,7 @@ import { levelIndexById } from './utils';
  * Render the game board infrastructure
  */
 function renderGameBoard() {
+  const appRoot: HTMLElement = document.getElementById('root');
   const gameBoard: HTMLElement = document.createElement('div');
   const gameBoardPanel: HTMLElement = document.createElement('div');
   const gameBoardPanelInfo: HTMLElement = document.createElement('div');
@@ -15,7 +16,18 @@ function renderGameBoard() {
   const panelStepsLabel: HTMLElement = document.createElement('div');
   const panelUndosLabel: HTMLElement = document.createElement('div');
 
-  this.appRoot.innerHTML = '';
+  this.gameBoardGrid = document.createElement('div');
+  this.panelLevelsValue = document.createElement('div');
+  this.panelStepsValue = document.createElement('div');
+  this.panelUndosValue = document.createElement('div');
+  this.panelGotoButton = document.createElement('div');
+  this.panelUndoButton = document.createElement('div');
+  this.panelHelpButton = document.createElement('div');
+  this.staticCanvas = document.createElement('canvas');
+  this.ballCanvas = document.createElement('canvas');
+  this.stonesCanvas = document.createElement('canvas');
+
+  appRoot.innerHTML = '';
 
   gameBoard.className = 'gameBoard';
   this.gameBoardGrid.className = '-grid';
@@ -36,7 +48,7 @@ function renderGameBoard() {
   panelStepsLabel.innerText = 'Steps:';
   panelUndosLabel.innerText = 'Undos:';
 
-  this.appRoot.appendChild(gameBoard);
+  appRoot.appendChild(gameBoard);
 
   gameBoard.appendChild(this.gameBoardGrid);
   gameBoard.appendChild(gameBoardPanel);

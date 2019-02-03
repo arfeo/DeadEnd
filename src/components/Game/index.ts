@@ -1,22 +1,17 @@
-import { globals } from '../../constants/globals';
-
 import {
   renderGameBoard,
   renderGameObjects,
   resetPanelInfoValues,
 } from './render';
+
 import {
-  gotoButtonClickHandler,
-  keyDownHandler,
   removeEventHandlers,
   setUpEventHandlers,
-  undoButtonClickHandler,
-  helpButtonClickHandler,
 } from './events';
+
 import { setCellSize } from '../../utils/common';
 
 class Game {
-  appRoot: HTMLElement;
   gameBoardGrid: HTMLElement;
   panelLevelsValue: HTMLElement;
   panelStepsValue: HTMLElement;
@@ -40,19 +35,6 @@ class Game {
   isGameOver: boolean;
 
   constructor(levelId = 1, stepsCount = 0, undosCount = 0) {
-    this.appRoot = document.getElementById('root');
-    this.gameBoardGrid = document.createElement('div');
-    this.panelLevelsValue = document.createElement('div');
-    this.panelStepsValue = document.createElement('div');
-    this.panelUndosValue = document.createElement('div');
-    this.panelGotoButton = document.createElement('div');
-    this.panelUndoButton = document.createElement('div');
-    this.panelHelpButton = document.createElement('div');
-
-    this.staticCanvas = document.createElement('canvas');
-    this.ballCanvas = document.createElement('canvas');
-    this.stonesCanvas = document.createElement('canvas');
-
     this.levelId = levelId;
     this.stepsCount = stepsCount;
     this.undosCount = undosCount;
@@ -65,13 +47,6 @@ class Game {
 
     this.isBallMoving = false;
     this.isGameOver = false;
-
-    globals.eventListeners = {
-      onKeyDown: keyDownHandler.bind(this),
-      onGotoButtonClick: gotoButtonClickHandler.bind(this),
-      onUndoButtonClick: undoButtonClickHandler.bind(this),
-      onHelpButtonClick: helpButtonClickHandler.bind(this),
-    };
 
     this.render();
   }
@@ -88,8 +63,6 @@ class Game {
     clearTimeout(this.stoneAnimationId);
 
     removeEventHandlers.call(this);
-
-    globals.pageInstance = null;
   }
 }
 

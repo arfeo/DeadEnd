@@ -1,6 +1,6 @@
 import { levels } from '../../constants/levels';
 
-import { ILevel } from '../../types/constants';
+import { ILevel } from '../../types/game';
 
 /**
  * Invert the ball movement direction

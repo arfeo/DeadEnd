@@ -13,7 +13,7 @@
  * 8 - stone (left arrow)
  */
 
-import { ILevel } from '../types/constants';
+import { ILevel } from '../types/game';
 
 export const levels: ILevel[] = [
   {

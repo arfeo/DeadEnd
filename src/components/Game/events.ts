@@ -10,6 +10,13 @@ import { renderGameObjects, resetPanelInfoValues } from './render';
  * Set up game event handlers
  */
 function setUpEventHandlers() {
+  globals.eventListeners = {
+    onKeyDown: keyDownHandler.bind(this),
+    onGotoButtonClick: gotoButtonClickHandler.bind(this),
+    onUndoButtonClick: undoButtonClickHandler.bind(this),
+    onHelpButtonClick: helpButtonClickHandler.bind(this),
+  };
+
   document.body.addEventListener('keydown', globals.eventListeners.onKeyDown);
   this.panelGotoButton.addEventListener('click', globals.eventListeners.onGotoButtonClick);
   this.panelUndoButton.addEventListener('click', globals.eventListeners.onUndoButtonClick);
