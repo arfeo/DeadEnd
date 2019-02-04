@@ -1,3 +1,5 @@
+import { CELL_SIZE_VMIN } from '../../constants/game';
+
 import {
   renderGameBoard,
   renderGameObjects,
@@ -39,7 +41,7 @@ class Game {
     this.stepsCount = stepsCount;
     this.undosCount = undosCount;
 
-    this.cellSize = setCellSize();
+    this.cellSize = setCellSize(CELL_SIZE_VMIN);
 
     this.ballPosition = [];
     this.stonePositions = [];
