@@ -1,7 +1,7 @@
 import { Goto } from '../Goto';
 import { Help } from '../Help';
 
-import { globals } from '../../constants/globals';
+import { APP } from '../../constants/global';
 
 import { ballMove } from './animation';
 import { renderGameObjects, resetPanelInfoValues } from './render';
@@ -10,27 +10,27 @@ import { renderGameObjects, resetPanelInfoValues } from './render';
  * Set up game event handlers
  */
 function setUpEventHandlers() {
-  globals.eventListeners = {
+  APP.eventListeners = {
     onKeyDown: keyDownHandler.bind(this),
     onGotoButtonClick: gotoButtonClickHandler.bind(this),
     onUndoButtonClick: undoButtonClickHandler.bind(this),
     onHelpButtonClick: helpButtonClickHandler.bind(this),
   };
 
-  document.body.addEventListener('keydown', globals.eventListeners.onKeyDown);
-  this.panelGotoButton.addEventListener('click', globals.eventListeners.onGotoButtonClick);
-  this.panelUndoButton.addEventListener('click', globals.eventListeners.onUndoButtonClick);
-  this.panelHelpButton.addEventListener('click', globals.eventListeners.onHelpButtonClick);
+  document.body.addEventListener('keydown', APP.eventListeners.onKeyDown);
+  this.panelGotoButton.addEventListener('click', APP.eventListeners.onGotoButtonClick);
+  this.panelUndoButton.addEventListener('click', APP.eventListeners.onUndoButtonClick);
+  this.panelHelpButton.addEventListener('click', APP.eventListeners.onHelpButtonClick);
 }
 
 /**
  * Remove game event handlers
  */
 function removeEventHandlers() {
-  document.body.removeEventListener('keydown', globals.eventListeners.onKeyDown);
-  this.panelGotoButton.removeEventListener('click', globals.eventListeners.onGotoButtonClick);
-  this.panelUndoButton.removeEventListener('click', globals.eventListeners.onUndoButtonClick);
-  this.panelHelpButton.removeEventListener('click', globals.eventListeners.onHelpButtonClick);
+  document.body.removeEventListener('keydown', APP.eventListeners.onKeyDown);
+  this.panelGotoButton.removeEventListener('click', APP.eventListeners.onGotoButtonClick);
+  this.panelUndoButton.removeEventListener('click', APP.eventListeners.onUndoButtonClick);
+  this.panelHelpButton.removeEventListener('click', APP.eventListeners.onHelpButtonClick);
 }
 
 /**

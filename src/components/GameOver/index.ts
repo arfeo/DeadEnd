@@ -1,7 +1,7 @@
 import { Modal } from '../common/Modal';
 import { Game } from '../Game';
 
-import { globals } from '../../constants/globals';
+import { APP } from '../../constants/global';
 
 class GameOver extends Modal {
   constructor(game: Game) {
@@ -29,7 +29,7 @@ class GameOver extends Modal {
     gameOverSubmitRestart.addEventListener('click', () => {
       this.game.destroy();
 
-      globals.pageInstance = new Game();
+      APP.pageInstance = new Game();
 
       this.close();
     });

@@ -2,7 +2,7 @@ import { Modal } from '../common/Modal';
 import { Game } from '../Game';
 
 import { levels } from '../../constants/levels';
-import { globals } from '../../constants/globals';
+import { APP } from '../../constants/global';
 
 import { levelIndexById } from '../Game/utils';
 
@@ -65,7 +65,7 @@ class Goto extends Modal {
 
       this.game.destroy();
 
-      globals.pageInstance = new Game(parseInt(inputValue));
+      APP.pageInstance = new Game(parseInt(inputValue));
 
       this.close();
     });

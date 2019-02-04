@@ -1,7 +1,7 @@
 import { Game } from './components/Game';
 
-import { globals } from './constants/globals';
+import { APP } from './constants/global';
 
 window.onload = () => {
-  globals.pageInstance = new Game();
+  APP.pageInstance = new Game();
 };
