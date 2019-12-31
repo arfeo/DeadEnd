@@ -2,9 +2,9 @@
 
 Remake of `DeadEnd II`, a puzzle game initially developed by Wolfgang Thaller (released for the Macintosh in 1998).
 
-[![DeadEnd Gameplay](http://static.arfeo.net/deadend/cover.png)](https://youtu.be/BItD1Ss58s8 "DeadEnd Gameplay")
+[![DeadEnd Gameplay](https://static.arfeo.net/deadend/cover.png)](https://youtu.be/BItD1Ss58s8 "DeadEnd Gameplay")
 
-Live demo: http://tests.arfeo.net/deadend/
+Live demo: https://tests.arfeo.net/deadend/
 
 Level editor is available [here](https://github.com/arfeo/deadend-level-editor).
 
