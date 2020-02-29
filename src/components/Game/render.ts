@@ -7,7 +7,7 @@ import { levelIndexById } from './utils';
 /**
  * Render the game board infrastructure
  */
-function renderGameBoard() {
+function renderGameBoard(): void {
   const appRoot: HTMLElement = document.getElementById('root');
   const gameBoard: HTMLElement = document.createElement('div');
   const gameBoardPanel: HTMLElement = document.createElement('div');
@@ -88,7 +88,7 @@ function renderGameBoard() {
  *
  * @param gameObjects
  */
-function renderGameObjects(gameObjects: number[][] = []) {
+function renderGameObjects(gameObjects: number[][] = []): void {
   const gameObjectsEmpty: boolean = Object.keys(gameObjects).length === 0;
   const boardMap: number[][] = !gameObjectsEmpty ? gameObjects : levels[levelIndexById(this.levelId)].boardMap;
 
@@ -245,7 +245,7 @@ function renderGameObjects(gameObjects: number[][] = []) {
  * @param y
  * @param radius
  */
-function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?: number) {
+function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?: number): void {
   const grdX: number = x + this.cellSize / 2;
   const grdY: number = y + this.cellSize / 2;
   const innerRadius: number = this.cellSize / 6;
@@ -292,7 +292,7 @@ function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?
  * @param y
  * @param direction
  */
-function renderStone(ctx: CanvasRenderingContext2D, x: number, y: number, direction?: string) {
+function renderStone(ctx: CanvasRenderingContext2D, x: number, y: number, direction?: string): void {
   ctx.fillStyle = GameColors.Stone;
 
   ctx.fillRect(
@@ -317,7 +317,7 @@ function renderStone(ctx: CanvasRenderingContext2D, x: number, y: number, direct
 /**
  * Set panel info values (level, steps, undos)
  */
-function resetPanelInfoValues() {
+function resetPanelInfoValues(): void {
   this.panelLevelsValue.innerText = this.levelId.toString();
   this.panelStepsValue.innerText = this.stepsCount.toString();
   this.panelUndosValue.innerText = this.undosCount.toString();

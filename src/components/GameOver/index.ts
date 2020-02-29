@@ -4,11 +4,7 @@ import { Game } from '../Game';
 import { APP } from '../../constants/global';
 
 class GameOver extends Modal {
-  constructor(game: Game) {
-    super(game);
-  }
-
-  render() {
+  render(): void {
     const gameOverLabel: HTMLElement = document.createElement('div');
     const gameOverSubmitContainer: HTMLElement = document.createElement('div');
     const gameOverSubmitRestart: HTMLButtonElement = document.createElement('button');

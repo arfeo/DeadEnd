@@ -6,7 +6,6 @@ type ModalSize = 'large' | 'medium' | 'small';
 
 abstract class Modal {
   game: Game;
-  appRoot: HTMLElement;
   modalContainer: HTMLElement;
   mask: HTMLElement;
   modalWindow: HTMLElement;
@@ -14,7 +13,7 @@ abstract class Modal {
   modal: HTMLElement;
   abstract render(): void;
 
-  protected constructor(game: Game, size?: ModalSize) {
+  constructor(game: Game, size?: ModalSize) {
     this.game = game;
 
     this.modalContainer = document.createElement('div');
@@ -46,7 +45,7 @@ abstract class Modal {
     this.modalClose.addEventListener('click', this.close.bind(this));
   }
 
-  close() {
+  close(): void {
     this.modalContainer.remove();
 
     setUpEventHandlers.call(this.game);

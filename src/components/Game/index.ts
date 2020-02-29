@@ -53,14 +53,14 @@ class Game {
     this.render();
   }
 
-  render() {
+  render(): void {
     renderGameBoard.call(this);
     renderGameObjects.call(this);
     resetPanelInfoValues.call(this);
     setUpEventHandlers.call(this);
   }
 
-  destroy() {
+  destroy(): void {
     clearTimeout(this.ballAnimationId);
     clearTimeout(this.stoneAnimationId);
 

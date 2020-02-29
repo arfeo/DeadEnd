@@ -9,7 +9,7 @@ import { renderGameObjects, resetPanelInfoValues } from './render';
 /**
  * Set up game event handlers
  */
-function setUpEventHandlers() {
+function setUpEventHandlers(): void {
   APP.eventListeners = {
     onKeyDown: keyDownHandler.bind(this),
     onGotoButtonClick: gotoButtonClickHandler.bind(this),
@@ -26,7 +26,7 @@ function setUpEventHandlers() {
 /**
  * Remove game event handlers
  */
-function removeEventHandlers() {
+function removeEventHandlers(): void {
   document.body.removeEventListener('keydown', APP.eventListeners.onKeyDown);
   this.panelGotoButton.removeEventListener('click', APP.eventListeners.onGotoButtonClick);
   this.panelUndoButton.removeEventListener('click', APP.eventListeners.onUndoButtonClick);
@@ -38,17 +38,17 @@ function removeEventHandlers() {
  *
  * @param event
  */
-function keyDownHandler(event: KeyboardEvent) {
-  const onBallMove = (direction: string) => {
-    ballMove.call(this, direction).then(onBallMoveCompleted).catch(() => {
-      // TODO: add a corresponding sound effect
-    });
-  };
-
-  const onBallMoveCompleted = () => {
+function keyDownHandler(event: KeyboardEvent): void {
+  const onBallMoveCompleted = (): void => {
     this.stepsCount += 1;
 
     resetPanelInfoValues.call(this);
+  };
+
+  const onBallMove = (direction: string): void => {
+    ballMove.call(this, direction).then(onBallMoveCompleted).catch(() => {
+      // TODO: add a corresponding sound effect
+    });
   };
 
   if (!this.isBallMoving && !this.isGameOver) {
@@ -81,14 +81,14 @@ function keyDownHandler(event: KeyboardEvent) {
 /**
  * Go to level button click handler
  */
-function gotoButtonClickHandler() {
+function gotoButtonClickHandler(): void {
   new Goto(this);
 }
 
 /**
  * Undo button click handler
  */
-function undoButtonClickHandler() {
+function undoButtonClickHandler(): void {
   const undoMapSize: number = Array.isArray(this.undoHistoryMap) ? this.undoHistoryMap.length : 0;
 
   if (undoMapSize > 0) {
@@ -105,7 +105,7 @@ function undoButtonClickHandler() {
 /**
  * Help button click handler
  */
-function helpButtonClickHandler() {
+function helpButtonClickHandler(): void {
   new Help(this);
 }
 

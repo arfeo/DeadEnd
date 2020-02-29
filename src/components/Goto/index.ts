@@ -11,7 +11,7 @@ class Goto extends Modal {
     super(game, 'small');
   }
 
-  render() {
+  render(): void {
     const gotoModalLabel: HTMLElement = document.createElement('div');
     const gotoForm: HTMLElement = document.createElement('div');
     const gotoInputContainer: HTMLElement = document.createElement('div');

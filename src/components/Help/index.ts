@@ -6,7 +6,7 @@ class Help extends Modal {
     super(game, 'large');
   }
 
-  render() {
+  render(): void {
     const textContainer: HTMLElement = document.createElement('div');
     const submitContainer: HTMLElement = document.createElement('div');
     const closeButton: HTMLButtonElement = document.createElement('button');
