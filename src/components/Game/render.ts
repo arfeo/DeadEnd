@@ -146,6 +146,7 @@ function renderGameObjects(gameObjects: number[][] = []) {
             grdY,
             outerRadius,
           );
+
           gradient.addColorStop(0, GameColors.ExitGradientInner);
           gradient.addColorStop(1, GameColors.ExitGradientOuter);
 
@@ -265,6 +266,7 @@ function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?
     grdY,
     outerRadius,
   );
+
   gradient.addColorStop(0, GameColors.BallGradientInner);
   gradient.addColorStop(1, GameColors.BallGradientOuter);
 
@@ -305,7 +307,7 @@ function renderStone(ctx: CanvasRenderingContext2D, x: number, y: number, direct
     ctx.font = STONE_LABEL_FONT;
 
     ctx.fillText(
-      StoneLabels[direction.replace(/^\w/, (c: string) => c.toUpperCase()) as keyof typeof StoneLabels],
+      StoneLabels[direction.replace(/^\w/, (item: string) => item.toUpperCase()) as keyof typeof StoneLabels],
       x + this.cellSize / (direction === 'up' || direction === 'down' ? 2.5 : 3.5),
       y + this.cellSize / 1.5,
     );

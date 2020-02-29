@@ -42,7 +42,6 @@ function keyDownHandler(event: KeyboardEvent) {
   const onBallMove = (direction: string) => {
     ballMove.call(this, direction).then(onBallMoveCompleted).catch(() => {
       // TODO: add a corresponding sound effect
-      console.log('Cannot move here');
     });
   };
 
@@ -117,4 +116,4 @@ export {
   setUpEventHandlers,
   undoButtonClickHandler,
   helpButtonClickHandler,
-}
+};

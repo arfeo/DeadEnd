@@ -54,7 +54,7 @@ class Goto extends Modal {
         return;
       }
 
-      if (levelIndexById(parseInt(inputValue)) === -1) {
+      if (levelIndexById(parseInt(inputValue, 10)) === -1) {
         alert(`Level # ${inputValue} does not exist`);
 
         gotoInput.value = '';
@@ -65,7 +65,7 @@ class Goto extends Modal {
 
       this.game.destroy();
 
-      APP.pageInstance = new Game(parseInt(inputValue));
+      APP.pageInstance = new Game(parseInt(inputValue, 10));
 
       this.close();
     });
