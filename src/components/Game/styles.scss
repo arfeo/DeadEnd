@@ -6,7 +6,7 @@
   width: calc(#{$cellSize} * 32);
   height: calc(#{$cellSize} * 20 + #{$panelHeight});
   border-style: outset;
-  border-color: $white $grey $grey $white;
+  border-color: $white $gray $gray $white;
   user-select: none;
 
   .-grid {

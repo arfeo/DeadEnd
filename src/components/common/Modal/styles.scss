@@ -43,10 +43,15 @@
         position: absolute;
         top: 0.5vmin;
         right: 0.7vmin;
+        color: $darkGray;
 
         &:before {
           content: '✕';
           cursor: pointer;
+        }
+
+        &:hover {
+          color: $black;
         }
       }
 

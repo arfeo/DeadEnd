@@ -33,6 +33,8 @@ class Goto extends Modal {
     gotoCancelButton.className = '-button';
     gotoCancelButton.innerText = 'Cancel';
 
+    gotoSubmitButton.disabled = true;
+
     this.modal.appendChild(gotoModalLabel);
     this.modal.appendChild(gotoForm);
     gotoForm.appendChild(gotoInputContainer);
@@ -43,21 +45,12 @@ class Goto extends Modal {
     gotoSubmitContainer.appendChild(gotoCancelButton);
     gotoInput.focus();
 
-    gotoSubmitButton.addEventListener('click', () => {
+    const tryToGoTo = (): void => {
       const inputValue: string = gotoInput.value;
 
-      if (!inputValue) {
-        alert('Enter level #');
-
-        gotoInput.focus();
-
-        return;
-      }
-
       if (levelIndexById(parseInt(inputValue, 10)) === -1) {
-        alert(`Level # ${inputValue} does not exist`);
-
         gotoInput.value = '';
+        gotoSubmitButton.disabled = true;
         gotoInput.focus();
 
         return;
@@ -68,9 +61,20 @@ class Goto extends Modal {
       APP.pageInstance = new Game(parseInt(inputValue, 10));
 
       this.close();
+    };
+
+    gotoSubmitButton.addEventListener('click', tryToGoTo);
+    gotoCancelButton.addEventListener('click', () => this.close());
+
+    gotoInput.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        tryToGoTo();
+      }
     });
 
-    gotoCancelButton.addEventListener('click', () => this.close());
+    gotoInput.addEventListener('keyup', () => {
+      gotoSubmitButton.disabled = !gotoInput.value;
+    });
   }
 }
 
