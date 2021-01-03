@@ -26,6 +26,7 @@
       background-color: lightgrey;
       z-index: 102;
       font-size: $modalFontSize;
+      user-select: none;
 
       &.large {
         width: 80vmin;
