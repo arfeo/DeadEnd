@@ -56,6 +56,8 @@
     .-goto,
     .-undo,
     .-help {
+      position: relative;
+      top: 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -68,6 +70,10 @@
       cursor: pointer;
       border-radius: 0.5vmin;
       text-align: center;
+
+      &:active {
+        top: calc(#{$cellSize} / 20);
+      }
     }
   }
 }
