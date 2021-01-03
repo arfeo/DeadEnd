@@ -1,4 +1,3 @@
-// tslint:disable:max-file-line-count
 import { levels } from '../../constants/levels';
 import { GameColors, StoneLabels, GridDimensions, STONE_LABEL_FONT } from '../../constants/game';
 
