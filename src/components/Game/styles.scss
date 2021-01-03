@@ -60,38 +60,14 @@
       align-items: center;
       justify-content: center;
       background-color: $white;
-      width: $cellSize;
+      width: auto;
       height: $cellSize;
+      padding: 0 calc(#{$cellSize} / 2);
       margin-left: calc(#{$cellSize} / 2);
       color: $black;
       cursor: pointer;
       border-radius: 0.5vmin;
-
-      &:before {
-        text-align: center;
-      }
-    }
-
-    .-goto {
-      width: auto;
-      padding: 0 calc(#{$cellSize} / 2);
-
-      &:before {
-        content: 'Go to...';
-      }
-    }
-
-    .-undo {
-      width: auto;
-      padding: 0 calc(#{$cellSize} / 2);
-
-      &:before {
-        content: 'Undo';
-      }
-    }
-
-    .-help:before {
-      content: '?';
+      text-align: center;
     }
   }
 }

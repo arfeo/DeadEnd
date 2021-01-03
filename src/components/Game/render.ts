@@ -43,6 +43,9 @@ function renderGameBoard(): void {
   panelLevelLabel.innerText = 'Level:';
   panelStepsLabel.innerText = 'Steps:';
   panelUndosLabel.innerText = 'Undos:';
+  this.panelGotoButton.innerText = 'Go to...';
+  this.panelUndoButton.innerText = 'Undo';
+  this.panelHelpButton.innerText = 'Help';
 
   appRoot.appendChild(gameBoard);
 
