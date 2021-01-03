@@ -30,8 +30,6 @@ class Help extends Modal {
       to reach the next level. If you move the ball to a block, the ball will try to push it.</p>
       <p>If you get stuck, use the <em>Undo</em> button. You can go to another level at any time
       using the <em>Go to...</em> button, but it is highly recommended to solve the levels one after another.</p>
-      <strong>Known bug</strong>
-      <p>The game will not launch on a Mac SE (a Macintosh model which was introduced in 1987, I think...).</p>
     `);
     submitContainer.className = 'modal-submit';
     closeButton.className = '-button';
