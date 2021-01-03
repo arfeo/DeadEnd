@@ -6,9 +6,6 @@ import { APP } from '../../constants/global';
 import { ballMove } from './animation';
 import { renderGameObjects, resetPanelInfoValues } from './render';
 
-/**
- * Set up game event handlers
- */
 function setUpEventHandlers(): void {
   APP.eventListeners = {
     onKeyDown: keyDownHandler.bind(this),
@@ -33,11 +30,6 @@ function removeEventHandlers(): void {
   this.panelHelpButton.removeEventListener('click', APP.eventListeners.onHelpButtonClick);
 }
 
-/**
- * Keyboard event handler
- *
- * @param event
- */
 function keyDownHandler(event: KeyboardEvent): void {
   const onBallMoveCompleted = (): void => {
     this.stepsCount += 1;
@@ -78,16 +70,10 @@ function keyDownHandler(event: KeyboardEvent): void {
   }
 }
 
-/**
- * Go to level button click handler
- */
 function gotoButtonClickHandler(): void {
   new Goto(this);
 }
 
-/**
- * Undo button click handler
- */
 function undoButtonClickHandler(): void {
   const undoMapSize: number = Array.isArray(this.undoHistoryMap) ? this.undoHistoryMap.length : 0;
 
@@ -102,9 +88,6 @@ function undoButtonClickHandler(): void {
   }
 }
 
-/**
- * Help button click handler
- */
 function helpButtonClickHandler(): void {
   new Help(this);
 }

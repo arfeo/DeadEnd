@@ -4,7 +4,7 @@ import { Game } from '../Game';
 import { levels } from '../../constants/levels';
 import { APP } from '../../constants/global';
 
-import { levelIndexById } from '../Game/utils';
+import { getLevelIndexById } from '../Game/utils';
 
 class Goto extends Modal {
   constructor(game: Game) {
@@ -48,7 +48,7 @@ class Goto extends Modal {
     const tryToGoTo = (): void => {
       const inputValue: string = gotoInput.value;
 
-      if (levelIndexById(parseInt(inputValue, 10)) === -1) {
+      if (getLevelIndexById(parseInt(inputValue, 10)) === -1) {
         gotoInput.value = '';
         gotoSubmitButton.disabled = true;
         gotoInput.focus();

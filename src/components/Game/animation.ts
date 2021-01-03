@@ -5,14 +5,9 @@ import { GameOver } from '../GameOver';
 import { APP } from '../../constants/global';
 import { levels } from '../../constants/levels';
 
-import { invertDirection, levelIndexById } from './utils';
+import { invertDirection, getLevelIndexById } from './utils';
 import { renderBall, renderStone } from './render';
 
-/**
- * Animate the ball move
- *
- * @param direction
- */
 function ballMove(direction: string): Promise<void> {
   const ballPosX: number = this.ballPosition[1];
   const ballPosY: number = this.ballPosition[0];
@@ -95,7 +90,7 @@ function ballMove(direction: string): Promise<void> {
         this.ballPosition[0] += direction === 'down' ? 1 : -1;
       }
 
-      if (levels[levelIndexById(this.levelId)].boardMap[this.ballPosition[0]][this.ballPosition[1]] === 2) {
+      if (levels[getLevelIndexById(this.levelId)].boardMap[this.ballPosition[0]][this.ballPosition[1]] === 2) {
         return ballTransport.call(this);
       }
 
@@ -118,11 +113,6 @@ function ballMove(direction: string): Promise<void> {
   return Promise.resolve();
 }
 
-/**
- * Animate the ball's hit
- *
- * @param startDirection
- */
 function ballHit(startDirection: string): Promise<void> {
   const ballPosX: number = this.ballPosition[1];
   const ballPosY: number = this.ballPosition[0];
@@ -170,15 +160,8 @@ function ballHit(startDirection: string): Promise<void> {
   return Promise.resolve();
 }
 
-/**
- * Move a stone if possible
- *
- * @param posX
- * @param posY
- * @param direction
- */
 function testStoneMove(posX: number, posY: number, direction: string): Promise<Array<Promise<void>>> {
-  const levelIndex: number = levelIndexById(this.levelId);
+  const levelIndex: number = getLevelIndexById(this.levelId);
 
   switch (direction) {
     case 'up': {
@@ -249,12 +232,6 @@ function testStoneMove(posX: number, posY: number, direction: string): Promise<A
   }
 }
 
-/**
- * Animate stone move
- *
- * @param position
- * @param direction
- */
 async function stoneMove(position: { x: number; y: number }, direction: string): Promise<void> {
   const ctx: CanvasRenderingContext2D = this.stonesCanvas.getContext('2d');
   const stoneType: number = this.stonePositions[position.y][position.x];
@@ -316,10 +293,7 @@ async function stoneMove(position: { x: number; y: number }, direction: string):
   return Promise.resolve();
 }
 
-/**
- * Animate the ball transportation
- */
-export function ballTransport(): Promise<void> {
+function ballTransport(): Promise<void> {
   const ctx: CanvasRenderingContext2D = this.ballCanvas.getContext('2d');
   const ballX: number = this.ballPosition[1] * this.cellSize;
   const ballY: number = this.ballPosition[0] * this.cellSize;
@@ -337,7 +311,7 @@ export function ballTransport(): Promise<void> {
 
       this.isBallMoving = false;
 
-      if (levelIndexById(this.levelId + 1) > -1) {
+      if (getLevelIndexById(this.levelId + 1) > -1) {
         this.destroy();
 
         APP.pageInstance = new Game(this.levelId + 1);
@@ -360,4 +334,7 @@ export function ballTransport(): Promise<void> {
   return Promise.resolve();
 }
 
-export { ballMove };
+export {
+  ballMove,
+  ballTransport,
+};

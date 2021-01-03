@@ -2,11 +2,6 @@ import { levels } from '../../constants/levels';
 
 import { ILevel } from '../../types/game';
 
-/**
- * Invert the ball movement direction
- *
- * @param direction
- */
 function invertDirection(direction: string): string {
   switch (direction) {
     case 'up': return 'down';
@@ -17,15 +12,10 @@ function invertDirection(direction: string): string {
   }
 }
 
-/**
- * Get level object index by id key
- *
- * @param levelId
- */
-function levelIndexById(levelId: number): number {
+function getLevelIndexById(levelId: number): number {
   return levels.findIndex((item: ILevel) => {
     return item.id === levelId;
   });
 }
 
-export { invertDirection, levelIndexById };
+export { invertDirection, getLevelIndexById };
