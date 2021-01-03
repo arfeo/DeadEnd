@@ -1,7 +1,6 @@
 import { Game } from './index';
 import { GameOver } from '../GameOver';
 
-import { APP } from '../../constants/global';
 import { levels } from '../../constants/levels';
 
 import { invertDirection, getLevelIndexById } from './utils';
@@ -313,7 +312,7 @@ function ballTransport(): Promise<void> {
       if (getLevelIndexById(this.levelId + 1) > -1) {
         this.destroy();
 
-        APP.pageInstance = new Game(this.levelId + 1);
+        new Game(this.levelId + 1);
       } else {
         new GameOver(this);
 

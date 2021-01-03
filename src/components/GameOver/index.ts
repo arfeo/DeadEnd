@@ -1,8 +1,6 @@
 import { Modal } from '../common/Modal';
 import { Game } from '../Game';
 
-import { APP } from '../../constants/global';
-
 class GameOver extends Modal {
   render(): void {
     const gameOverLabel: HTMLElement = document.createElement('div');
@@ -25,7 +23,7 @@ class GameOver extends Modal {
     gameOverSubmitRestart.addEventListener('click', () => {
       this.game.destroy();
 
-      APP.pageInstance = new Game();
+      new Game();
 
       this.close();
     });

@@ -1,4 +1,5 @@
 export interface IGlobals {
-  pageInstance: any;
-  eventListeners: { [key: string]: EventListener };
+  eventListeners: {
+    [key: string]: EventListener;
+  };
 }

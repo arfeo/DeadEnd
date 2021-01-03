@@ -2,7 +2,6 @@ import { Modal } from '../common/Modal';
 import { Game } from '../Game';
 
 import { levels } from '../../constants/levels';
-import { APP } from '../../constants/global';
 
 import { getLevelIndexById } from '../Game/utils';
 
@@ -15,30 +14,27 @@ class Goto extends Modal {
     const gotoModalLabel: HTMLElement = document.createElement('div');
     const gotoForm: HTMLElement = document.createElement('div');
     const gotoInputContainer: HTMLElement = document.createElement('div');
-    const gotoLabel: HTMLElement = document.createElement('div');
     const gotoInput: HTMLInputElement = document.createElement('input');
     const gotoSubmitContainer: HTMLElement = document.createElement('div');
     const gotoSubmitButton: HTMLButtonElement = document.createElement('button');
     const gotoCancelButton: HTMLButtonElement = document.createElement('button');
 
-    gotoModalLabel.innerHTML = `<strong>Go to level (1—${levels.length}):</strong>`;
     gotoForm.className = 'goto-form';
     gotoInputContainer.className = '-input-container';
-    gotoLabel.className = '-label';
-    gotoLabel.innerText = 'Level:';
     gotoInput.className = '-input';
     gotoSubmitContainer.className = 'modal-submit';
     gotoSubmitButton.className = '-button';
-    gotoSubmitButton.innerText = 'Go to';
     gotoCancelButton.className = '-button';
-    gotoCancelButton.innerText = 'Cancel';
 
+    gotoModalLabel.innerHTML = `<strong>Go to level (1—${levels.length}):</strong>`;
+    gotoInput.type = 'number';
     gotoSubmitButton.disabled = true;
+    gotoSubmitButton.innerText = 'OK';
+    gotoCancelButton.innerText = 'Cancel';
 
     this.modal.appendChild(gotoModalLabel);
     this.modal.appendChild(gotoForm);
     gotoForm.appendChild(gotoInputContainer);
-    gotoInputContainer.appendChild(gotoLabel);
     gotoInputContainer.appendChild(gotoInput);
     gotoForm.appendChild(gotoSubmitContainer);
     gotoSubmitContainer.appendChild(gotoSubmitButton);
@@ -58,7 +54,7 @@ class Goto extends Modal {
 
       this.game.destroy();
 
-      APP.pageInstance = new Game(parseInt(inputValue, 10));
+      new Game(parseInt(inputValue, 10));
 
       this.close();
     };
