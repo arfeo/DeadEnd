@@ -1,5 +1,12 @@
 import { levels } from '../../constants/levels';
-import { GameColors, StoneLabels, GridDimensions, STONE_LABEL_FONT } from '../../constants/game';
+
+import {
+  GameColors,
+  GridDimensions,
+  MapObjects,
+  StoneLabels,
+  STONE_LABEL_FONT,
+} from '../../constants/game';
 
 import { getLevelIndexById } from './utils';
 
@@ -116,109 +123,52 @@ function renderGameObjects(gameObjects: number[][] = []): void {
       const currentBoardCell: number = boardMap[y][x];
 
       switch (currentBoardCell) {
-        case 1: { // Ball
+        case MapObjects.Ball: {
           this.ballPosition = [y, x];
           this.stonePositions[y].push(0);
 
           renderBall.call(this, ctxBall, x * this.cellSize, y * this.cellSize);
-
           break;
         }
-        case 2: { // Exit
+        case MapObjects.Exit: {
           this.stonePositions[y].push(currentBoardCell);
 
-          const grdX: number = x * this.cellSize + this.cellSize / 2;
-          const grdY: number = y * this.cellSize + this.cellSize / 2;
-          const innerRadius: number = this.cellSize / 8;
-          const outerRadius: number = this.cellSize / 3;
-
-          const gradient: CanvasGradient = ctxStatic.createRadialGradient(
-            grdX,
-            grdY,
-            innerRadius,
-            grdX,
-            grdY,
-            outerRadius,
-          );
-
-          gradient.addColorStop(0, GameColors.ExitGradientInner);
-          gradient.addColorStop(1, GameColors.ExitGradientOuter);
-
-          ctxStatic.fillStyle = gradient;
-          ctxStatic.beginPath();
-          ctxStatic.arc(
-            x * this.cellSize + this.cellSize / 2,
-            y * this.cellSize + this.cellSize / 2,
-            this.cellSize / 2.5,
-            0,
-            Math.PI * 2,
-            false,
-          );
-          ctxStatic.fill();
-
+          renderExit.call(this, ctxStatic, x * this.cellSize, y * this.cellSize);
           break;
         }
-        case 3: { // Wall
+        case MapObjects.Wall: {
           this.stonePositions[y].push(currentBoardCell);
 
-          ctxStatic.fillStyle = GameColors.Wall;
-          ctxStatic.fillRect(
-            x * this.cellSize,
-            y * this.cellSize,
-            this.cellSize,
-            this.cellSize,
-          );
-
-          for (let i = 1; i <= 4; i += 1) {
-            ctxStatic.beginPath();
-            ctxStatic.moveTo(
-              x * this.cellSize,
-              y * this.cellSize + i * this.cellSize / 4,
-            );
-            ctxStatic.lineTo(
-              x * this.cellSize + this.cellSize,
-              y * this.cellSize + i * this.cellSize / 4,
-            );
-            ctxStatic.stroke();
-          }
-
-          for (let i = 1; i <= 4; i += 1) {
-            ctxStatic.beginPath();
-            ctxStatic.moveTo(
-              x * this.cellSize + (i % 2 === 0 ? 1 : 2) * this.cellSize / 2,
-              y * this.cellSize + (i - 1) * this.cellSize / 4,
-            );
-            ctxStatic.lineTo(
-              x * this.cellSize + (i % 2 === 0 ? 1 : 2) * this.cellSize / 2,
-              y * this.cellSize + (i - 1) * this.cellSize / 4 + this.cellSize / 4,
-            );
-            ctxStatic.stroke();
-          }
-
+          renderWall.call(this, ctxStatic, x * this.cellSize, y * this.cellSize);
           break;
         }
-        case 4: { // Stone (regular)
+        case MapObjects.StoneRegular: {
           this.stonePositions[y].push(currentBoardCell);
+
           renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize);
           break;
         }
-        case 5: { // Stone (up arrow)
+        case MapObjects.StoneUp: {
           this.stonePositions[y].push(currentBoardCell);
+
           renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'up');
           break;
         }
-        case 6: { // Stone (right arrow)
+        case MapObjects.StoneRight: {
           this.stonePositions[y].push(currentBoardCell);
+
           renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'right');
           break;
         }
-        case 7: { // Stone (down arrow)
+        case MapObjects.StoneDown: {
           this.stonePositions[y].push(currentBoardCell);
+
           renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'down');
           break;
         }
-        case 8: { // Stone (left arrow)
+        case MapObjects.StoneLeft: {
           this.stonePositions[y].push(currentBoardCell);
+
           renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'left');
           break;
         }
@@ -259,6 +209,7 @@ function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?
   ctx.fillStyle = gradient;
 
   ctx.beginPath();
+
   ctx.arc(
     x + this.cellSize / 2,
     y + this.cellSize / 2,
@@ -267,7 +218,79 @@ function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?
     Math.PI * 2,
     false,
   );
+
   ctx.fill();
+}
+
+function renderExit(ctx: CanvasRenderingContext2D, x: number, y: number): void {
+  const grdX: number = x + this.cellSize / 2;
+  const grdY: number = y + this.cellSize / 2;
+  const innerRadius: number = this.cellSize / 8;
+  const outerRadius: number = this.cellSize / 3;
+
+  const gradient: CanvasGradient = ctx.createRadialGradient(
+    grdX,
+    grdY,
+    innerRadius,
+    grdX,
+    grdY,
+    outerRadius,
+  );
+
+  gradient.addColorStop(0, GameColors.ExitGradientInner);
+  gradient.addColorStop(1, GameColors.ExitGradientOuter);
+
+  ctx.fillStyle = gradient;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    x + this.cellSize / 2,
+    y + this.cellSize / 2,
+    this.cellSize / 2.5,
+    0,
+    Math.PI * 2,
+    false,
+  );
+
+  ctx.fill();
+}
+
+function renderWall(ctx: CanvasRenderingContext2D, x: number, y: number): void {
+  ctx.fillStyle = GameColors.Wall;
+
+  ctx.fillRect(
+    x,
+    y ,
+    this.cellSize,
+    this.cellSize,
+  );
+
+  for (let i = 1; i <= 4; i += 1) {
+    ctx.beginPath();
+    ctx.moveTo(
+      x,
+      y + i * this.cellSize / 4,
+    );
+    ctx.lineTo(
+      x + this.cellSize,
+      y + i * this.cellSize / 4,
+    );
+    ctx.stroke();
+  }
+
+  for (let i = 1; i <= 4; i += 1) {
+    ctx.beginPath();
+    ctx.moveTo(
+      x + (i % 2 === 0 ? 1 : 2) * this.cellSize / 2,
+      y + (i - 1) * this.cellSize / 4,
+    );
+    ctx.lineTo(
+      x + (i % 2 === 0 ? 1 : 2) * this.cellSize / 2,
+      y + (i - 1) * this.cellSize / 4 + this.cellSize / 4,
+    );
+    ctx.stroke();
+  }
 }
 
 function renderStone(ctx: CanvasRenderingContext2D, x: number, y: number, direction?: string): void {
@@ -303,5 +326,6 @@ export {
   renderGameObjects,
   resetPanelInfoValues,
   renderBall,
+  renderExit,
   renderStone,
 };

@@ -20,6 +20,17 @@ export enum GridDimensions {
   Height = 20,
 }
 
+export enum MapObjects {
+  Ball = 1,
+  Exit,
+  Wall,
+  StoneRegular,
+  StoneUp,
+  StoneRight,
+  StoneDown,
+  StoneLeft,
+}
+
 export const CELL_SIZE_VMIN = 4;
 
 export const STONE_LABEL_FONT = '2vmin Helvetica, Arial';
