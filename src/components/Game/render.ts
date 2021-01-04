@@ -89,7 +89,7 @@ function renderGameBoard(): void {
   this.gameBoardGrid.appendChild(this.stonesCanvas);
 }
 
-function renderGameObjects(gameObjects: number[][] = []): void {
+function renderMapObjects(gameObjects: number[][] = []): void {
   const gameObjectsEmpty: boolean = Object.keys(gameObjects).length === 0;
   const boardMap: number[][] = !gameObjectsEmpty ? gameObjects : levels[getLevelIndexById(this.levelId)].boardMap;
 
@@ -306,7 +306,7 @@ function resetPanelInfoValues(): void {
 
 export {
   renderGameBoard,
-  renderGameObjects,
+  renderMapObjects,
   resetPanelInfoValues,
   renderBall,
   renderExit,

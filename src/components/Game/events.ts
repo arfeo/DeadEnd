@@ -4,7 +4,7 @@ import { Help } from '../Help';
 import { APP } from '../../constants/global';
 
 import { ballMove } from './animation';
-import { renderGameObjects, resetPanelInfoValues } from './render';
+import { renderMapObjects, resetPanelInfoValues } from './render';
 
 function setUpEventHandlers(): void {
   APP.eventListeners = {
@@ -78,7 +78,7 @@ function undoButtonClickHandler(): void {
   const undoMapSize: number = Array.isArray(this.undoHistoryMap) ? this.undoHistoryMap.length : 0;
 
   if (undoMapSize > 0) {
-    renderGameObjects.call(this, JSON.parse(JSON.stringify(this.undoHistoryMap[undoMapSize - 1])));
+    renderMapObjects.call(this, JSON.parse(JSON.stringify(this.undoHistoryMap[undoMapSize - 1])));
 
     this.undoHistoryMap.pop();
     this.undosCount += 1;

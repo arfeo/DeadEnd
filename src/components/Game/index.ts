@@ -2,7 +2,7 @@ import { CELL_SIZE_VMIN } from '../../constants/game';
 
 import {
   renderGameBoard,
-  renderGameObjects,
+  renderMapObjects,
   resetPanelInfoValues,
 } from './render';
 
@@ -51,13 +51,14 @@ class Game {
     this.isGameOver = false;
 
     this.render();
+
+    setUpEventHandlers.call(this);
   }
 
   render(): void {
     renderGameBoard.call(this);
-    renderGameObjects.call(this);
+    renderMapObjects.call(this);
     resetPanelInfoValues.call(this);
-    setUpEventHandlers.call(this);
   }
 
   destroy(): void {
