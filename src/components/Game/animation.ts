@@ -2,6 +2,7 @@ import { Game } from './index';
 import { GameOver } from '../GameOver';
 
 import { levels } from '../../constants/levels';
+import { GridDimensions } from '../../constants/game';
 
 import { invertDirection, getLevelIndexById } from './utils';
 import { renderBall, renderStone } from './render';
@@ -14,6 +15,10 @@ function ballMove(direction: string): Promise<void> {
 
   switch (direction) {
     case 'up': {
+      if (ballPosY === 0) {
+        return Promise.reject();
+      }
+
       const nextCell: number = this.stonePositions[ballPosY - 1][ballPosX];
 
       if (nextCell !== 0 && nextCell !== 2) {
@@ -27,6 +32,10 @@ function ballMove(direction: string): Promise<void> {
       break;
     }
     case 'right': {
+      if (ballPosX === GridDimensions.Width - 1) {
+        return Promise.reject();
+      }
+
       const nextCell: number = this.stonePositions[ballPosY][ballPosX + 1];
 
       if (nextCell !== 0 && nextCell !== 2) {
@@ -40,6 +49,10 @@ function ballMove(direction: string): Promise<void> {
       break;
     }
     case 'down': {
+      if (ballPosY === GridDimensions.Height - 1) {
+        return Promise.reject();
+      }
+
       const nextCell: number = this.stonePositions[ballPosY + 1][ballPosX];
 
       if (nextCell !== 0 && nextCell !== 2) {
@@ -53,6 +66,10 @@ function ballMove(direction: string): Promise<void> {
       break;
     }
     case 'left': {
+      if (ballPosX === 0) {
+        return Promise.reject();
+      }
+
       const nextCell: number = this.stonePositions[ballPosY][ballPosX - 1];
 
       if (nextCell !== 0 && nextCell !== 2) {
