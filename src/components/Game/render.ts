@@ -103,12 +103,14 @@ function renderGameObjects(gameObjects: number[][] = []): void {
     this.cellSize * GridDimensions.Width,
     this.cellSize * GridDimensions.Height,
   );
+
   ctxBall.clearRect(
     0,
     0,
     this.cellSize * GridDimensions.Width,
     this.cellSize * GridDimensions.Height,
   );
+
   ctxStones.clearRect(
     0,
     0,
@@ -122,60 +124,41 @@ function renderGameObjects(gameObjects: number[][] = []): void {
     for (let x = 0; x < GridDimensions.Width; x += 1) {
       const currentBoardCell: number = boardMap[y][x];
 
+      this.stonePositions[y].push(
+        currentBoardCell === MapObjects.Nothing || currentBoardCell === MapObjects.Ball
+          ? 0
+          : currentBoardCell
+      );
+
       switch (currentBoardCell) {
-        case MapObjects.Ball: {
+        case MapObjects.Ball:
           this.ballPosition = [y, x];
-          this.stonePositions[y].push(0);
 
           renderBall.call(this, ctxBall, x * this.cellSize, y * this.cellSize);
           break;
-        }
-        case MapObjects.Exit: {
-          this.stonePositions[y].push(currentBoardCell);
-
+        case MapObjects.Exit:
           renderExit.call(this, ctxStatic, x * this.cellSize, y * this.cellSize);
           break;
-        }
-        case MapObjects.Wall: {
-          this.stonePositions[y].push(currentBoardCell);
-
+        case MapObjects.Wall:
           renderWall.call(this, ctxStatic, x * this.cellSize, y * this.cellSize);
           break;
-        }
-        case MapObjects.StoneRegular: {
-          this.stonePositions[y].push(currentBoardCell);
-
+        case MapObjects.StoneRegular:
           renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize);
           break;
-        }
-        case MapObjects.StoneUp: {
-          this.stonePositions[y].push(currentBoardCell);
-
+        case MapObjects.StoneUp:
           renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'up');
           break;
-        }
-        case MapObjects.StoneRight: {
-          this.stonePositions[y].push(currentBoardCell);
-
+        case MapObjects.StoneRight:
           renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'right');
           break;
-        }
-        case MapObjects.StoneDown: {
-          this.stonePositions[y].push(currentBoardCell);
-
+        case MapObjects.StoneDown:
           renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'down');
           break;
-        }
-        case MapObjects.StoneLeft: {
-          this.stonePositions[y].push(currentBoardCell);
-
+        case MapObjects.StoneLeft:
           renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'left');
           break;
-        }
-        default: {
-          this.stonePositions[y].push(0);
+        default:
           break;
-        }
       }
     }
   }

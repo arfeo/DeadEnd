@@ -21,7 +21,8 @@ export enum GridDimensions {
 }
 
 export enum MapObjects {
-  Ball = 1,
+  Nothing = 0,
+  Ball,
   Exit,
   Wall,
   StoneRegular,
