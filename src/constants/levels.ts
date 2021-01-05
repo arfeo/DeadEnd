@@ -11,9 +11,9 @@
  * 8 - stone (left arrow)
  */
 
-import { ILevel } from '../types/game';
+import { Level } from '../types/game';
 
-export const levels: ILevel[] = [
+export const levels: Level[] = [
   {
     id: 1,
     boardMap: [

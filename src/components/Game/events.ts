@@ -2,8 +2,9 @@ import { Goto } from '../Goto';
 import { Help } from '../Help';
 
 import { APP } from '../../constants/global';
+import { Directions } from '../../constants/game';
 
-import { ballMove } from './animation';
+import { animateBallMove } from './animations';
 import { renderMapObjects, resetPanelInfoValues } from './render';
 
 function setUpEventHandlers(): void {
@@ -15,16 +16,15 @@ function setUpEventHandlers(): void {
   };
 
   document.body.addEventListener('keydown', APP.eventListeners.onKeyDown);
+
   this.panelGotoButton.addEventListener('click', APP.eventListeners.onGotoButtonClick);
   this.panelUndoButton.addEventListener('click', APP.eventListeners.onUndoButtonClick);
   this.panelHelpButton.addEventListener('click', APP.eventListeners.onHelpButtonClick);
 }
 
-/**
- * Remove game event handlers
- */
 function removeEventHandlers(): void {
   document.body.removeEventListener('keydown', APP.eventListeners.onKeyDown);
+
   this.panelGotoButton.removeEventListener('click', APP.eventListeners.onGotoButtonClick);
   this.panelUndoButton.removeEventListener('click', APP.eventListeners.onUndoButtonClick);
   this.panelHelpButton.removeEventListener('click', APP.eventListeners.onHelpButtonClick);
@@ -37,8 +37,8 @@ function keyDownHandler(event: KeyboardEvent): void {
     resetPanelInfoValues.call(this);
   };
 
-  const onBallMove = (direction: string): void => {
-    ballMove.call(this, direction).then(onBallMoveCompleted).catch(() => {
+  const onBallMove = (direction: Directions): void => {
+    animateBallMove.call(this, direction).then(onBallMoveCompleted).catch(() => {
       // TODO: add a corresponding sound effect
     });
   };
@@ -47,22 +47,22 @@ function keyDownHandler(event: KeyboardEvent): void {
     switch (event.key) {
       case 'ArrowUp':
       case 'Up': {
-        onBallMove('up');
+        onBallMove(Directions.Up);
         break;
       }
       case 'ArrowRight':
       case 'Right': {
-        onBallMove('right');
+        onBallMove(Directions.Right);
         break;
       }
       case 'ArrowDown':
       case 'Down': {
-        onBallMove('down');
+        onBallMove(Directions.Down);
         break;
       }
       case 'ArrowLeft':
       case 'Left': {
-        onBallMove('left');
+        onBallMove(Directions.Left);
         break;
       }
       default: break;
@@ -93,10 +93,6 @@ function helpButtonClickHandler(): void {
 }
 
 export {
-  gotoButtonClickHandler,
-  keyDownHandler,
-  removeEventHandlers,
   setUpEventHandlers,
-  undoButtonClickHandler,
-  helpButtonClickHandler,
+  removeEventHandlers,
 };

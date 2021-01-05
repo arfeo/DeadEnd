@@ -1,5 +1,3 @@
-import { IGlobals } from '../types/global';
-
-export const APP: IGlobals = {
+export const APP: App = {
   eventListeners: null,
 };

@@ -1,19 +1,20 @@
 import { levels } from '../../constants/levels';
+import { Directions } from '../../constants/game';
 
-import { ILevel } from '../../types/game';
+import { Level } from '../../types/game';
 
-function invertDirection(direction: string): string {
+function invertDirection(direction: Directions): Directions {
   switch (direction) {
-    case 'up': return 'down';
-    case 'right': return 'left';
-    case 'down': return 'up';
-    case 'left': return 'right';
-    default: return null as string;
+    case Directions.Up: return Directions.Down;
+    case Directions.Right: return Directions.Left;
+    case Directions.Down: return Directions.Up;
+    case Directions.Left: return Directions.Right;
+    default: break;
   }
 }
 
 function getLevelIndexById(levelId: number): number {
-  return levels.findIndex((item: ILevel) => {
+  return levels.findIndex((item: Level) => {
     return item.id === levelId;
   });
 }

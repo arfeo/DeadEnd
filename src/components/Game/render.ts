@@ -1,5 +1,5 @@
 import { levels } from '../../constants/levels';
-import { GridDimensions, MapObjects } from '../../constants/game';
+import { Directions, GridDimensions, MapObjects } from '../../constants/game';
 
 import { getLevelIndexById } from './utils';
 import { drawCircle, drawLineToAngle, drawRectangle, drawTriangle } from '../../utils/drawing';
@@ -117,7 +117,9 @@ function renderMapObjects(gameObjects: number[][] = []): void {
           renderBall.call(this, ctxBall, x * this.cellSize, y * this.cellSize);
           break;
         case MapObjects.Exit:
-          renderExit.call(this, ctxStatic, x * this.cellSize, y * this.cellSize);
+          this.exitPosition = [y, x];
+
+          renderExit.call(this, ctxStatic);
           break;
         case MapObjects.Wall:
           renderWall.call(this, ctxStatic, x * this.cellSize, y * this.cellSize);
@@ -126,16 +128,16 @@ function renderMapObjects(gameObjects: number[][] = []): void {
           renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize);
           break;
         case MapObjects.StoneUp:
-          renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'up');
+          renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, Directions.Up);
           break;
         case MapObjects.StoneRight:
-          renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'right');
+          renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, Directions.Right);
           break;
         case MapObjects.StoneDown:
-          renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'down');
+          renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, Directions.Down);
           break;
         case MapObjects.StoneLeft:
-          renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, 'left');
+          renderStone.call(this, ctxStones, x * this.cellSize, y * this.cellSize, Directions.Left);
           break;
         default:
           break;
@@ -180,7 +182,10 @@ function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?
   );
 }
 
-function renderExit(ctx: CanvasRenderingContext2D, x: number, y: number): void {
+function renderExit(ctx: CanvasRenderingContext2D): void {
+  const [exitY, exitX] = this.exitPosition;
+  const x: number = exitX * this.cellSize;
+  const y: number = exitY * this.cellSize;
   const grdX: number = x + this.cellSize / 2;
   const grdY: number = y + this.cellSize / 2;
   const innerRadius: number = this.cellSize / 8;
@@ -248,12 +253,7 @@ function renderWall(ctx: CanvasRenderingContext2D, x: number, y: number): void {
   }
 }
 
-function renderStone(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  direction?: 'up' | 'down' | 'left' | 'right',
-): void {
+function renderStone(ctx: CanvasRenderingContext2D, x: number, y: number, direction?: Directions): void {
   drawRectangle(
     ctx,
     x + 1,
@@ -314,7 +314,7 @@ function renderStone(
   );
 
   if (direction) {
-    if (direction === 'up' || direction === 'down') {
+    if (direction === Directions.Up || direction === Directions.Down) {
       drawLineToAngle(
         ctx,
         x + this.cellSize / 2,
@@ -329,7 +329,7 @@ function renderStone(
 
       drawTriangle(
         ctx,
-        direction === 'up'
+        direction === Directions.Up
           ? [x + this.cellSize / 2, y + this.cellSize / 4]
           : [x + this.cellSize / 2, y + this.cellSize - this.cellSize / 4],
         [x + this.cellSize - this.cellSize / 4, y + this.cellSize / 2],
@@ -353,7 +353,7 @@ function renderStone(
 
       drawTriangle(
         ctx,
-        direction === 'left'
+        direction === Directions.Left
           ? [x + this.cellSize / 4, y + this.cellSize / 2]
           : [x + this.cellSize - this.cellSize / 4, y + this.cellSize / 2],
         [x + this.cellSize / 2, y + this.cellSize / 4],
@@ -377,6 +377,5 @@ export {
   renderMapObjects,
   resetPanelInfoValues,
   renderBall,
-  renderExit,
   renderStone,
 };

@@ -1,4 +1,4 @@
-export interface ILevel {
+export interface Level {
   id: number;
   boardMap: number[][];
 }

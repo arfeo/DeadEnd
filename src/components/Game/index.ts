@@ -1,7 +1,6 @@
 import { CELL_SIZE_VMIN } from '../../constants/game';
 
 import { renderGameBoard, renderMapObjects, resetPanelInfoValues } from './render';
-
 import { removeEventHandlers, setUpEventHandlers } from './events';
 
 import { setCellSize } from '../../utils/common';
@@ -23,10 +22,11 @@ class Game {
   cellSize: number;
   ballPosition: number[];
   stonePositions: number[][];
+  exitPosition: number[];
   undoHistoryMap: Array<number[][]>;
   ballAnimationId: number;
-  isBallMoving: boolean;
   stoneAnimationId: number;
+  isBallMoving: boolean;
   isGameOver: boolean;
 
   constructor(levelId = 1, stepsCount = 0, undosCount = 0) {
@@ -49,6 +49,7 @@ class Game {
 
     this.ballPosition = [];
     this.stonePositions = [];
+    this.exitPosition = [];
     this.undoHistoryMap = [];
 
     this.isBallMoving = false;
@@ -66,9 +67,6 @@ class Game {
   }
 
   destroy(): void {
-    clearTimeout(this.ballAnimationId);
-    clearTimeout(this.stoneAnimationId);
-
     removeEventHandlers.call(this);
   }
 }

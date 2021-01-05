@@ -16,3 +16,10 @@ export enum MapObjects {
   StoneDown,
   StoneLeft,
 }
+
+export enum Directions {
+  Up = 'up',
+  Right = 'right',
+  Down = 'down',
+  Left = 'left',
+}
