@@ -1,15 +1,8 @@
 import { CELL_SIZE_VMIN } from '../../constants/game';
 
-import {
-  renderGameBoard,
-  renderMapObjects,
-  resetPanelInfoValues,
-} from './render';
+import { renderGameBoard, renderMapObjects, resetPanelInfoValues } from './render';
 
-import {
-  removeEventHandlers,
-  setUpEventHandlers,
-} from './events';
+import { removeEventHandlers, setUpEventHandlers } from './events';
 
 import { setCellSize } from '../../utils/common';
 
@@ -42,6 +35,17 @@ class Game {
     this.undosCount = undosCount;
 
     this.cellSize = setCellSize(CELL_SIZE_VMIN);
+
+    this.gameBoardGrid = document.createElement('div');
+    this.panelLevelsValue = document.createElement('div');
+    this.panelStepsValue = document.createElement('div');
+    this.panelUndosValue = document.createElement('div');
+    this.panelGotoButton = document.createElement('div');
+    this.panelUndoButton = document.createElement('div');
+    this.panelHelpButton = document.createElement('div');
+    this.staticCanvas = document.createElement('canvas');
+    this.ballCanvas = document.createElement('canvas');
+    this.stonesCanvas = document.createElement('canvas');
 
     this.ballPosition = [];
     this.stonePositions = [];

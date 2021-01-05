@@ -19,18 +19,9 @@ function renderGameBoard(): void {
   const panelStepsLabel: HTMLElement = document.createElement('div');
   const panelUndosLabel: HTMLElement = document.createElement('div');
 
-  this.gameBoardGrid = document.createElement('div');
-  this.panelLevelsValue = document.createElement('div');
-  this.panelStepsValue = document.createElement('div');
-  this.panelUndosValue = document.createElement('div');
-  this.panelGotoButton = document.createElement('div');
-  this.panelUndoButton = document.createElement('div');
-  this.panelHelpButton = document.createElement('div');
-  this.staticCanvas = document.createElement('canvas');
-  this.ballCanvas = document.createElement('canvas');
-  this.stonesCanvas = document.createElement('canvas');
-
-  appRoot.innerHTML = '';
+  while (appRoot.firstChild) {
+    appRoot.removeChild(appRoot.firstChild);
+  }
 
   gameBoard.className = 'gameBoard';
   this.gameBoardGrid.className = '-grid';
@@ -40,6 +31,9 @@ function renderGameBoard(): void {
   panelStepsLabel.className = '-label';
   panelUndosLabel.className = '-label';
 
+  this.staticCanvas.className = '-static-canvas';
+  this.ballCanvas.className = '-ball-canvas';
+  this.stonesCanvas.className = '-stones-canvas';
   this.panelLevelsValue.className = '-value';
   this.panelStepsValue.className = '-value';
   this.panelUndosValue.className = '-value';
@@ -53,6 +47,13 @@ function renderGameBoard(): void {
   this.panelGotoButton.innerText = 'Go to...';
   this.panelUndoButton.innerText = 'Undo';
   this.panelHelpButton.innerText = 'Help';
+
+  this.staticCanvas.width = this.cellSize * GridDimensions.Width;
+  this.staticCanvas.height = this.cellSize * GridDimensions.Height;
+  this.ballCanvas.width = this.cellSize * GridDimensions.Width;
+  this.ballCanvas.height = this.cellSize * GridDimensions.Height;
+  this.stonesCanvas.width = this.cellSize * GridDimensions.Width;
+  this.stonesCanvas.height = this.cellSize * GridDimensions.Height;
 
   appRoot.appendChild(gameBoard);
 
@@ -68,21 +69,6 @@ function renderGameBoard(): void {
   gameBoardPanel.appendChild(this.panelGotoButton);
   gameBoardPanel.appendChild(this.panelUndoButton);
   gameBoardPanel.appendChild(this.panelHelpButton);
-
-  this.staticCanvas = document.createElement('canvas');
-  this.staticCanvas.className = '-static-canvas';
-  this.staticCanvas.width = this.cellSize * GridDimensions.Width;
-  this.staticCanvas.height = this.cellSize * GridDimensions.Height;
-
-  this.ballCanvas = document.createElement('canvas');
-  this.ballCanvas.className = '-ball-canvas';
-  this.ballCanvas.width = this.cellSize * GridDimensions.Width;
-  this.ballCanvas.height = this.cellSize * GridDimensions.Height;
-
-  this.stonesCanvas = document.createElement('canvas');
-  this.stonesCanvas.className = '-stones-canvas';
-  this.stonesCanvas.width = this.cellSize * GridDimensions.Width;
-  this.stonesCanvas.height = this.cellSize * GridDimensions.Height;
 
   this.gameBoardGrid.appendChild(this.staticCanvas);
   this.gameBoardGrid.appendChild(this.ballCanvas);
