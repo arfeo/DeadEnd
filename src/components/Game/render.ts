@@ -1,5 +1,5 @@
 import { levels } from '../../constants/levels';
-import { GameColors, GridDimensions, MapObjects } from '../../constants/game';
+import { GridDimensions, MapObjects } from '../../constants/game';
 
 import { getLevelIndexById } from './utils';
 import { drawCircle, drawLineToAngle, drawRectangle, drawTriangle } from '../../utils/drawing';
@@ -166,8 +166,8 @@ function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?
     outerRadius,
   );
 
-  gradient.addColorStop(0, GameColors.BallGradientInner);
-  gradient.addColorStop(1, GameColors.BallGradientOuter);
+  gradient.addColorStop(0, 'rgb(0, 191, 255)');
+  gradient.addColorStop(1, 'rgb(65, 105, 225)');
 
   drawCircle(
     ctx,
@@ -195,8 +195,8 @@ function renderExit(ctx: CanvasRenderingContext2D, x: number, y: number): void {
     outerRadius,
   );
 
-  gradient.addColorStop(0, GameColors.ExitGradientInner);
-  gradient.addColorStop(1, GameColors.ExitGradientOuter);
+  gradient.addColorStop(0, 'rgb(255, 0, 0)');
+  gradient.addColorStop(1, 'rgb(255, 215, 0)');
 
   drawCircle(
     ctx,
@@ -217,7 +217,7 @@ function renderWall(ctx: CanvasRenderingContext2D, x: number, y: number): void {
     this.cellSize,
     this.cellSize,
     {
-      fillColor: GameColors.Wall,
+      fillColor: 'rgb(255, 0, 0)',
     },
   );
 
@@ -229,7 +229,7 @@ function renderWall(ctx: CanvasRenderingContext2D, x: number, y: number): void {
       this.cellSize,
       0,
       {
-        edgingColor: GameColors.Background,
+        edgingColor: 'rgb(0, 0, 0)',
       },
     );
   }
@@ -242,7 +242,7 @@ function renderWall(ctx: CanvasRenderingContext2D, x: number, y: number): void {
       this.cellSize / 4,
       90,
       {
-        edgingColor: GameColors.Background,
+        edgingColor: 'rgb(0, 0, 0)',
       },
     );
   }
@@ -261,7 +261,55 @@ function renderStone(
     this.cellSize - 2,
     this.cellSize - 2,
     {
-      fillColor: GameColors.Stone,
+      fillColor: 'rgb(128, 128, 128)',
+    },
+  );
+
+  drawLineToAngle(
+    ctx,
+    x + this.cellSize / 16,
+    y + this.cellSize / 16,
+    this.cellSize - this.cellSize / 8,
+    0,
+    {
+      edgingWidth: this.cellSize / 8,
+      edgingColor: 'rgb(255, 255, 255)',
+    },
+  );
+
+  drawLineToAngle(
+    ctx,
+    x + this.cellSize / 16,
+    y + this.cellSize / 16,
+    this.cellSize - this.cellSize / 8,
+    90,
+    {
+      edgingWidth: this.cellSize / 8,
+      edgingColor: 'rgb(255, 255, 255)',
+    },
+  );
+
+  drawLineToAngle(
+    ctx,
+    x + this.cellSize - this.cellSize / 16,
+    y + this.cellSize - this.cellSize / 16,
+    this.cellSize - this.cellSize / 8,
+    180,
+    {
+      edgingWidth: this.cellSize / 8,
+      edgingColor: 'rgb(70, 70, 70)',
+    },
+  );
+
+  drawLineToAngle(
+    ctx,
+    x + this.cellSize - this.cellSize / 16,
+    y + this.cellSize - this.cellSize / 16,
+    this.cellSize - this.cellSize / 8,
+    -90,
+    {
+      edgingWidth: this.cellSize / 8,
+      edgingColor: 'rgb(70, 70, 70)',
     },
   );
 
@@ -275,7 +323,7 @@ function renderStone(
         90,
         {
           edgingWidth: this.cellSize / 20,
-          edgingColor: GameColors.StoneLabel,
+          edgingColor: 'rgb(10, 10, 10)',
         },
       );
 
@@ -287,7 +335,7 @@ function renderStone(
         [x + this.cellSize - this.cellSize / 4, y + this.cellSize / 2],
         [x + this.cellSize / 4, y + this.cellSize / 2],
         {
-          fillColor: GameColors.StoneLabel,
+          fillColor: 'rgb(10, 10, 10)',
         },
       );
     } else {
@@ -299,7 +347,7 @@ function renderStone(
         0,
         {
           edgingWidth: this.cellSize / 20,
-          edgingColor: GameColors.StoneLabel,
+          edgingColor: 'rgb(10, 10, 10)',
         },
       );
 
@@ -311,7 +359,7 @@ function renderStone(
         [x + this.cellSize / 2, y + this.cellSize / 4],
         [x + this.cellSize / 2, y + this.cellSize - this.cellSize / 4],
         {
-          fillColor: GameColors.StoneLabel,
+          fillColor: 'rgb(10, 10, 10)',
         },
       );
     }
