@@ -1,6 +1,6 @@
 {
   "name": "deadend",
-  "version": "0.1.0",
+  "version": "1.0.0-beta.1",
   "description": "Remake of DeadEnd II, a puzzle game initially developed by Wolfgang Thaller (released for the Macintosh in 1998)",
   "repository": {
     "type": "git",
