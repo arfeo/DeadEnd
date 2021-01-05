@@ -1,14 +1,14 @@
 /**
  * Legend:
  *
- * 1 - ball
- * 2 - exit
- * 3 - wall
- * 4 - stone (regular)
- * 5 - stone (up arrow)
- * 6 - stone (right arrow)
- * 7 - stone (down arrow)
- * 8 - stone (left arrow)
+ * 1 - Ball
+ * 2 - Exit
+ * 3 - Wall
+ * 4 - Stone (regular)
+ * 5 - Stone (up arrow)
+ * 6 - Stone (right arrow)
+ * 7 - Stone (down arrow)
+ * 8 - Stone (left arrow)
  */
 
 import { Level } from '../types/game';

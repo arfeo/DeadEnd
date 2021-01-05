@@ -23,9 +23,9 @@ class GameOver extends Modal {
     gameOverSubmitRestart.addEventListener('click', () => {
       this.game.destroy();
 
-      new Game();
-
       this.close();
+
+      new Game();
     });
 
     gameOverSubmitStop.addEventListener('click', () => {
