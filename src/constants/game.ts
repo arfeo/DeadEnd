@@ -1,18 +1,14 @@
-export enum GameColors {
-  BallGradientInner = 'deepskyblue',
-  BallGradientOuter = 'royalblue',
-  ExitGradientInner = 'red',
-  ExitGradientOuter = 'gold',
-  Wall = 'red',
-  Stone = 'grey',
-  StoneLabel = 'black',
-}
+export const CELL_SIZE_VMIN = 4;
 
-export enum StoneLabels {
-  Up = '↑',
-  Right = '→',
-  Down = '↓',
-  Left = '←',
+export enum GameColors {
+  BallGradientInner = 'rgb(0, 191, 255)',
+  BallGradientOuter = 'rgb(65, 105, 225)',
+  ExitGradientInner = 'rgb(255, 0, 0)',
+  ExitGradientOuter = 'rgb(255, 215, 0)',
+  Wall = 'rgb(255, 0, 0)',
+  Stone = 'rgb(128, 128, 128)',
+  StoneLabel = 'rgb(0, 0, 0)',
+  Background = 'rgb(0, 0, 0)'
 }
 
 export enum GridDimensions {
@@ -31,7 +27,3 @@ export enum MapObjects {
   StoneDown,
   StoneLeft,
 }
-
-export const CELL_SIZE_VMIN = 4;
-
-export const STONE_LABEL_FONT = '2vmin Helvetica, Arial';

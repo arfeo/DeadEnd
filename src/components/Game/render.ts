@@ -1,14 +1,8 @@
 import { levels } from '../../constants/levels';
-
-import {
-  GameColors,
-  GridDimensions,
-  MapObjects,
-  StoneLabels,
-  STONE_LABEL_FONT,
-} from '../../constants/game';
+import { GameColors, GridDimensions, MapObjects } from '../../constants/game';
 
 import { getLevelIndexById } from './utils';
+import { drawCircle, drawLineToAngle, drawRectangle, drawTriangle } from '../../utils/drawing';
 
 function renderGameBoard(): void {
   const appRoot: HTMLElement = document.getElementById('root');
@@ -175,20 +169,15 @@ function renderBall(ctx: CanvasRenderingContext2D, x: number, y: number, radius?
   gradient.addColorStop(0, GameColors.BallGradientInner);
   gradient.addColorStop(1, GameColors.BallGradientOuter);
 
-  ctx.fillStyle = gradient;
-
-  ctx.beginPath();
-
-  ctx.arc(
+  drawCircle(
+    ctx,
     x + this.cellSize / 2,
     y + this.cellSize / 2,
     radius || this.cellSize / 2.5,
-    0,
-    Math.PI * 2,
-    false,
+    {
+      fillColor: gradient,
+    },
   );
-
-  ctx.fill();
 }
 
 function renderExit(ctx: CanvasRenderingContext2D, x: number, y: number): void {
@@ -209,78 +198,123 @@ function renderExit(ctx: CanvasRenderingContext2D, x: number, y: number): void {
   gradient.addColorStop(0, GameColors.ExitGradientInner);
   gradient.addColorStop(1, GameColors.ExitGradientOuter);
 
-  ctx.fillStyle = gradient;
-
-  ctx.beginPath();
-
-  ctx.arc(
+  drawCircle(
+    ctx,
     x + this.cellSize / 2,
     y + this.cellSize / 2,
     this.cellSize / 2.5,
-    0,
-    Math.PI * 2,
-    false,
+    {
+      fillColor: gradient,
+    },
   );
-
-  ctx.fill();
 }
 
 function renderWall(ctx: CanvasRenderingContext2D, x: number, y: number): void {
-  ctx.fillStyle = GameColors.Wall;
-
-  ctx.fillRect(
+  drawRectangle(
+    ctx,
     x,
     y ,
     this.cellSize,
     this.cellSize,
+    {
+      fillColor: GameColors.Wall,
+    },
   );
 
   for (let i = 1; i <= 4; i += 1) {
-    ctx.beginPath();
-    ctx.moveTo(
+    drawLineToAngle(
+      ctx,
       x,
       y + i * this.cellSize / 4,
+      this.cellSize,
+      0,
+      {
+        edgingColor: GameColors.Background,
+      },
     );
-    ctx.lineTo(
-      x + this.cellSize,
-      y + i * this.cellSize / 4,
-    );
-    ctx.stroke();
   }
 
   for (let i = 1; i <= 4; i += 1) {
-    ctx.beginPath();
-    ctx.moveTo(
+    drawLineToAngle(
+      ctx,
       x + (i % 2 === 0 ? 1 : 2) * this.cellSize / 2,
       y + (i - 1) * this.cellSize / 4,
+      this.cellSize / 4,
+      90,
+      {
+        edgingColor: GameColors.Background,
+      },
     );
-    ctx.lineTo(
-      x + (i % 2 === 0 ? 1 : 2) * this.cellSize / 2,
-      y + (i - 1) * this.cellSize / 4 + this.cellSize / 4,
-    );
-    ctx.stroke();
   }
 }
 
-function renderStone(ctx: CanvasRenderingContext2D, x: number, y: number, direction?: string): void {
-  ctx.fillStyle = GameColors.Stone;
-
-  ctx.fillRect(
+function renderStone(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  direction?: 'up' | 'down' | 'left' | 'right',
+): void {
+  drawRectangle(
+    ctx,
     x + 1,
     y + 1,
     this.cellSize - 2,
     this.cellSize - 2,
+    {
+      fillColor: GameColors.Stone,
+    },
   );
 
   if (direction) {
-    ctx.fillStyle = GameColors.StoneLabel;
-    ctx.font = STONE_LABEL_FONT;
+    if (direction === 'up' || direction === 'down') {
+      drawLineToAngle(
+        ctx,
+        x + this.cellSize / 2,
+        y + this.cellSize / 4,
+        this.cellSize / 2,
+        90,
+        {
+          edgingWidth: this.cellSize / 20,
+          edgingColor: GameColors.StoneLabel,
+        },
+      );
 
-    ctx.fillText(
-      StoneLabels[direction.replace(/^\w/, (item: string) => item.toUpperCase()) as keyof typeof StoneLabels],
-      x + this.cellSize / (direction === 'up' || direction === 'down' ? 2.5 : 3.5),
-      y + this.cellSize / 1.5,
-    );
+      drawTriangle(
+        ctx,
+        direction === 'up'
+          ? [x + this.cellSize / 2, y + this.cellSize / 4]
+          : [x + this.cellSize / 2, y + this.cellSize - this.cellSize / 4],
+        [x + this.cellSize - this.cellSize / 4, y + this.cellSize / 2],
+        [x + this.cellSize / 4, y + this.cellSize / 2],
+        {
+          fillColor: GameColors.StoneLabel,
+        },
+      );
+    } else {
+      drawLineToAngle(
+        ctx,
+        x + this.cellSize / 4,
+        y + this.cellSize / 2,
+        this.cellSize / 2,
+        0,
+        {
+          edgingWidth: this.cellSize / 20,
+          edgingColor: GameColors.StoneLabel,
+        },
+      );
+
+      drawTriangle(
+        ctx,
+        direction === 'left'
+          ? [x + this.cellSize / 4, y + this.cellSize / 2]
+          : [x + this.cellSize - this.cellSize / 4, y + this.cellSize / 2],
+        [x + this.cellSize / 2, y + this.cellSize / 4],
+        [x + this.cellSize / 2, y + this.cellSize - this.cellSize / 4],
+        {
+          fillColor: GameColors.StoneLabel,
+        },
+      );
+    }
   }
 }
 
