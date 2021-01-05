@@ -29,33 +29,6 @@ function drawCircle(
   );
 }
 
-function drawSector(
-  ctx: CanvasRenderingContext2D,
-  dotX: number,
-  dotY: number,
-  radius: number,
-  options: DrawOptionsExtended = {},
-): void {
-  ctx.beginPath();
-  ctx.moveTo(dotX, dotY);
-  ctx.arc(dotX, dotY, radius, options.startAngle, options.endAngle);
-  ctx.lineTo(dotX, dotY);
-  ctx.closePath();
-
-  if (options.fillColor) {
-    ctx.fillStyle = options.fillColor;
-
-    ctx.fill();
-  }
-
-  if (options.edgingWidth) {
-    ctx.lineWidth = options.edgingWidth;
-    ctx.strokeStyle = options.edgingColor || 'rgba(0, 0, 0, 0)';
-
-    ctx.stroke();
-  }
-}
-
 function drawArc(
   ctx: CanvasRenderingContext2D,
   cx: number,
@@ -157,7 +130,6 @@ function drawTriangle(
 
 export {
   drawCircle,
-  drawSector,
   drawArc,
   drawLineToAngle,
   drawRectangle,
